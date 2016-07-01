@@ -1,0 +1,13 @@
+{
+  "name": "pingpong-like",
+  "version": "0.0.0",
+  "description": "pingpong like aplication",
+  "main": "server.js",
+  "repository": "",
+  "author": "Jumpei Arai<ja.create@gmail.com>",
+  "dependencies": {
+    "async": "^2.0.0-rc.6",
+    "express": "4.14.0",
+    "socket.io": "1.0.6"
+  }
+}
