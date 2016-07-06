@@ -7,7 +7,7 @@
 </div>
 
 <div if={ vis == 2}>
-<p>ルームコード</p>
+<p>{roomname}</p>
 <p onclick={toResult} class="link">４つの中から選ぶ</p>
 </div>
 
@@ -21,16 +21,21 @@
 
 
 <script>
-var self = this;
-this.vis = 1;
+    var self = this;
+    var socket = io.connect();
+    this.on('mount',function(){
+        self.socket.emit('makeRoom');
+    });
 
-toSelect = function(){
-this.vis = 2;
-}
+    this.vis = 1;
 
-toResult = function(){
-this.vis = 3;
-}
+    toSelect = function(){
+    this.vis = 2;
+    }
+
+    toResult = function(){
+    this.vis = 3;
+    }
 
 
 

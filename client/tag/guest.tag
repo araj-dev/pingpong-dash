@@ -30,30 +30,28 @@
 
 
 <script>
-var self = this;
-self.choice =[ {number:1},{number:2},{number:3},{number:4}];
-self.ndex;
-self.vis = 1;
+    var self = this;
+    self.choice =[ {number:1},{number:2},{number:3},{number:4}];
+    self.ndex;
+    self.vis = 1;
 
-toWait = function(){
-self.vis = 2;
-}
+    toWait = function(){
+        self.vis = 2;
+    }
 
-toSelect = function(){
-self.vis = 3;
+    toSelect = function(){
+        self.vis = 3;
+    }
 
-}
-
-toResult = function(evetn){
-self.vis = 4;
-var item = event.item;
-index = self.choice.indexOf(item) + 1;
-console.log(index);
-}
-
-
-
+    toResult = function(evetn){
+        self.vis = 4;
+        var item = event.item;
+        index = self.choice.indexOf(item) + 1;
+        console.log(index);
+    }
 </script>
+
+
  <!-- style -->
   <style scoped>
 
