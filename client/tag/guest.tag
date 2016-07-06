@@ -42,7 +42,6 @@
     toWait = function(){
         var roomcode = document.querySelectorAll('#roomcode')[0].value;
         self.socket.emit('joinRoom',roomcode);
-        self.vis = 2;
     }
 
     toSelect = function(){
@@ -55,6 +54,15 @@
         index = self.choice.indexOf(item) + 1;
         console.log(index);
     }
+    
+    socket.on('joinResult',function(data){
+        if( data == 0){
+            alert("番号が違います")
+        }
+        if( data == 1){
+            self.vis = 2;
+        }
+    });
 </script>
 
 
