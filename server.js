@@ -37,33 +37,37 @@ io.on('connection', function (socket) {
 
 //-----主催者用のイベント-------//
   socket.on('makeRoom',function(){
-      var roomname = Math.floor(Math.random()*(9999-1000)+1000);
+      var roomname = Math.floor(Math.random()*(9999-1000)+1000).toString();
       rooms.push(roomname);
       socket.roomname = roomname;
       socket.flg = 1 ;
+      console.log(roomname);
   });
 
   socket.on('choice',function(data){
-    // if(!socket.flg){
-    //   return;
-    // }
-    // rooms[socket.roomname].foreach(socket){
-    //   socket.emit('choice',data);
-    // io.to(roomname).broadcast()
-    // }
+    if(!socket.flg){
+      return;
+    }
+    io.to(socket.roomname).emit('msg',data);
+    }
   });
 
 
 
 //----参加者用のイベント-------//
   socket.on('joinRoom',function(roomname){
+    console.log(roomname);
+    console.log(rooms);
     //roomsの配列にdata.roomnameがあるかどうかチェック
+    console.log(rooms.indexOf(roomname.toString()));
     if(rooms.indexOf(roomname) == -1){
-      socket.emit('joinResult', 0);
+      console.log("not exsist");
+      socket.emit('joinResult', "0");
       return;
     }
-      //ある場合、その配列に自分のsocketを追加する。
-      socket.emit('joinResult', 1);
+      //ある場合、その配列に自分のsocketを追加する;
+      console.log("exist");
+      socket.emit('joinResult', "1");
       socket.join(roomname);
       console.log(roomname);
   });

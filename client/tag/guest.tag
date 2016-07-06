@@ -31,10 +31,7 @@
 
 <script>
     var self = this;
-    this.on('mount',function(){
-      self.socket = io.connect();
-    });
-    
+    self.socket = io.connect();
     self.choice =[ {number:1},{number:2},{number:3},{number:4}];
     self.ndex;
     self.vis = 1;
@@ -54,15 +51,19 @@
         index = self.choice.indexOf(item) + 1;
         console.log(index);
     }
-    
-    socket.on('joinResult',function(data){
-        if( data == 0){
-            alert("番号が違います")
-        }
-        if( data == 1){
-            self.vis = 2;
-        }
-    });
+
+    this.on('mount',function(){
+      self.socket.on('joinResult',function(data){
+        console.log(data);
+          if( data == 0){
+              alert("番号が違います");
+          }
+          if( data == 1){
+              self.vis = 2;
+              self.update();
+          }
+       });
+     });
 </script>
 
 
@@ -81,7 +82,7 @@
         color: red;
         cursor: pointer;
     }
-   
+
     #main{
     width:500px;
     }
@@ -109,7 +110,7 @@
     padding:10px 15px;
     border-radius:5px;
     color:white;
-    
+
     }
 
 
