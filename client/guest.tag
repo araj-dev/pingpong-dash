@@ -15,12 +15,13 @@
 
 <div if={ vis == 3}>
 <p class="Behavior">選ぶ</p>
-<p each={choice} onclick={toResult} class="link">{number}</p>
+<p each={choice} onclick={toResult} class="link" >{number}</p>
 </div>
 
 <div if={ vis == 4 }>
 <div id="roomcode">ルームコード</div>
 <div id="select"><p onclick={toSelect}>主催者からの要請をお待ち下さい</p></div>
+<div><p>最新回答:<span id="index">{self.index}</span></p></div>
 </div>
 
 
@@ -30,19 +31,24 @@
 
 <script>
 var self = this;
-self.choice =[ {number:1},{number:2},{number:3},{number:4}]
-this.vis = 1;
+self.choice =[ {number:1},{number:2},{number:3},{number:4}];
+self.ndex;
+self.vis = 1;
 
 toWait = function(){
-this.vis = 2;
+self.vis = 2;
 }
 
 toSelect = function(){
-this.vis = 3;
+self.vis = 3;
+
 }
 
-toResult = function(){
-this.vis = 4;
+toResult = function(evetn){
+self.vis = 4;
+var item = event.item;
+index = self.choice.indexOf(item) + 1;
+console.log(index);
 }
 
 
@@ -78,12 +84,19 @@ this.vis = 4;
     border-bottom:1px solid green;
     margin-top:20px;
     padding:20px;
+    margin-bottom:30px;
     }
     .Behavior{
     font-size:20px;
     margin-bottom:20px;
     padding:20px;
     border-bottom:1px solid black;
+    }
+    #index{
+    background:red;
+    padding:10px 15px;
+    border-radius:5px;
+    color:white;
     
     }
 
