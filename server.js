@@ -44,11 +44,11 @@ io.on('connection', function (socket) {
       console.log(roomname);
   });
 
-  socket.on('choice',function(data){
+  socket.on('OtoG',function(data){
     if(!socket.flg){
       return;
     }
-    io.to(socket.roomname).emit('msg',data);
+    io.to(socket.roomname).emit('OtoG',data);
     }
   });
 
@@ -72,6 +72,14 @@ io.on('connection', function (socket) {
       console.log(roomname);
   });
 
+  socket.on('GtoO',function(data){
+    if(!socket.flg){
+      return;
+    }
+    io.to(socket.roomname).emit('GtoO',data);
+    }
+  });
+  
 });
 
 server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function(){
