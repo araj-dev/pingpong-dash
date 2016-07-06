@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="reset.css">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ページタイトル</title>
+<!--CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+<!--JS -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<!--自作CSS -->
+<style type="text/css">
+/*ここに調整CSS記述*/
+
+ body { padding-top: 70px; }
+ body { padding-bottom: 70px; }
+    .navbar{
+        background:green;
+    }
+</style>
+</head>
+ 
+<body>
+<nav class="navbar navbar-fixed-top" role="navigation">
+  <div class="container">
+  </div>
+</nav>
+     
+<div style="text-align:center;">
+        <div class="btn-group"  role="group">
+          
+          <owner></owner>
+        </div>
+      </div>
+      
+       
+       
+<nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+  <div class="container">
+  </div>
+</nav>
+        <!-- scripts we need -->
+    <script src="https://rawgit.com/riot/riot/master/riot%2Bcompiler.min.js"></script>
+   <!-- riot tags -->
+    <script type="riot/tag" src="owner.tag"></script>
+    
+   <!-- mount this app -->
+    <script>
+
+    riot.compile(function() {
+      riot.mount('owner');
+      riot.route.start(true);
+    })
+
+    </script>
+</body>
+</html>
