@@ -2,7 +2,7 @@
 <div id="main">
 <div if={ vis == 1}>
 <form action="">
-          <br><span>ルームコード入力:</span><input type="text" style="width:300px"><br><br>
+          <br><span>ルームコード入力:</span><input type="text" style="width:300px" id="roomcode"><br><br>
           <span>名前入力:</span><input type="text" style="width:300px">
 </form><br>
        <p class="link" onclick={toWait}>ログイン</p>
@@ -31,11 +31,17 @@
 
 <script>
     var self = this;
+    this.on('mount',function(){
+      self.socket = io.connect();
+    });
+    
     self.choice =[ {number:1},{number:2},{number:3},{number:4}];
     self.ndex;
     self.vis = 1;
 
     toWait = function(){
+        var roomcode = document.querySelectorAll('#roomcode')[0].value;
+        self.socket.emit('joinRoom',roomcode);
         self.vis = 2;
     }
 
@@ -43,7 +49,7 @@
         self.vis = 3;
     }
 
-    toResult = function(evetn){
+    toResult = function(event){
         self.vis = 4;
         var item = event.item;
         index = self.choice.indexOf(item) + 1;
