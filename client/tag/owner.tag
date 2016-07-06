@@ -22,15 +22,15 @@
 
 <script>
     var self = this;
-    var socket = io.connect();
     this.on('mount',function(){
-        self.socket.emit('makeRoom');
+      self.socket = io.connect();
     });
 
     this.vis = 1;
 
     toSelect = function(){
-    this.vis = 2;
+      self.socket.emit('makeRoom');
+      this.vis = 2;
     }
 
     toResult = function(){
@@ -56,7 +56,7 @@
         color: red;
         cursor: pointer;
     }
-   
+
     #main{
     width:500px;
     }

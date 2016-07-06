@@ -30,28 +30,28 @@ io.on('connection', function (socket) {
   console.log("ID: "+socket.id.substring(2)+"has connected");
 
   socket.on('event_name',function(data){
-    console.log(data);
-    socket.emit('send',{aisatsu:"こんにちは"});
+    // console.log(data);
+    // socket.emit('send',{aisatsu:"こんにちは"});
   });
 
 
 //-----主催者用のイベント-------//
   socket.on('makeRoom',function(){
       var roomname = Math.floor(Math.random()*(9999-1000)+1000);
-      rooms[] = roomname;
+      rooms.push(roomname);
       socket.roomname = roomname;
       socket.flg = 1 ;
       console.log(socket);
   });
 
   socket.on('choice',function(data){
-    if(!socket.flg){
-      return;
-    }
+    // if(!socket.flg){
+    //   return;
+    // }
     // rooms[socket.roomname].foreach(socket){
     //   socket.emit('choice',data);
-    io.to(roomname).broadcast()
-    }
+    // io.to(roomname).broadcast()
+    // }
   });
 
 
@@ -59,12 +59,12 @@ io.on('connection', function (socket) {
 //----参加者用のイベント-------//
   socket.on('joinRoom',function(roomname){
     //roomsの配列にdata.roomnameがあるかどうかチェック
-    if([!rooms[]=data.noomname]){
-      return;
-    }
-      //ある場合、その配列に自分のsocketを追加する。
-      socket.join(roomname);
-      console.log(roomname);
+    // if([!rooms[]=data.noomname]){
+    //   return;
+    // }
+    //   //ある場合、その配列に自分のsocketを追加する。
+    //   socket.join(roomname);
+    //   console.log(roomname);
   });
 
 });
