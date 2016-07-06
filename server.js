@@ -49,7 +49,6 @@ io.on('connection', function (socket) {
       return;
     }
     io.to(socket.roomname).emit('OtoG',data);
-    }
   });
 
 
@@ -77,9 +76,8 @@ io.on('connection', function (socket) {
       return;
     }
     io.to(socket.roomname).emit('GtoO',data);
-    }
   });
-  
+
 });
 
 server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function(){
