@@ -41,7 +41,6 @@ io.on('connection', function (socket) {
       rooms.push(roomname);
       socket.roomname = roomname;
       socket.flg = 1 ;
-      console.log(socket);
   });
 
   socket.on('choice',function(data){
@@ -59,12 +58,14 @@ io.on('connection', function (socket) {
 //----参加者用のイベント-------//
   socket.on('joinRoom',function(roomname){
     //roomsの配列にdata.roomnameがあるかどうかチェック
-    // if([!rooms[]=data.noomname]){
-    //   return;
-    // }
-    //   //ある場合、その配列に自分のsocketを追加する。
-    //   socket.join(roomname);
-    //   console.log(roomname);
+    if(rooms.indexOf(roomname) == -1){
+      socket.emit('joinResult', 0);
+      return;
+    }
+      //ある場合、その配列に自分のsocketを追加する。
+      socket.emit('joinResult', 1);
+      socket.join(roomname);
+      console.log(roomname);
   });
 
 });
