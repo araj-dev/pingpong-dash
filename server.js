@@ -24,24 +24,21 @@ router.use(express.static(path.resolve(__dirname, 'client')));
 
 
 //--------------//
-var rooms = [];
+var rooms = {};
+var roomnames = [];
 
 io.on('connection', function (socket) {
   console.log("ID: "+socket.id.substring(2)+"has connected");
-
-  socket.on('event_name',function(data){
-    // console.log(data);
-    // socket.emit('send',{aisatsu:"こんにちは"});
-  });
 
 
 //-----主催者用のイベント-------//
   socket.on('makeRoom',function(){
       var roomname = Math.floor(Math.random()*(9999-1000)+1000).toString();
-      rooms.push(roomname);
       socket.roomname = roomname;
       socket.flg = 1 ;
-      console.log(roomname);
+      socket.emit('success',roomname);
+      roomnames.push(roomname);
+      rooms[roomname] = socket;
   });
 
   socket.on('OtoG',function(data){
@@ -49,38 +46,40 @@ io.on('connection', function (socket) {
       return;
     }
     io.to(socket.roomname).emit('OtoG',data);
-    }
   });
 
 
 
 //----参加者用のイベント-------//
   socket.on('joinRoom',function(roomname){
-    console.log(roomname);
-    console.log(rooms);
-    //roomsの配列にdata.roomnameがあるかどうかチェック
-    console.log(rooms.indexOf(roomname.toString()));
-    if(rooms.indexOf(roomname) == -1){
+    //roomnamesの配列にdata.roomnameがあるかどうかチェック
+      var roomname = roomname.toString();
+      
+    if(roomnames.indexOf(roomname) == -1){
       console.log("not exsist");
       socket.emit('joinResult', "0");
       return;
     }
       //ある場合、その配列に自分のsocketを追加する;
       console.log("exist");
+      socket.roomname = roomname;
       socket.emit('joinResult', "1");
       socket.join(roomname);
-      console.log(roomname);
   });
 
   socket.on('GtoO',function(data){
-    if(!socket.flg){
-      return;
-    }
-    io.to(socket.roomname).emit('GtoO',data);
-    }
+    console.log("GtoO");
+    rooms[socket.roomname].emit('GtoO',data);
   });
   
+    socket.on('disconnect',function(){
+        console.log("ID: "+socket.id.substring(2)+"has disconnected");
+    });
+    
+    
+    
 });
+
 
 server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function(){
   var addr = server.address();

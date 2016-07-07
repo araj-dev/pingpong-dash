@@ -10,7 +10,7 @@
 
 <div if={ vis == 2}>
 <div id="roomcode">ルームコード</div>
-<div id="select"><p onclick={toSelect}>主催者からの要請をお待ち下さい</p></div>
+<div id="select"><p>主催者からの要請をお待ち下さい</p></div>
 </div>
 
 <div if={ vis == 3}>
@@ -20,7 +20,7 @@
 
 <div if={ vis == 4 }>
 <div id="roomcode">ルームコード</div>
-<div id="select"><p onclick={toSelect}>主催者からの要請をお待ち下さい</p></div>
+<div id="select"><p>主催者からの要請をお待ち下さい</p></div>
 <div><p>最新回答:<span id="index">{self.index}</span></p></div>
 </div>
 
@@ -40,21 +40,51 @@
         var roomcode = document.querySelectorAll('#roomcode')[0].value;
         self.socket.emit('joinRoom',roomcode);
     }
-
-    toSelect = function(){
-        self.vis = 3;
-    }
+    
+    //--------------------------------------
+    self.socket.on('OtoG',function(data){
+        
+        if(data.type == 'yontaku'){
+        self.vis=3;
+        self.update();
+        }
+        
+        
+    });
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+//    toSelect = function(){
+//        self.vis = 3;
+//    }
 
     toResult = function(event){
-        self.vis = 4;
+        
         var item = event.item;
         index = self.choice.indexOf(item) + 1;
-        console.log(index);
+        data = { 
+            type:'yontaku_kaitou',
+            kaitou:index,
+        };
+        console.log(data.type);
+        self.socket.emit('GtoO',data);
+        self.vis = 4;
+        self.update();
     }
 
     this.on('mount',function(){
       self.socket.on('joinResult',function(data){
-        console.log(data);
+        //console.log(data);
           if( data == 0){
               alert("番号が違います");
           }
