@@ -80,6 +80,9 @@ io.on('connection', function (socket) {
         console.log("ID: "+socket.id.substring(2)+"has disconnected");
 
         //参加者カウント用
+        if(!rooms[socket.roomname]){
+            return;
+        }
         rooms[socket.roomname].emit('count', -1);
     });
 });
