@@ -75,9 +75,6 @@ io.on('connection', function (socket) {
     socket.on('disconnect',function(){
         console.log("ID: "+socket.id.substring(2)+"has disconnected");
     });
-    
-    
-    
 });
 
 
