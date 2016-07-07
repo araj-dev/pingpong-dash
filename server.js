@@ -54,7 +54,7 @@ io.on('connection', function (socket) {
   socket.on('joinRoom',function(roomname){
     //roomnamesの配列にdata.roomnameがあるかどうかチェック
       var roomname = roomname.toString();
-      
+
     if(roomnames.indexOf(roomname) == -1){
       console.log("not exsist");
       socket.emit('joinResult', "0");
@@ -65,15 +65,22 @@ io.on('connection', function (socket) {
       socket.roomname = roomname;
       socket.emit('joinResult', "1");
       socket.join(roomname);
+
+      //参加者カウント用
+      rooms[roomname].emit('count', 1);
+      console.log(rooms[roomname]);
   });
 
   socket.on('GtoO',function(data){
     console.log("GtoO");
     rooms[socket.roomname].emit('GtoO',data);
   });
-  
+
     socket.on('disconnect',function(){
         console.log("ID: "+socket.id.substring(2)+"has disconnected");
+
+        //参加者カウント用
+        rooms[socket.roomname].emit('count', -1);
     });
 });
 
