@@ -11,6 +11,12 @@
 <div if={ vis == 2}>
 <p>{roomname}</p>
 <p onclick={toResult} class="link">４つの中から選ぶ</p>
+
+<form name="question">
+<input type="text" class="inputText" maxlength="1" name="selectNum" pattern="^[0-9A-Za-z]+$">
+<p onclick={selectNumber} class="link">４つの中から選ぶ</p>
+</form>
+
 </div>
 
 <div if={ vis == 3}>
@@ -26,13 +32,14 @@
     var self = this;
     self.socket = io.connect();
     this.vis = 1;
+    var X= [];
+    var Y = [];
 
     var Kaitou_Data = {
-        one:0,
-        two:0,
-        three:0,
-        four:0,
-        guest:0
+        X:X,
+        Y:Y,
+        guest:0,
+        SN:0
     }
     
     this.on('mount',function(){
@@ -54,7 +61,7 @@
         
         self.socket.on('GtoO',function(data){
             console.log(Kaitou_Data);
-            Kaitou_Check(data);
+            Kaitou_Check(Kaitou_Data,data);
             if( data.type == 'yontaku_kaitou'){
                 chart(Kaitou_Data);
                             
@@ -78,47 +85,46 @@
             self.vis = 3;
             self.update();
         }
+        selectNumber = function(){
+            Kaitou_Data.SN = document.question.selectNum.value;
+            var data = {
+                type:'yontaku',
+                SN:Kaitou_Data.SN
+            };     
+            console.log(Kaitou_Data);
+            self.socket.emit('OtoG',data);
+            document.question.selectNum.value ="";
+            self.vis = 3;
+            self.update();
+        }
         backSelect = function(){
             self.vis = 2;
             Date_Reset(Kaitou_Data);
             chart(Kaitou_Data);
-            
-            
-
-
         }
-  //----------------------------------------------------function     
-         function Date_Reset(obj){
-                obj.one = 0;
-                obj.two = 0;
-                obj.three = 0;
-                obj.four = 0;
+  //----------------------------------------------------function 
+        function Date_Reset(obj){
+                for( var i = 0;i<obj.SN;i++){
+                obj.Y[i] = 0; 
+            }
         }
-
-
-
-        function Kaitou_Check(data){
-            if( data.kaitou == 1){
-                Kaitou_Data.one = Kaitou_Data.one + 1;
+        function Kaitou_Check(data,data2){
+                for( var i = 0;i<data.SN;i++){
+                data.X[i] = i + 1;
+                data.Y[i] = 0; 
             }
-            if( data.kaitou == 2){
-                Kaitou_Data.two = Kaitou_Data.two + 1;
-            }
-            if( data.kaitou == 3){
-                Kaitou_Data.three = Kaitou_Data.three + 1;
-            }
-            if( data.kaitou == 4){
-                Kaitou_Data.four = Kaitou_Data.four + 1;
+            if ( data2.kaitou){
+                data.Y[data2.kaitou-1] = data.Y[data2.kaitou-1] + 1;
             }
         }
         function chart(data){
                 var barChartData = {
-                  labels : ["1","2","3","4"],
+                  labels : data.X,
                   datasets : [
                     {
                       fillColor : "rgba(220,220,220,0.5)",
                       strokeColor : "rgba(220,220,220,1)",
-                      data : [Kaitou_Data.one,Kaitou_Data.two,Kaitou_Data.three,Kaitou_Data.four]
+                      data : data.Y
                     }
 
                   ]
@@ -167,10 +173,18 @@
     border:1px solid green;
     height:250px;
     }
+      .inputText{
+          width:30px;
+          height:50px;
+          font-size:30pt;
+          ime-mode: inactive;
+      }
       .canvas{
           height:250px;
           width:500px;
+          
       }
+      
 
 
 
