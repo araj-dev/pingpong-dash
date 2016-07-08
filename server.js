@@ -68,7 +68,7 @@ io.on('connection', function (socket) {
 
       //参加者カウント用
       rooms[roomname].emit('count', 1);
-      console.log(rooms[roomname]);
+      //console.log(rooms[roomname]);
   });
 
   socket.on('GtoO',function(data){
