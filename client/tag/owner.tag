@@ -31,7 +31,8 @@
         one:0,
         two:0,
         three:0,
-        four:0
+        four:0,
+        guest:0
     }
     
     this.on('mount',function(){
@@ -41,6 +42,15 @@
             console.log(self.roomname);
             self.update();
         });
+            self.socket.on('count',function(data){
+                console.log(data);
+                console.log(Kaitou_Data.guest);
+                
+            Kaitou_Data.guest = Kaitou_Data.guest + data;
+                console.log(Kaitou_Data.guest);
+        });
+
+        
         
         self.socket.on('GtoO',function(data){
             console.log(Kaitou_Data);
@@ -70,20 +80,20 @@
         }
         backSelect = function(){
             self.vis = 2;
-            Date_Reset();
+            Date_Reset(Kaitou_Data);
             chart(Kaitou_Data);
+            
+            
 
 
         }
   //----------------------------------------------------function     
-         function Date_Reset(){
-                Kaitou_Data.one = 0;
-                Kaitou_Data.two = 0;
-                Kaitou_Data.three = 0;
-                Kaitou_Data.four = 0;
-
-
-        }     
+         function Date_Reset(obj){
+                obj.one = 0;
+                obj.two = 0;
+                obj.three = 0;
+                obj.four = 0;
+        }
 
 
 
@@ -117,11 +127,15 @@
                       //縦軸の目盛りの上書き許可。これ設定しないとscale関連の設定が有効にならないので注意。
                       scaleOverride : true,
 
-                      //以下設定で、縦軸のレンジは、最小値0から5区切りで35(0+5*7)までになる。
-                      //縦軸の区切りの数
-                      scaleSteps : 7,
+//                      以下設定で、縦軸のレンジは、最小値0から5区切りで35(0+5*7)までになる。
+//                    　scaleLabel:"<%=Kaitou_Data.guest%>",
+//                      
+                    showScale:true,
+                    scaleShowVerticalLines:false,
+                    //縦軸の区切りの数
+                      scaleSteps : 1,
                       //縦軸の目盛り区切りの間隔
-                      scaleStepWidth : 5,
+                      scaleStepWidth : Kaitou_Data.guest,
                       //縦軸の目盛りの最小値
                       scaleStartValue : 0,
                       animation : false

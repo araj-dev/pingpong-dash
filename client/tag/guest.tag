@@ -41,6 +41,7 @@
         self.socket.emit('joinRoom',roomcode);
     }
     
+    
     //--------------------------------------
     self.socket.on('OtoG',function(data){
         
@@ -93,6 +94,9 @@
               self.update();
           }
        });
+            self.socket.on('count',function(data){
+            console.log(data);
+        });
      });
 </script>
 
