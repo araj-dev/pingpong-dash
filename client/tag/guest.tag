@@ -32,7 +32,7 @@
 <script>
     var self = this;
     self.socket = io.connect();
-    self.choice =[ {number:1},{number:2},{number:3},{number:4}];
+    self.choice =[];
     self.ndex;
     self.vis = 1;
 
@@ -46,6 +46,9 @@
     self.socket.on('OtoG',function(data){
         
         if(data.type == 'yontaku'){
+            for( var i = 0; i < data.SN; i++){
+                self.choice[i] = {number:i+1};
+            }
         self.vis=3;
         self.update();
         }
