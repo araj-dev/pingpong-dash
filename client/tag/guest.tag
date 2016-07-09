@@ -3,7 +3,7 @@
 <div if={ vis == 1}>
 <form action="">
           <br><span>ルームコード入力:</span><input type="text" style="width:300px" id="roomcode"><br><br>
-          <span>名前入力:</span><input type="text" style="width:300px">
+          <span>名前入力:</span><input type="text" style="width:300px" id="username">
 </form><br>
        <p class="link" onclick={toWait}>ログイン</p>
 </div>
@@ -40,11 +40,11 @@
         var roomcode = document.querySelectorAll('#roomcode')[0].value;
         self.socket.emit('joinRoom',roomcode);
     }
-    
-    
+
+
     //--------------------------------------
     self.socket.on('OtoG',function(data){
-        
+
         if(data.type == 'yontaku'){
             for( var i = 0; i < data.SN; i++){
                 self.choice[i] = {number:i+1};
@@ -53,31 +53,31 @@
         self.vis=3;
         self.update();
         }
-        
-        
+
+
     });
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
 //    toSelect = function(){
 //        self.vis = 3;
 //    }
 
     toResult = function(event){
-        
+
         var item = event.item;
         index = self.choice.indexOf(item) + 1;
-        data = { 
+        data = {
             type:'yontaku_kaitou',
             kaitou:index,
         };
