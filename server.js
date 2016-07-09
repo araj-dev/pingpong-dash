@@ -51,9 +51,10 @@ io.on('connection', function (socket) {
 
 
 //----参加者用のイベント-------//
-  socket.on('joinRoom',function(roomname){
+  socket.on('joinRoom',function(guestdata){
     //roomnamesの配列にdata.roomnameがあるかどうかチェック
-      var roomname = roomname.toString();
+      var roomname = guestdata.roomname.toString();
+      var username = guestdata.username;
 
     if(roomnames.indexOf(roomname) == -1){
       console.log("not exsist");
@@ -63,12 +64,21 @@ io.on('connection', function (socket) {
       //ある場合、その配列に自分のsocketを追加する;
       console.log("exist");
       socket.roomname = roomname;
+
+      console.log(username);
+      if(!username){
+        var betaname = Math.floor(Math.random()*(9999-1000)+1000).toString();
+        console.log(betaname);
+        socket.username = 'guest'+betaname;
+      }
+      socket.username = username;
+
       socket.emit('joinResult', "1");
       socket.join(roomname);
 
       //参加者カウント用
       rooms[roomname].emit('count', 1);
-      console.log(rooms[roomname]);
+      //console.log(rooms[roomname]);
   });
 
   socket.on('GtoO',function(data){
