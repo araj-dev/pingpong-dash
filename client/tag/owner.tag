@@ -84,6 +84,7 @@
             self.vis = 3;
             self.update();
         }
+
         selectNumber = function(){
             Kaitou_Data.SN = document.question.selectNum.value;
             var data = {

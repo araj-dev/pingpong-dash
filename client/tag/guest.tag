@@ -43,29 +43,7 @@
     
     
     //--------------------------------------
-    self.socket.on('OtoG',function(data){
-        
-        if(data.type == 'yontaku'){
-            for( var i = 0; i < data.SN; i++){
-                self.choice[i] = {number:i+1};
-            }
-        console.log(self.choice);
-        self.vis=3;
-        self.update();
-        }
-        
-        
-    });
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     
     
     
@@ -89,19 +67,35 @@
     }
 
     this.on('mount',function(){
-      self.socket.on('joinResult',function(data){
+        
+        self.socket.on('OtoG',function(data){
+            if(data.type == 'yontaku'){
+                self.choice = [];
+                for( var i = 0; i < data.SN; i++){
+                    self.choice[i] = {number:i+1};
+                }
+                console.log(self.choice);
+                self.vis=3;
+                self.update();
+            }
+        });
+        
+        
+        self.socket.on('joinResult',function(data){
         //console.log(data);
-          if( data == 0){
+            if( data == 0){
               alert("番号が違います");
-          }
-          if( data == 1){
+            }
+            if( data == 1){
               self.vis = 2;
               self.update();
-          }
-       });
-            self.socket.on('count',function(data){
+            }
+        });
+        
+        self.socket.on('count',function(data){
             console.log(data);
         });
+        
      });
 </script>
 
