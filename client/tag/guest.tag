@@ -37,8 +37,10 @@
     self.vis = 1;
 
     toWait = function(){
-        var roomcode = document.querySelectorAll('#roomcode')[0].value;
-        self.socket.emit('joinRoom',roomcode);
+        var guestdata = {};
+        guestdata.roomname = document.querySelectorAll('#roomcode')[0].value;
+        guestdata.username = document.querySelectorAll('#username')[0].value;
+        self.socket.emit('joinRoom', guestdata);
     }
 
 
