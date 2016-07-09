@@ -3,7 +3,7 @@
 <div if={ vis == 1}>
 <form action="">
           <br><span>ルームコード入力:</span><input type="text" style="width:300px" id="roomcode"><br><br>
-          <span>名前入力:</span><input type="text" style="width:300px">
+          <span>名前入力:</span><input type="text" style="width:300px" id="username">
 </form><br>
        <p class="link" onclick={toWait}>ログイン</p>
 </div>
@@ -47,8 +47,10 @@
     
 
     toWait = function(){
-        var roomcode = document.querySelectorAll('#roomcode')[0].value;
-        self.socket.emit('joinRoom',roomcode);
+        var guestdata = {};
+        guestdata.roomname = document.querySelectorAll('#roomcode')[0].value;
+        guestdata.username = document.querySelectorAll('#username')[0].value;
+        self.socket.emit('joinRoom', guestdata);
     }
 
     toResult_choice = function(event){
@@ -58,6 +60,7 @@
         data = { 
             type:'select_answer',
             kaitou:Answer,
+
         };
         console.log(data.type);
         self.socket.emit('GtoO',data);
