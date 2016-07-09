@@ -14,11 +14,18 @@
 選択肢の数を記入<input type="text" class="inputText" maxlength="1" name="selectNum" pattern="^[0-9A-Za-z]+$">
 <p onclick={selectNumber} class="link">アンケート</p>
 </form>
+<p onclick={toResult} class="link">テキスト送信</p>
+
 
 </div>
 
 <div if={ vis == 3}>
-<div id="result"><canvas id="bar" class="canvas"></canvas></div>
+<div id="result_canvas">
+<canvas id="bar" class="canvas"></canvas></div>
+<p onclick={backSelect} class="link">回答を締め切る</p>
+</div>
+<div if={ vis == 4}>
+<div id="result_text"></div>
 <p onclick={backSelect} class="link">回答を締め切る</p>
 </div>
 
@@ -59,11 +66,14 @@
         
         
         self.socket.on('GtoO',function(data){
-            console.log(Kaitou_Data);
             Kaitou_Check(data);
-            if( data.type == 'yontaku_kaitou'){
+            if( data.type == 'select_answer'){
                 chart(Kaitou_Data);
                             
+            }
+            if(data.type == 'text_answer'){
+                console.log(data);
+                document.getElementById("result_text").appendChild(data.Answer);
             }
         });
         
@@ -78,10 +88,10 @@
 
         toResult = function(){
             var data = {
-                type:'yontaku',
+                type:'text',
             };     
             self.socket.emit('OtoG',data);
-            self.vis = 3;
+            self.vis = 4;
             self.update();
         }
 
@@ -102,9 +112,16 @@
             self.update();
         }
         backSelect = function(){
-            self.vis = 2;
-            Date_Zero(Kaitou_Data);
-            chart(Kaitou_Data);
+            if( Kaitou_Data.SN == 0){
+                self.vis = 2;
+            }else if(Kaitou_Data.SN > 0){
+                Date_Zero(Kaitou_Data);
+                chart(Kaitou_Data);
+                self.vis = 2;
+            }
+            
+            
+            
         }
   //----------------------------------------------------function 
         function Date_Zero(obj){
@@ -134,13 +151,32 @@
                   ]
                 }
                 var option = {
-                      //縦軸の目盛りの上書き許可。これ設定しないとscale関連の設定が有効にならないので注意。
                       scaleOverride : true,
-
-//                      以下設定で、縦軸のレンジは、最小値0から5区切りで35(0+5*7)までになる。
-//                    　scaleLabel:"<%=Kaitou_Data.guest%>",
-                    tooltipTemplate:"<%if (label){%><%=label: %><%}%><%=value%>",
                     tooltipEvents: [],
+                    onAnimationComplete: function(){
+                      this.eachBars(function(bar){
+                        var tooltipPosition = bar.tooltipPosition();
+                        new Chart.Tooltip({
+                          x: Math.round(tooltipPosition.x),
+                          y: Math.round(tooltipPosition.y),
+                          xPadding: this.options.tooltipXPadding,
+                          yPadding: this.options.tooltipYPadding,
+                          fillColor: this.options.tooltipFillColor,
+                          textColor: this.options.tooltipFontColor,
+                          fontFamily: this.options.tooltipFontFamily,
+                          fontStyle: this.options.tooltipFontStyle,
+                          fontSize: this.options.tooltipFontSize,
+                          caretHeight: this.options.tooltipCaretSize,
+                          cornerRadius: this.options.tooltipCornerRadius,
+                          text: bar.value,
+                          chart: this.chart
+                        }).draw();
+                      });
+                    },
+
+
+                    
+                    
                     showTooltips: true,
                     showScale:true,
                     scaleShowVerticalLines:false,
@@ -175,7 +211,11 @@
     #main{
     width:500px;
     }
-    #result{
+    #result_canvas{
+    border:1px solid green;
+    height:250px;
+    }
+    #result_text{
     border:1px solid green;
     height:250px;
     }
