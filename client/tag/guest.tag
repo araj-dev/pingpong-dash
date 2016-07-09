@@ -49,6 +49,7 @@
             for( var i = 0; i < data.SN; i++){
                 self.choice[i] = {number:i+1};
             }
+        console.log(self.choice);
         self.vis=3;
         self.update();
         }
@@ -82,6 +83,7 @@
         };
         console.log(data.type);
         self.socket.emit('GtoO',data);
+        self.choice.length = 0;
         self.vis = 4;
         self.update();
     }

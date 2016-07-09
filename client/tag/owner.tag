@@ -10,11 +10,9 @@
 
 <div if={ vis == 2}>
 <p>{roomname}</p>
-<p onclick={toResult} class="link">４つの中から選ぶ</p>
-
 <form name="question">
-<input type="text" class="inputText" maxlength="1" name="selectNum" pattern="^[0-9A-Za-z]+$">
-<p onclick={selectNumber} class="link">４つの中から選ぶ</p>
+選択肢の数を記入<input type="text" class="inputText" maxlength="1" name="selectNum" pattern="^[0-9A-Za-z]+$">
+<p onclick={selectNumber} class="link">アンケート</p>
 </form>
 
 </div>
@@ -42,6 +40,7 @@
         SN:0
     }
     
+    
     this.on('mount',function(){
         
         self.socket.on('success',function(roomcode){
@@ -61,7 +60,7 @@
         
         self.socket.on('GtoO',function(data){
             console.log(Kaitou_Data);
-            Kaitou_Check(Kaitou_Data,data);
+            Kaitou_Check(data);
             if( data.type == 'yontaku_kaitou'){
                 chart(Kaitou_Data);
                             
@@ -91,31 +90,35 @@
                 type:'yontaku',
                 SN:Kaitou_Data.SN
             };     
-            console.log(Kaitou_Data);
+            console.log(Kaitou_Data.SN);
             self.socket.emit('OtoG',data);
             document.question.selectNum.value ="";
+            for( var i = 0;i<Kaitou_Data.SN;i++){
+                Kaitou_Data.X[i] = i + 1;
+                Kaitou_Data.Y[i] = 0; 
+            }
             self.vis = 3;
             self.update();
         }
         backSelect = function(){
             self.vis = 2;
-            Date_Reset(Kaitou_Data);
+            Date_Zero(Kaitou_Data);
             chart(Kaitou_Data);
         }
   //----------------------------------------------------function 
-        function Date_Reset(obj){
-                for( var i = 0;i<obj.SN;i++){
-                obj.Y[i] = 0; 
-            }
+        function Date_Zero(obj){
+            obj.X.length = 0;
+            obj.Y.length = 0;
+                //for( var i = 0;i<obj.SN;i++){
+                    
+                //obj.Y[i] = 0; 
+            //}
         }
-        function Kaitou_Check(data,data2){
-                for( var i = 0;i<data.SN;i++){
-                data.X[i] = i + 1;
-                data.Y[i] = 0; 
-            }
-            if ( data2.kaitou){
-                data.Y[data2.kaitou-1] = data.Y[data2.kaitou-1] + 1;
-            }
+        function Kaitou_Check(data2){
+                
+                if ( data2.kaitou){
+                    Kaitou_Data.Y[data2.kaitou-1] = Kaitou_Data.Y[data2.kaitou-1] + 1;
+                }
         }
         function chart(data){
                 var barChartData = {
@@ -135,7 +138,9 @@
 
 //                      以下設定で、縦軸のレンジは、最小値0から5区切りで35(0+5*7)までになる。
 //                    　scaleLabel:"<%=Kaitou_Data.guest%>",
-//                      
+                    tooltipTemplate:"<%if (label){%><%=label: %><%}%><%=value%>",
+                    tooltipEvents: [],
+                    showTooltips: true,
                     showScale:true,
                     scaleShowVerticalLines:false,
                     //縦軸の区切りの数
@@ -177,7 +182,6 @@
           width:30px;
           height:50px;
           font-size:30pt;
-          ime-mode: inactive;
       }
       .canvas{
           height:250px;
