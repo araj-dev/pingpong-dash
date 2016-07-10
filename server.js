@@ -68,11 +68,11 @@ io.on('connection', function (socket) {
       console.log(username);
       if(!username){
         var betaname = Math.floor(Math.random()*(9999-1000)+1000).toString();
-        console.log(betaname);
         socket.username = 'guest'+betaname;
+      } else {
+          socket.username = username;
       }
-      socket.username = username;
-
+      console.log(socket.username);
       socket.emit('joinResult', "1");
       socket.join(roomname);
 
@@ -94,6 +94,7 @@ io.on('connection', function (socket) {
             return;
         }
         rooms[socket.roomname].emit('count', -1);
+        console.log(socket);
     });
 });
 
