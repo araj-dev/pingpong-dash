@@ -33,19 +33,11 @@ io.on('connection', function (socket) {
 
 //-----主催者用のイベント-------//
   socket.on('makeRoom',function(){
-      var checkArray = [];
-      var number_array = [];
-      var i = 0;
-      var j = 1;
-      for(i=0;i<j;i++){
-        var roomname = Math.floor(Math.random()*(9999-1000)+1000).toString();
-        var checkArray = number_array.indexOf(roomname);
-        if(checkArray == -1){
-          number_array.push(roomname);
-          break;
-        }
-        j++;
-      }
+
+    //roomnameがかぶらないための処理
+    do {
+    var roomname = Math.floor(Math.random()*(9999-1000)+1000).toString();
+    }while( 0 <= roomnames.indexOf(roomname));
       console.log(roomname);
 
       socket.roomname = roomname;
