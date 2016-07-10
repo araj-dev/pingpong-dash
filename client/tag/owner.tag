@@ -1,12 +1,13 @@
 <owner>
 <div id="main">
-
+<!--1ページ目-->
 <div if={ vis == 1}>
 <p>Profile</p>
 <p onclick={toSelect} class="link">Start PingPong</p>
 <p class="link">ログアウト</p>
 </div>
 
+<!--2ページ目-->
 <div if={ vis == 2}>
 <p>{roomname}</p>
 <form name="question">
@@ -16,12 +17,12 @@
 <p onclick={toResult} class="link">テキスト送信</p>
 </div>
 
-
-
+<!--3ページ目　選択問題-->
 <div if={ vis == 3}>
 <div id="result"><canvas id="bar" class="canvas"></canvas></div>
 <p onclick={backSelect} class="link">回答を締め切る</p>
 </div>
+<!--3ページ目　テキスト問題-->
 <div if={ vis == 4}>
 <div id="result">
     <ul>
@@ -30,11 +31,8 @@
 </div>
 <p onclick={backSelect} class="link">回答を締め切る</p>
 </div>
-
 </div>
-
-
-
+<!--スクリプト-->
 <script>
     var self = this;
     self.socket = io.connect();
@@ -42,63 +40,24 @@
     var X= [];//チャートのラベル
     var Y = [];//チャートのラベルに対する回答者数
     self.textAnswer = [];//テキスト問題の回答の配列
-
     var Kaitou_Data = {
         X:X,
         Y:Y,
         guest:0,
         SN:0
-    }
+    }//チャートオブジェクト
     
-    
-    this.on('mount',function(){
-        
-        self.socket.on('success',function(roomcode){
-            self.roomname = roomcode;
-            console.log(self.roomname);
-            self.update();
-        });
-            self.socket.on('count',function(data){
-                console.log(data);
-                console.log(Kaitou_Data.guest);
-                
-            Kaitou_Data.guest = Kaitou_Data.guest + data;
-                console.log(Kaitou_Data.guest);
-        }); 
-        self.socket.on('GtoO',function(data){
-            console.log(data);
-            if( data.type == 'select_answer'){
-                Kaitou_Check(data);
-                chart(Kaitou_Data);                
-            }
-            if(data.type == 'text_answer'){
-                console.log(data.Answer);
-                self.textAnswer.push({Answer:data.Answer});
-                self.update();   
-            }
-        });  
-    });
-
-  
-//-----------------------------------------------------onClick
+ 
+//-------------------------------------------onClick,emit送信
         toSelect = function(){
           self.socket.emit('makeRoom');
           self.vis = 2;
         }
-
-        toResult = function(){
-            var data = {
-                type:'text',
-            };     
-            self.socket.emit('OtoG',data);
-            self.vis = 4;
-            self.update();
-        }
-
+        //選択肢問題の回答要請
         selectNumber = function(){
             Kaitou_Data.SN = document.question.selectNum.value;
             var data = {
-                type:'yontaku',
+                type:'select',
                 SN:Kaitou_Data.SN
             };     
             console.log(Kaitou_Data.SN);
@@ -111,6 +70,16 @@
             self.vis = 3;
             self.update();
         }
+        //テキストの回答要請
+        toResult = function(){
+            var data = {
+                type:'text',
+            };     
+            self.socket.emit('OtoG',data);
+            self.vis = 4;
+            self.update();
+        }
+        //回答形式の選択画面（２ページ目）へ
         backSelect = function(){
             if( Kaitou_Data.SN == 0){
                 self.textAnswer.length = 0;
@@ -121,26 +90,46 @@
                 Kaitou_Data.SN = 0;
                 self.vis = 2;
             }
-            
-            
-            
-            
         }
+//-------------------------------------mount,socket.on受信   
+    this.on('mount',function(){
+        
+        self.socket.on('success',function(roomcode){
+            self.roomname = roomcode;
+            console.log(self.roomname);
+            self.update();
+        });
+            self.socket.on('count',function(data){
+            Kaitou_Data.guest = Kaitou_Data.guest + data;
+        }); 
+        self.socket.on('GtoO',function(data){
+            //選択回答の受信
+            if( data.type == 'select_answer'){
+                Kaitou_Check(data);
+                chart(Kaitou_Data);                
+            }
+            //テキスト回答の受信
+            if(data.type == 'text_answer'){
+                console.log(data.Answer);
+                self.textAnswer.push({Answer:data.Answer});
+                self.update();   
+            }
+        });  
+    });
   //----------------------------------------------------function 
+        //チャートのラベル、回答数リセット
         function Date_Zero(obj){
             obj.X.length = 0;
             obj.Y.length = 0;
-                //for( var i = 0;i<obj.SN;i++){
-                    
-                //obj.Y[i] = 0; 
-            //}
-        }
+        }   
+        //チャート、選択肢ごとの回答数のカウント
         function Kaitou_Check(data2){
                 
                 if ( data2.kaitou){
                     Kaitou_Data.Y[data2.kaitou-1] = Kaitou_Data.Y[data2.kaitou-1] + 1;
                 }
         }
+        //チャート描画
         function chart(data){
                 var barChartData = {
                   labels : data.X,
@@ -176,10 +165,6 @@
                         }).draw();
                       });
                     },
-
-
-                    
-                    
                     showTooltips: true,
                     showScale:true,
                     scaleShowVerticalLines:false,
@@ -196,28 +181,25 @@
 </script>
  <!-- style -->
   <style scoped>
-    p {
-      background:green;
-      color:white;
-      padding:10px;
-      width:
-    }
-    .link{
-    cursor:pointer;
-    }
-
-    .link:hover {
-        color: red;
-        cursor: pointer;
-    }
-
-    #main{
-    width:500px;
-    }
-    #result{
-    border:1px solid green;
-    height:250px;
-    }
+    p { 
+        background:green;
+        color:white;
+        padding:10px;
+      }
+      .link{
+          cursor:pointer;
+      }
+      .link:hover {
+          color: red;
+          cursor: pointer;
+      }
+      #main{
+          width:500px;
+      }
+      #result{
+          border:1px solid green;
+          height:250px;
+      }
       .inputText{
           width:30px;
           height:50px;
@@ -226,20 +208,6 @@
       .canvas{
           height:250px;
           width:500px;
-          
       }
-      
-
-
-
   </style>
-
-
-
-
-
-
-
-
-
 </owner>
