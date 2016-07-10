@@ -27,8 +27,14 @@
         <p class="link" onclick={toResult_text}>送信</p>
     </form>
 </div>
+<!--3ページ目　作成問題の回答ページ-->
+<div if={ vis == 5}>
+    <p class="Behavior">選ぶ</p>
+    <p>問題；{Q}</p>
+    <p each={choice} onclick={toRexult_createQ} class="link" >{number}-{content}</p>
+</div>
 <!--4ページ目　回答送信後の待ち-->
-<div if={ vis == 5 }>
+<div if={ vis == 6 }>
     <div id="roomcode">ルームコード</div>
     <div id="select"><p>主催者からの要請をお待ち下さい</p></div>
     <div><p>最新回答:<span id="index">{Answer}</span></p></div>
@@ -43,6 +49,7 @@
     self.index;
     self.vis = 1;
     self.Answer;//回答
+    var guestdata = {};//ゲストデータ
     
 //----------------------------------------mount,socket.on受信
     this.on('mount',function(){
@@ -78,16 +85,31 @@
                 self.vis=4;
                 self.update();
             }
+            //問題文作成問題受信
+            if(data.type == 'createQ'){
+                self.choice.length = 0;
+                self.Q = data.Q;//問題文
+                for( var i = 0; i < data.SN; i++){
+                    self.choice[i] = {
+                        number:data.QContent[i].num+1,//選択肢数
+                        content:data.QContent[i].content//項目
+                    }
+                }
+                self.title = "選ぶ";
+                console.log(self.choice);
+                self.vis=5;
+                self.update();
+            }
             //主催者退室した場合
             if(data.type == 'close'){
                 alert('主催者が退室しました。本日はありがとうございました。')
                 location.href = 'http://0.0.0.0:3000/';
             }
+            
         });
     });
 //-----------------------------------------onClick,emit送信
     toWait = function(){
-        var guestdata = {};
         guestdata.roomname = document.querySelectorAll('#roomcode')[0].value;
         guestdata.username = document.querySelectorAll('#username')[0].value;
         self.socket.emit('joinRoom', guestdata);
@@ -101,7 +123,7 @@
             kaitou:Answer,
         };
         self.socket.emit('GtoO',data);
-        self.vis = 5;
+        self.vis = 6;
         self.update();
     }
     //テキスト問題回答
@@ -109,13 +131,26 @@
         Answer = document.text.answer.value;
         data = {
             type:'text_answer',
+            Name:guestdata.username,
             Answer:Answer,
         }
         self.socket.emit("GtoO",data);
         document.text.answer.value ="";
-        self.vis = 5;
+        self.vis = 6;
         self.update();
      }
+    toRexult_createQ = function(){
+        var item = event.item;
+        Answer = self.choice.indexOf(item) + 1;
+        data = {
+            type:'createQ_answer',
+            kaitou:Answer
+        }
+        console.log(data);
+        self.socket.emit('GtoO',data);
+        self.vis = 6;
+        self.update();
+    }
     toClose = function(){
         location.href = 'http://0.0.0.0:3000/';
     }

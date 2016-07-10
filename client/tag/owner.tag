@@ -15,6 +15,7 @@
         <p onclick={selectNumber} class="link">アンケート</p>
     </form>
     <p onclick={toResult} class="link">テキスト送信</p>
+    <p onclick={toCreateQ} class="link">問題文作成</p>
     <p onclick={toClose} class="link">退室</p>
 </div>
 
@@ -27,13 +28,24 @@
 <div if={ vis == 4}>
     <div id="result">
         <ul>
-            <li each={textAnswer}>{Answer}</li>
+            <li each={textAnswer}>回答者：{Name}ー{Answer}</li>
         </ul>
     </div>
         <p onclick={backSelect} class="link">回答を締め切る</p>
     </div>
+<!--4ページ目　問題文作成画面-->
+<div if={ vis == 5}>
+  <form name="Q">
+    問題文作成<input type="text" id="Qtext" name="question">
+    選択肢の数を入力<input type="text" id="selectNum" name="num">
+    <p onclick={getSelectNum} class="link">選択肢数決定</p>
+    <ul>
+        <li each={selectNumber}>{Number}:<input type="text" id="Answer" name="Q{Number}"></li>
+    </ul>
+    <p onclick={sendCreateQ} class="link">送信</p>
+  </form>
 </div>
-<!--スクリプト-->
+</div>
 <script>
     var self = this;
     self.socket = io.connect();
@@ -48,6 +60,8 @@
         guest:0,
         SN:0
     }//チャートオブジェクト
+    self.selectNumber = [];//問題作成の選択肢数の配列
+    
     
  
 //-------------------------------------------onClick,emit送信
@@ -79,6 +93,46 @@
             };     
             self.socket.emit('OtoG',data);
             self.vis = 4;
+            self.update();
+        }
+        //問題文作成
+        toCreateQ = function(){
+            self.vis = 5;
+            self.update();
+        }
+        //問題文作成,選択肢の数を決定
+        getSelectNum = function(){
+            var selectNum = document.Q.num.value;//選択肢数
+            for (var i = 0;i<selectNum;i++){
+                self.selectNumber.push({Number:i+1}); 
+            }
+        }
+        //問題文作成,選択肢の項目を設定し、送信
+        sendCreateQ = function(){
+            self.QselectContent = [];
+            for( var i = 0 ;i < parseInt(document.Q.num.value);i++){
+                var content = document.Q.elements['Q'+(i+1)].value;
+                document.Q.elements['Q'+(i+1)].value = "";
+                self.QselectContent[i] = {num:i,content:content};
+            }
+            Kaitou_Data.SN = document.Q.num.value;//選択肢数
+            var Question = document.Q.question.value;//問題文
+            var data = {
+                type:'createQ',
+                SN:Kaitou_Data.SN,
+                Q:Question,//問題文
+                QContent:self.QselectContent//選択肢、選択肢の項目
+            }
+            console.log(data);
+            self.socket.emit('OtoG',data);
+            document.Q.num.value = "";
+            document.Q.question.value ="";
+            self.selectNumber.length = 0;
+            for( var i = 0;i<Kaitou_Data.SN;i++){
+                Kaitou_Data.X[i] = i + 1;
+                Kaitou_Data.Y[i] = 0; 
+            }
+            self.vis = 3;
             self.update();
         }
         //回答形式の選択画面（２ページ目）へ
@@ -122,8 +176,14 @@
             //テキスト回答の受信
             if(data.type == 'text_answer'){
                 console.log(data.Answer);
-                self.textAnswer.push({Answer:data.Answer});
+                self.textAnswer.push({Name:data.Name,Answer:data.Answer});
                 self.update();   
+            }
+            if(data.type == 'createQ_answer'){
+                console.log(data);
+                Kaitou_Check(data);
+                chart(Kaitou_Data); 
+                
             }
         });  
     });
@@ -219,6 +279,17 @@
       .canvas{
           height:250px;
           width:500px;
+      }
+      #Qtext{
+          width:500px;
+      }
+      #selectNum{
+          width:30px;
+          height:50px;
+          font-size:30pt; 
+      }
+      #Answer{
+          width:400px;
       }
   </style>
 </owner>
