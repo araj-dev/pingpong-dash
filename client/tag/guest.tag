@@ -12,6 +12,7 @@
 <div if={ vis == 2}>
     <div id="roomcode">ルームコード</div>
     <div id="select"><p>主催者からの要請をお待ち下さい</p></div>
+    <p onclick={toClose} class="link">退室</p>
 </div>
 <!--3ページ目　選択問題の回答ページ-->
 <div if={ vis == 3}>
@@ -31,6 +32,7 @@
     <div id="roomcode">ルームコード</div>
     <div id="select"><p>主催者からの要請をお待ち下さい</p></div>
     <div><p>最新回答:<span id="index">{Answer}</span></p></div>
+    <p onclick={toClose} class="link">退室</p>
 </div>
 </div>
 <!--スクリプト-->
@@ -76,6 +78,11 @@
                 self.vis=4;
                 self.update();
             }
+            //主催者退室した場合
+            if(data.type == 'close'){
+                alert('主催者が退室しました。本日はありがとうございました。')
+                location.href = 'http://0.0.0.0:3000/';
+            }
         });
     });
 //-----------------------------------------onClick,emit送信
@@ -109,6 +116,9 @@
         self.vis = 5;
         self.update();
      }
+    toClose = function(){
+        location.href = 'http://0.0.0.0:3000/';
+    }
 </script>
 
 

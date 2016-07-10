@@ -15,6 +15,7 @@
         <p onclick={selectNumber} class="link">アンケート</p>
     </form>
     <p onclick={toResult} class="link">テキスト送信</p>
+    <p onclick={toClose} class="link">退室</p>
 </div>
 
 <!--3ページ目　選択問題-->
@@ -92,9 +93,16 @@
                 self.vis = 2;
             }
         }
+        //退室
+        toClose = function(){
+            var data = {
+                type:'close'
+            }
+            self.socket.emit('OtoG',data);
+            location.href = 'http://0.0.0.0:3000/';
+        }
 //-------------------------------------mount,socket.on受信   
     this.on('mount',function(){
-        
         self.socket.on('success',function(roomcode){
             self.roomname = roomcode;
             console.log(self.roomname);
