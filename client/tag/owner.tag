@@ -2,35 +2,35 @@
 <div id="main">
 <!--1ページ目-->
 <div if={ vis == 1}>
-<p>Profile</p>
-<p onclick={toSelect} class="link">Start PingPong</p>
-<p class="link">ログアウト</p>
+    <p>Profile</p>
+    <p onclick={toSelect} class="link">Start PingPong</p>
+    <p class="link">ログアウト</p>
 </div>
 
 <!--2ページ目-->
 <div if={ vis == 2}>
-<p>{roomname}</p>
-<form name="question">
-選択肢の数を記入<input type="text" class="inputText" maxlength="1" name="selectNum" pattern="^[0-9A-Za-z]+$">
-<p onclick={selectNumber} class="link">アンケート</p>
-</form>
-<p onclick={toResult} class="link">テキスト送信</p>
+    <p>{roomname}</p>
+    <form name="question">
+    選択肢の数を記入<input type="text" class="inputText" maxlength="1" name="selectNum" pattern="^[0-9A-Za-z]+$">
+        <p onclick={selectNumber} class="link">アンケート</p>
+    </form>
+    <p onclick={toResult} class="link">テキスト送信</p>
 </div>
 
 <!--3ページ目　選択問題-->
 <div if={ vis == 3}>
-<div id="result"><canvas id="bar" class="canvas"></canvas></div>
-<p onclick={backSelect} class="link">回答を締め切る</p>
+    <div id="result"><canvas id="bar" class="canvas"></canvas></div>
+    <p onclick={backSelect} class="link">回答を締め切る</p>
 </div>
 <!--3ページ目　テキスト問題-->
 <div if={ vis == 4}>
-<div id="result">
-    <ul>
-        <li each={textAnswer}>{Answer}</li>
-    </ul>
-</div>
-<p onclick={backSelect} class="link">回答を締め切る</p>
-</div>
+    <div id="result">
+        <ul>
+            <li each={textAnswer}>{Answer}</li>
+        </ul>
+    </div>
+        <p onclick={backSelect} class="link">回答を締め切る</p>
+    </div>
 </div>
 <!--スクリプト-->
 <script>

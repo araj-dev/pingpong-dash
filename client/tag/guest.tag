@@ -10,27 +10,27 @@
 </div>
 <!--2ページ目-->
 <div if={ vis == 2}>
-<div id="roomcode">ルームコード</div>
-<div id="select"><p>主催者からの要請をお待ち下さい</p></div>
+    <div id="roomcode">ルームコード</div>
+    <div id="select"><p>主催者からの要請をお待ち下さい</p></div>
 </div>
 <!--3ページ目　選択問題の回答ページ-->
 <div if={ vis == 3}>
-<p class="Behavior">選ぶ</p>
-<p each={choice} onclick={toResult_choice} class="link" >{number}</p>
+    <p class="Behavior">選ぶ</p>
+    <p each={choice} onclick={toResult_choice} class="link" >{number}</p>
 </div>
 <!--3ページ目　テキスト問題の回答ページ-->
 <div if={ vis == 4}>
-<p class="Behavior">テキスト回答</p>
-<form name="text">
-<textarea name="answer" id="textAnswer" cols="30" rows="10"></textarea>
-<p class="link" onclick={toResult_text}>送信</p>
-</form>
+    <p class="Behavior">テキスト回答</p>
+    <form name="text">
+        <textarea name="answer" id="textAnswer" cols="30" rows="10"></textarea>
+        <p class="link" onclick={toResult_text}>送信</p>
+    </form>
 </div>
 <!--4ページ目　回答送信後の待ち-->
 <div if={ vis == 5 }>
-<div id="roomcode">ルームコード</div>
-<div id="select"><p>主催者からの要請をお待ち下さい</p></div>
-<div><p>最新回答:<span id="index">{Answer}</span></p></div>
+    <div id="roomcode">ルームコード</div>
+    <div id="select"><p>主催者からの要請をお待ち下さい</p></div>
+    <div><p>最新回答:<span id="index">{Answer}</span></p></div>
 </div>
 </div>
 <!--スクリプト-->
