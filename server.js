@@ -33,7 +33,13 @@ io.on('connection', function (socket) {
 
 //-----主催者用のイベント-------//
   socket.on('makeRoom',function(){
-      var roomname = Math.floor(Math.random()*(9999-1000)+1000).toString();
+
+    //roomnameがかぶらないための処理
+    do {
+    var roomname = Math.floor(Math.random()*(9999-1000)+1000).toString();
+    }while( 0 <= roomnames.indexOf(roomname));
+      console.log(roomname);
+
       socket.roomname = roomname;
       socket.flg = 1 ;
       socket.emit('success',roomname);
@@ -61,10 +67,11 @@ io.on('connection', function (socket) {
       socket.emit('joinResult', "0");
       return;
     }
+
       //ある場合、その配列に自分のsocketを追加する;
       console.log("exist");
       socket.roomname = roomname;
-
+      socket.flg = 0;
       console.log(username);
       if(!username){
         var betaname = Math.floor(Math.random()*(9999-1000)+1000).toString();
@@ -81,13 +88,14 @@ io.on('connection', function (socket) {
       //console.log(rooms[roomname]);
   });
 
-  socket.on('GtoO',function(data){
+    socket.on('GtoO',function(data){
     console.log("GtoO");
     rooms[socket.roomname].emit('GtoO',data);
   });
 
     socket.on('disconnect',function(){
         console.log("ID: "+socket.id.substring(2)+"has disconnected");
+
 
         //参加者カウント用
         if(!rooms[socket.roomname]){
