@@ -41,7 +41,7 @@
     var self = this;
     self.socket = io.connect();
     self.choice =[];
-    self.ndex;
+    self.index;
     self.vis = 1;
     
     
@@ -73,6 +73,7 @@
             type:'text_answer',
             Answer:Answer,
         }
+        console.log(data);
         self.socket.emit("GtoO",data);
         document.text.answer.value ="";
         self.vis = 5;

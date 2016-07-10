@@ -1,11 +1,10 @@
 <owner>
 <div id="main">
+
 <div if={ vis == 1}>
 <p>Profile</p>
 <p onclick={toSelect} class="link">Start PingPong</p>
 <p class="link">ログアウト</p>
-
-
 </div>
 
 <div if={ vis == 2}>
@@ -15,17 +14,20 @@
 <p onclick={selectNumber} class="link">アンケート</p>
 </form>
 <p onclick={toResult} class="link">テキスト送信</p>
-
-
 </div>
 
+
+
 <div if={ vis == 3}>
-<div id="result_canvas">
-<canvas id="bar" class="canvas"></canvas></div>
+<div id="result"><canvas id="bar" class="canvas"></canvas></div>
 <p onclick={backSelect} class="link">回答を締め切る</p>
 </div>
 <div if={ vis == 4}>
-<div id="result_text"></div>
+<div id="result">
+    <ul>
+        <li each={textAnswer}>{Answer}</li>
+    </ul>
+</div>
 <p onclick={backSelect} class="link">回答を締め切る</p>
 </div>
 
@@ -37,8 +39,9 @@
     var self = this;
     self.socket = io.connect();
     this.vis = 1;
-    var X= [];
-    var Y = [];
+    var X= [];//チャートのラベル
+    var Y = [];//チャートのラベルに対する回答者数
+    self.textAnswer = [];//テキスト問題の回答の配列
 
     var Kaitou_Data = {
         X:X,
@@ -61,22 +64,19 @@
                 
             Kaitou_Data.guest = Kaitou_Data.guest + data;
                 console.log(Kaitou_Data.guest);
-        });
-
-        
-        
+        }); 
         self.socket.on('GtoO',function(data){
-            Kaitou_Check(data);
+            console.log(data);
             if( data.type == 'select_answer'){
-                chart(Kaitou_Data);
-                            
+                Kaitou_Check(data);
+                chart(Kaitou_Data);                
             }
             if(data.type == 'text_answer'){
-                console.log(data);
-                document.getElementById("result_text").appendChild(data.Answer);
+                console.log(data.Answer);
+                self.textAnswer.push({Answer:data.Answer});
+                self.update();   
             }
-        });
-        
+        });  
     });
 
   
@@ -113,12 +113,15 @@
         }
         backSelect = function(){
             if( Kaitou_Data.SN == 0){
+                self.textAnswer.length = 0;
                 self.vis = 2;
             }else if(Kaitou_Data.SN > 0){
                 Date_Zero(Kaitou_Data);
                 chart(Kaitou_Data);
+                Kaitou_Data.SN = 0;
                 self.vis = 2;
             }
+            
             
             
             
@@ -211,11 +214,7 @@
     #main{
     width:500px;
     }
-    #result_canvas{
-    border:1px solid green;
-    height:250px;
-    }
-    #result_text{
+    #result{
     border:1px solid green;
     height:250px;
     }
