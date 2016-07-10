@@ -9,7 +9,7 @@
 
 <!--2ページ目-->
 <div if={ vis == 2}>
-    <p>{roomname}</p>
+    <p>部屋番号：{roomname}&nbsp;&nbsp;参加人数：{guestNumber}</p>
     <form name="question">
     選択肢の数を記入<input type="text" class="inputText" maxlength="1" name="selectNum" pattern="^[0-9A-Za-z]+$">
         <p onclick={selectNumber} class="link">アンケート</p>
@@ -37,6 +37,7 @@
     var self = this;
     self.socket = io.connect();
     this.vis = 1;
+    self.guestNumber = 0;
     var X= [];//チャートのラベル
     var Y = [];//チャートのラベルに対する回答者数
     self.textAnswer = [];//テキスト問題の回答の配列
@@ -99,8 +100,10 @@
             console.log(self.roomname);
             self.update();
         });
-            self.socket.on('count',function(data){
+        self.socket.on('count',function(data){
             Kaitou_Data.guest = Kaitou_Data.guest + data;
+            self.guestNumber = Kaitou_Data.guest;
+            self.update(); 
         }); 
         self.socket.on('GtoO',function(data){
             //選択回答の受信

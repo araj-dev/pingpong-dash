@@ -56,6 +56,7 @@
         });
         self.socket.on('count',function(data){
             console.log(data);
+            console.log("A");
         });
         self.socket.on('OtoG',function(data){
             //選択肢問題受信
