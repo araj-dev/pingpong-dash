@@ -96,13 +96,26 @@ io.on('connection', function (socket) {
     socket.on('disconnect',function(){
         console.log("ID: "+socket.id.substring(2)+"has disconnected");
 
-
         //参加者カウント用
         if(!rooms[socket.roomname]){
             return;
         }
         rooms[socket.roomname].emit('count', -1);
-        console.log(socket);
+        //console.log(socket);
+
+        //オーナーdisconnectの時ルーム情報を削除
+        if(socket.flg == 1){
+          //console.log(socket.adapter.rooms);
+          //console.log(socket.roomname);
+          var roomIndex = roomnames.indexOf(socket.roomname);
+          roomnames.splice(roomIndex, 1);
+          delete rooms[socket.roomname];
+          delete socket.roomname;
+
+          // console.log(socket.roomname);
+          // console.log(roomnames);
+          // console.log(rooms);
+        }
     });
 });
 
