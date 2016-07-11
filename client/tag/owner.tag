@@ -12,7 +12,7 @@
     <p>部屋番号：{roomname}&nbsp;&nbsp;参加人数：{guestNumber}</p>
     <form name="question">
     選択肢の数を記入<input type="text" class="inputText" maxlength="1" name="selectNum" pattern="^[0-9A-Za-z]+$">
-        <p onclick={selectNumber} class="link">アンケート</p>
+        <p onclick={choiceNumber} class="link">アンケート</p>
     </form>
     <p onclick={toResult} class="link">テキスト送信</p>
     <p onclick={toCreateQ} class="link">問題文作成</p>
@@ -70,7 +70,7 @@
           self.vis = 2;
         }
         //選択肢問題の回答要請
-        selectNumber = function(){
+        choiceNumber = function(){
             Kaitou_Data.SN = document.question.selectNum.value;
             var data = {
                 type:'select',
