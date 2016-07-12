@@ -185,6 +185,7 @@
             self.socket.emit('OtoG',data);
             document.Q.num.value = "";
             document.Q.question.value ="";
+            document.Q.Time.value = "";
             self.selectNumber.length = 0;
             for( var i = 0;i<Kaitou_Data.SN;i++){
                 Kaitou_Data.X[i] = i + 1;
