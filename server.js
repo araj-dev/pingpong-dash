@@ -33,7 +33,13 @@ io.on('connection', function (socket) {
 
 //-----主催者用のイベント-------//
   socket.on('makeRoom',function(){
-      var roomname = Math.floor(Math.random()*(9999-1000)+1000).toString();
+
+    //roomnameがかぶらないための処理
+    do {
+    var roomname = Math.floor(Math.random()*(9999-1000)+1000).toString();
+    }while( 0 <= roomnames.indexOf(roomname));
+      console.log(roomname);
+
       socket.roomname = roomname;
       socket.flg = 1 ;
       socket.emit('success',roomname);
@@ -61,18 +67,19 @@ io.on('connection', function (socket) {
       socket.emit('joinResult', "0");
       return;
     }
+
       //ある場合、その配列に自分のsocketを追加する;
       console.log("exist");
       socket.roomname = roomname;
-
+      socket.flg = 0;
       console.log(username);
       if(!username){
         var betaname = Math.floor(Math.random()*(9999-1000)+1000).toString();
-        console.log(betaname);
         socket.username = 'guest'+betaname;
+      } else {
+          socket.username = username;
       }
-      socket.username = username;
-
+      console.log(socket.username);
       socket.emit('joinResult', "1");
       socket.join(roomname);
 
@@ -81,7 +88,7 @@ io.on('connection', function (socket) {
       //console.log(rooms[roomname]);
   });
 
-  socket.on('GtoO',function(data){
+    socket.on('GtoO',function(data){
     console.log("GtoO");
     rooms[socket.roomname].emit('GtoO',data);
   });
@@ -94,6 +101,21 @@ io.on('connection', function (socket) {
             return;
         }
         rooms[socket.roomname].emit('count', -1);
+        //console.log(socket);
+
+        //オーナーdisconnectの時ルーム情報を削除
+        if(socket.flg == 1){
+          //console.log(socket.adapter.rooms);
+          //console.log(socket.roomname);
+          var roomIndex = roomnames.indexOf(socket.roomname);
+          roomnames.splice(roomIndex, 1);
+          delete rooms[socket.roomname];
+          delete socket.roomname;
+
+          // console.log(socket.roomname);
+          // console.log(roomnames);
+          // console.log(rooms);
+        }
     });
 });
 

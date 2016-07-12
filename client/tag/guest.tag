@@ -53,7 +53,7 @@
     var guestdata = {};//ゲストデータ
     self.answerFinish = false;//回答済みか判定
     var setAnswerTime = 0;
-    
+
 //----------------------------------------mount,socket.on受信
     this.on('mount',function(){
         self.socket.on('joinResult',function(data){
@@ -82,7 +82,7 @@
                 self.answerFinish = false;//未回答へ変更
                 self.vis=3;
                 self.update();
-            } 
+            }
             //テキスト問題受信
             if(data.type == 'text'){
                 self.title = "テキスト入力";
@@ -127,14 +127,14 @@
                 Answer = "未回答";
                 self.answerFinish　=true;//回答済みに変更
                 self.update();
-                
+
             }
             //主催者退室した場合
             if(data.type == 'close'){
                 alert('主催者が退室しました。本日はありがとうございました。')
                 location.href = 'http://0.0.0.0:3000/';
             }
-            
+
         });
     });
 //-----------------------------------------onClick,emit送信
@@ -147,7 +147,7 @@
     toResult_choice = function(event){
         var item = event.item;
         Answer = self.choice.indexOf(item) + 1;
-        data = { 
+        data = {
             type:'select_answer',
             kaitou:Answer,
         };
@@ -192,7 +192,7 @@
         location.href = 'http://0.0.0.0:3000/';
     }
     //------------------------------------------function
-    
+
 </script>
 
 
@@ -200,7 +200,7 @@
   <style scoped>
     .link{
         cursor:pointer;
-        background:green;
+        background:#00a7ea;
         color:white;
         padding:10px;
         width:
@@ -219,8 +219,8 @@
       }
       #select{
           height:250px;
-          border-top:1px solid green;
-          border-bottom:1px solid green;
+          border-top:1px solid #00a7ea;
+          border-bottom:1px solid #00a7ea;
           margin-top:20px;
           padding:20px;
           margin-bottom:30px;
