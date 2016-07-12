@@ -31,7 +31,8 @@
 <div if={ vis == 5}>
     <p class="Behavior">選ぶ</p>
     <p>問題；{Q}</p>
-    <p each={choice} onclick={toRexult_createQ} class="link" >{number}-{content}</p>
+    <p id="time"></p>
+    <p each={choice} onclick={toResult_createQ} class="link" >{number}-{content}</p>
 </div>
 <!--4ページ目　回答送信後の待ち-->
 <div if={ vis == 6 }>
@@ -50,6 +51,8 @@
     self.vis = 1;
     self.Answer;//回答
     var guestdata = {};//ゲストデータ
+    self.answerFinish = false;//回答済みか判定
+    var setAnswerTime = 0;
     
 //----------------------------------------mount,socket.on受信
     this.on('mount',function(){
@@ -76,18 +79,35 @@
                 }
                 self.title = "選ぶ";
                 console.log(self.choice);
+                self.answerFinish = false;//未回答へ変更
                 self.vis=3;
                 self.update();
             } 
             //テキスト問題受信
             if(data.type == 'text'){
                 self.title = "テキスト入力";
+                self.answerFinish = false;//未回答へ変更
                 self.vis=4;
                 self.update();
             }
             //問題文作成問題受信
             if(data.type == 'createQ'){
                 self.choice.length = 0;
+                console.log(data.Time);
+                setAnswerTime = data.Time;
+                count = data.Time;
+                timerID = setInterval(function(){
+                    document.getElementById("time").innerHTML = count;
+                    count--;
+                    if (count < 0){
+                        alert("Time UP!");
+                        self.vis = 6;
+                        Answer = "未回答";
+                        self.answerFinish　=true;//回答済みに変更
+                        clearInterval(timerID);
+                        self.update();
+                    }
+                },1000);
                 self.Q = data.Q;//問題文
                 for( var i = 0; i < data.SN; i++){
                     self.choice[i] = {
@@ -97,8 +117,17 @@
                 }
                 self.title = "選ぶ";
                 console.log(self.choice);
+                self.answerFinish = false;//未回答へ変更
                 self.vis=5;
                 self.update();
+            }
+            //未回答だが回答締め切りされた場合
+            if(data.type == 'deadline'){
+                self.vis = 6;
+                Answer = "未回答";
+                self.answerFinish　=true;//回答済みに変更
+                self.update();
+                
             }
             //主催者退室した場合
             if(data.type == 'close'){
@@ -123,6 +152,7 @@
             kaitou:Answer,
         };
         self.socket.emit('GtoO',data);
+        self.answerFinish　=true;//回答済みに変更
         self.vis = 6;
         self.update();
     }
@@ -136,24 +166,33 @@
         }
         self.socket.emit("GtoO",data);
         document.text.answer.value ="";
+        self.answerFinish　=true;//回答済みに変更
         self.vis = 6;
         self.update();
      }
-    toRexult_createQ = function(){
+    //作成問題の回答
+    toResult_createQ = function(){
         var item = event.item;
         Answer = self.choice.indexOf(item) + 1;
+        answerTime = setAnswerTime - count;
         data = {
             type:'createQ_answer',
-            kaitou:Answer
+            Name:guestdata.username,
+            kaitou:Answer,
+            zikan:answerTime
         }
         console.log(data);
         self.socket.emit('GtoO',data);
+        self.answerFinish　=true;//回答済みに変更
+        clearInterval(timerID);
         self.vis = 6;
         self.update();
     }
     toClose = function(){
         location.href = 'http://0.0.0.0:3000/';
     }
+    //------------------------------------------function
+    
 </script>
 
 
