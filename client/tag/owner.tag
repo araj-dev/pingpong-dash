@@ -61,7 +61,7 @@
             <td>{Name}</td>
             <td>{Correct}問</td>
             <td>{Time}秒</td>
-            
+
         </tr>
     </table>
 </div>
@@ -106,9 +106,9 @@
     self.answerNum = 0;//正解番号
     self.finishedAnswer = 0;//回答者数
     self.rankData = [];//ランキング表データ
-    
-    
- 
+
+
+
 //-------------------------------------------onClick,emit送信
         toSelect = function(){
           self.socket.emit('makeRoom');
@@ -120,13 +120,13 @@
             var data = {
                 type:'select',
                 SN:Kaitou_Data.SN
-            };     
+            };
             console.log(Kaitou_Data.SN);
             self.socket.emit('OtoG',data);
             document.question.selectNum.value ="";
             for( var i = 0;i<Kaitou_Data.SN;i++){
                 Kaitou_Data.X[i] = i + 1;
-                Kaitou_Data.Y[i] = 0; 
+                Kaitou_Data.Y[i] = 0;
             }
             self.vis = 3;
             self.update();
@@ -135,7 +135,7 @@
         toResult = function(){
             var data = {
                 type:'text',
-            };     
+            };
             self.socket.emit('OtoG',data);
             self.vis = 4;
             self.update();
@@ -149,7 +149,7 @@
         getSelectNum = function(){
             var selectNum = document.Q.num.value;//選択肢数
             for (var i = 0;i<selectNum;i++){
-                self.selectNumber.push({Number:i+1}); 
+                self.selectNumber.push({Number:i+1});
             }
         }
         //ラジオボタンのチェック判断で正解の取得
@@ -188,7 +188,7 @@
             self.selectNumber.length = 0;
             for( var i = 0;i<Kaitou_Data.SN;i++){
                 Kaitou_Data.X[i] = i + 1;
-                Kaitou_Data.Y[i] = 0; 
+                Kaitou_Data.Y[i] = 0;
             }
             self.vis = 5;
             self.update();
@@ -226,7 +226,7 @@
             self.socket.emit('OtoG',data);
             location.href = 'http://0.0.0.0:3000/';
         }
-//-------------------------------------mount,socket.on受信   
+//-------------------------------------mount,socket.on受信
     this.on('mount',function(){
         self.socket.on('success',function(roomcode){
             self.roomname = roomcode;
@@ -236,25 +236,25 @@
         self.socket.on('count',function(data){
             Kaitou_Data.guest = Kaitou_Data.guest + data;
             self.guestNumber = Kaitou_Data.guest;
-            self.update(); 
-        }); 
+            self.update();
+        });
         self.socket.on('GtoO',function(data){
             //選択回答の受信
             if( data.type == 'select_answer'){
                 Kaitou_Check(data);
-                chart(Kaitou_Data); 
+                chart(Kaitou_Data);
             }
             //テキスト回答の受信
             if(data.type == 'text_answer'){
                 console.log(data.Answer);
-                self.textAnswer.push({Name:data.Name,Answer:data.Answer});   
+                self.textAnswer.push({Name:data.Name,Answer:data.Answer});
             }
             //作成問題の回答受信
             if(data.type == 'createQ_answer'){
-                
+
                 console.log(data);
                 Kaitou_Check(data);
-                chart(Kaitou_Data); 
+                chart(Kaitou_Data);
                 var Correct = 0;//正解数
                 if(data.kaitou == self.answerNum){
                     Correct = Correct + 1;//回答と正解番号が一致したら正解数をプラス1
@@ -267,9 +267,9 @@
                     Time:data.zikan,//回答時間
                     Correct:Correct//正解数
                     }
-                
+
                 self.rankData.push(AnswerData);
-                
+
                 self.rankData.sort(//正解数、回答時間で並べ替え
                         function(a,b){
                                 var aCorrect = a["Correct"];
@@ -286,7 +286,7 @@
                 if(self.rankData.length > 1){
                     var num = 1;
                     for( var i = 0; i < self.rankData.length;i++){
-                        
+
                         if(self.rankData[0] == self.rankData[i]){
                             self.rankData[0].Rank = num;
                         }
@@ -301,22 +301,22 @@
                     }
                 }
                 console.log(self.rankData);
-                
+
             }
             //回答者数 / 参加人数
             self.finishedAnswer = self.finishedAnswer + 1;
             self.update();
-        });  
+        });
     });
-  //----------------------------------------------------function 
+  //----------------------------------------------------function
         //チャートのラベル、回答数リセット
         function Date_Zero(obj){
             obj.X.length = 0;
             obj.Y.length = 0;
-        }   
+        }
         //チャート、選択肢ごとの回答数のカウント
         function Kaitou_Check(data2){
-                
+
                 if ( data2.kaitou){
                     Kaitou_Data.Y[data2.kaitou-1] = Kaitou_Data.Y[data2.kaitou-1] + 1;
                 }
@@ -373,8 +373,8 @@
 </script>
  <!-- style -->
   <style scoped>
-    p { 
-        background:green;
+    p {
+        background:#00a7ea;
         color:white;
         padding:10px;
       }
@@ -389,7 +389,7 @@
           width:500px;
       }
       #result{
-          border:1px solid green;
+          border:1px solid #00a7ea;
           height:250px;
       }
       .inputText{
@@ -407,7 +407,7 @@
       #selectNum{
           width:30px;
           height:50px;
-          font-size:30pt; 
+          font-size:30pt;
       }
       #Answer{
           width:400px;
