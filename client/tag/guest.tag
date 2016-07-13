@@ -132,7 +132,7 @@
             //主催者退室した場合
             if(data.type == 'close'){
                 alert('主催者が退室しました。本日はありがとうございました。')
-                location.href = 'http://0.0.0.0:3000/';
+                location.href = location.origin;
             }
 
         });
@@ -189,7 +189,7 @@
         self.update();
     }
     toClose = function(){
-        location.href = 'http://0.0.0.0:3000/';
+        location.href = location.origin;
     }
     //------------------------------------------function
 

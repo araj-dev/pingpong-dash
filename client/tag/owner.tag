@@ -225,7 +225,7 @@
                 type:'close'
             }
             self.socket.emit('OtoG',data);
-            location.href = 'http://0.0.0.0:3000/';
+            location.href = location.origin;
         }
 //-------------------------------------mount,socket.on受信
     this.on('mount',function(){
