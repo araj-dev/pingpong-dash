@@ -2,17 +2,17 @@
 <div id="main">
 <!--1ページ目-->
 <div if={ vis == 1}>
-    <p>Profile</p>
-    <p onclick={toSelect} class="link">Start PingPong</p>
+    <p id="roomcode">ようこそ！</p>
+    <p onclick={toSelect} class="link">Start G's Rally</p>
     <p class="link">ログアウト</p>
 </div>
 
 <!--2ページ目-->
 <div if={ vis == 2}>
-    <p>部屋番号：{roomname}&nbsp;&nbsp;参加人数：{guestNumber}</p>
+    <p id="roomcode">部屋番号：{roomname}&nbsp;&nbsp;参加人数：{guestNumber}</p>
     <form name="question">
-    選択肢の数を記入<input type="text" class="inputText" maxlength="1" name="selectNum" pattern="^[0-9A-Za-z]+$">
-        <p onclick={choiceNumber} class="link">アンケート</p>
+    
+        <p>選択肢の数を記入<input type="text" class="inputText" maxlength="1" name="selectNum" pattern="^[0-9A-Za-z]+$"><span onclick={choiceNumber} class="link">アンケート</span></p>
     </form>
     <p onclick={toResult} class="link">テキスト送信</p>
     <p onclick={toCreateQ} class="link">問題文作成</p>
@@ -30,12 +30,12 @@
     <div id="result">
         <table>
         <tr>
-            <th>回答者</th>
-            <th>回答</th>
+            <th class="first">回答者</th>
+            <th class="second">回答</th>
         </tr>
         <tr each={textAnswer}>
-            <td>{Name}</td>
-            <td>{Answer}</td>
+            <td class="first">{Name}</td>
+            <td class="second">{Answer}</td>
         </tr>
     </table>
     </div>
@@ -51,16 +51,16 @@
         <p class="link">{finishedAnswer}/{guestNumber}</p>
                 <table>
         <tr>
-            <th>順位</th>
-            <th>回答者</th>
-            <th>回答時間</th>
-            <th>正解数</th>
+            <th class="ichi">順位</th>
+            <th class="ni">回答者</th>
+            <th class="san">正解数</th>
+            <th class="yon">回答時間</th>
         </tr>
         <tr each={rankData}>
-            <td>{Rank}</td>
-            <td>{Name}</td>
-            <td>{Correct}問</td>
-            <td>{Time}秒</td>
+            <td class="ichi">{Rank}</td>
+            <td class="ni">{Name}</td>
+            <td class="san">{Correct}問</td>
+            <td class="yon">{Time}秒</td>
 
         </tr>
     </table>
@@ -69,13 +69,13 @@
 <div if={ vis == 6}>
   <form name="Q" id="Q">
     問題文作成<input type="text" id="Qtext" name="question">
-    選択肢の数を入力<input type="text" id="selectNum" name="num">
-    <p onclick={getSelectNum} class="link">選択肢数決定</p>
+    選択肢の数を入力
+    <p><input type="text" class="inputText" name="num"><span onclick={getSelectNum} class="link">選択肢数決定</span></p>
     <table>
         <tr>
-            <th>番号</th>
-            <th>項目</th>
-            <th>正解</th>
+            <th class="one">番号</th>
+            <th class="two">項目</th>
+            <th class="three">正解</th>
         </tr>
         <tr each={selectNumber}>
             <td>{Number}</td>
@@ -83,7 +83,7 @@
             <td><input type="radio" name="trueORfalse" onclick={trueORfalse} id="R{Number}"></td>
         </tr>
     </table>
-    制限時間を入力<input type="text" id="Time" name="Time">分
+    制限時間を入力<input type="text" id="Time" name="Time" class="inputText">分
     <p onclick={sendCreateQ} class="link">送信</p>
   </form>
 </div>
@@ -379,6 +379,11 @@
         color:white;
         padding:10px;
       }
+      #roomcode{
+          background:black;
+          color:white;
+          padding:10px;
+      }
       .link{
           cursor:pointer;
       }
@@ -394,9 +399,10 @@
           height:250px;
       }
       .inputText{
-          width:30px;
-          height:50px;
-          font-size:30pt;
+          width:20px;
+          height:30px;
+          font-size:20pt;
+          color:black;
       }
       .canvas{
           height:250px;
@@ -412,6 +418,41 @@
       }
       #Answer{
           width:400px;
+      }
+      .first{
+          width:100px;
+          text-align:left;
+      }
+      .second{
+          text-align:left;
+      }
+      .one{
+          width:100px;
+          text-align:left;
+      }
+      .two{
+          width:300px;
+          text-align:left;
+      }
+      .three{
+          width:50px;
+          text-align:left;
+      }
+      .ichi{
+          width:100px;
+          text-align:left;
+      }
+      .ni{
+          width:100px;
+          text-align:left;
+      }
+      .san{
+          width:100px;
+          text-align:left;
+      }
+      .yon{
+          width:100px;
+          text-align:left;
       }
   </style>
 </owner>

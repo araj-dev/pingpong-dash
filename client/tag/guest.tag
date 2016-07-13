@@ -23,7 +23,7 @@
 <div if={ vis == 4}>
     <p class="Behavior">テキスト回答</p>
     <form name="text">
-        <textarea name="answer" id="textAnswer" cols="30" rows="10"></textarea>
+        <textarea name="answer" id="textAnswer" cols="50" rows="10"></textarea>
         <p class="link" onclick={toResult_text}>送信</p>
     </form>
 </div>
@@ -31,7 +31,7 @@
 <div if={ vis == 5}>
     <p class="Behavior">選ぶ</p>
     <p>問題；{Q}</p>
-    <p id="time"></p>
+    <p id="time">制限時間</p>
     <p each={choice} onclick={toResult_createQ} class="link" >{number}-{content}</p>
 </div>
 <!--4ページ目　回答送信後の待ち-->
