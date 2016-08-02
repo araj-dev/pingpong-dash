@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head lang="ja">
+    <title>test C3.js</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <meta charset="UTF-8">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.js"></script>
+    <style type="text/css">
+        @charset "UTF-8";
+/*basic.css*/
+
+/*default
+-----------------------------------*/
+body,h1, h2, h3, h4, h5, h6,
+p, pre, blockquote,form,input,textarea,fieldset,
+ul, ol, dl, li,dt,dd,address,caption {
+    margin: 0;
+    padding: 0;
+}
+
+table{
+	border-collapse:collapse;
+	}
+p{
+	margin-bottom:1em;
+	}
+	
+body{
+	color: #333;
+	text-align:left;
+	font-size:75%;
+	line-height:1.5;
+	font-family:"ヒラギノ角ゴ Pro W3","Hiragino Kaku Gothic Pro","メイリオ","ＭＳ Ｐゴシック",sans-serif;
+	background:#fff;
+}
+	
+
+/*font size
+-----------------------------------*/
+.txt-10px{	font-size:84%;	}/*10px*/
+.txt-11px{	font-size:92%;	}/*11px*/
+.txt-14px{	font-size:117%;	}/*14px*/
+.txt-16px{	font-size:133%;	}/*16px*/
+.txt-18px{	font-size:150%;	}/*18px*/
+.txt-20px{	font-size:167%;	}/*20px*/
+.txt-22px{	font-size:183%;	}/*22px*/
+.txt-24px{	font-size:200%;	}/*24px*/
+
+.red{	color:#F00;	}
+
+/*clearfixハック
+-----------------------------------*/
+.clearfix:after {
+	content: ""; 
+	display: block; 
+	clear: both; 
+}
+.clearfix {display: inline-block;}
+/* Hides from IE-mac ¥*/
+* html .clearfix {height: 1%;}
+.clearfix {display: block;}
+/* End hide from IE-mac */
+
+
+
+h1{
+	margin-bottom:30px;
+	padding:5px;
+	font-size:117%;
+	text-align:center;
+	color:#fff;
+	background-color:#000;
+}
+#content{
+	padding:0 20px;
+}
+h2{
+	margin-bottom:15px;
+	padding:3px 0 3px 10px;
+	font-size:117%;
+	line-height:1;
+	border-left:3px #000 solid;
+}
+
+#table{
+	width: 90%;
+	border-collapse: collapse;
+}
+#table td,
+#table th{
+	padding: 5px;
+	border: 1px solid #ccc;
+}
+#table th{
+	font-weight: bold;
+}
+#table thead th{
+	background:#e6e6e6;
+}
+        
+@media only screen and (max-width:800px){
+	#table{
+		display: block;
+	}
+		#table thead{
+			display: none;
+		}
+		#table tbody{
+			display: block;
+		}
+			#table tbody tr{
+				display: block;
+				margin-bottom: 1.5em;
+			}
+			#table tbody th,
+			#table tbody td{
+				display: list-item;
+				border: none;
+			}
+			#table tbody th{
+				margin-bottom: 5px;
+				list-style-type: none;
+				color: #fff;
+				background: #000;
+			}
+			#table tbody td{
+				margin-left: 20px;
+				padding: 0;
+			}
+			#table tbody td:nth-of-type(1):before { content: "[品詞]"; }
+			#table tbody td:nth-of-type(2):before { content: "[意味]"; }
+			#table tbody td:nth-of-type(3):before { content: "[用例]"; }
+}
+
+
+    </style>
+        
+
+
+</head>
+
+<body>
+	<table id="table">
+		<thead>
+			<tr>
+				<th>単語</th>
+				<th>品詞</th>
+				<th>意味</th>
+				<th>用例</th>
+			</tr>
+		</thead>
+		<tbody>
+		<tr>
+			<th>responsive</th>
+			<td>形容詞</td>
+			<td>すぐ応答[反応]する，敏感な</td>
+			<td>We must be responsive to the needs of society.</td>
+		</tr>
+		<tr>
+			<th>adaptive</th>
+			<td>形容詞</td>
+			<td>適応性の(ある)</td>
+			<td>social facilitation is an adaptive condition</td>
+		</tr>
+		<tr>
+			<th>elastic</th>
+			<td>形容詞</td>
+			<td>弾力のある，伸縮自在の</td>
+			<td>Rubber is very elastic.</td>
+		</tr>
+		<tr>
+			<th>liquid</th>
+			<td>形容詞</td>
+			<td>液体の，液状の; 流動体の.</td>
+			<td>to dilute a liquid with another liquid</td>
+		</tr>
+		<tr>
+			<th>fixed</th>
+			<td>形容詞</td>
+			<td>固定した，据え付けの.</td>
+			<td>a fixed idea</td>
+		</tr>
+		</tbody>
+	</table>
+	
+</div><!--/#content-->
+</body>
+</html>
