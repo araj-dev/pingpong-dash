@@ -111,13 +111,14 @@
     this.on('mount',function(){
         self.socket.on('joinResult',function(data){
             //ルームコード確認
-            if( data == 0){
+            if( data.result == 0){
               alert("番号が違います");
             }
-            if( data == 1){
+            if( data.result == 1){
               self.vis = 2;
               self.update();
             }
+            console.log(data.name);
         });
         self.socket.on('count',function(data){
             console.log(data);
