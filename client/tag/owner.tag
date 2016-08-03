@@ -182,7 +182,7 @@
 </div>
 <!--URL表示ページ-->
 <div if={ vis == 7}  class="top padding-top">
-    <div class="URL content_center">部屋番号：{roomname}<br>http://pingpong-<br>dash.herokuapp.<br>com/guest.html</div>
+    <div class="URL content_center">http://pingpong-<br>dash.herokuapp.<br>com/guest.html<br><span id="roomnum">部屋番号：</span>{roomname} <img src="./img/QR_Code.jpg"></div>
 
 </div>
 
@@ -882,7 +882,12 @@
           font-weight: bold;
           color:black;
           font-family: 'Raleway', sans-serif;
-          
+          line-height:95%;
+      }
+      .URL img{
+          vertical-align: bottom;
+          width: 250px;
+          height: auto;
       }
       .function{
           display:inline-block;
@@ -996,6 +1001,10 @@
           text-align: left;
           padding-left:30px;
           
+      }
+/*      部屋番号用*/
+      #roomnum{
+          font-size:50px;
       }
 /*      部屋作成ボタンの色変更*/
 /*選択肢自由問題作成
