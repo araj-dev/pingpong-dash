@@ -1,7 +1,7 @@
 <owner>
 <div id="hanbaga_menu">
             <ul class="munu_han">
-              <li class="menuhan" onclick={toFunction}>機能</li>
+              <li class="menuhan" onclick={toFunction}>基本機能</li>
               <li class="menuhan" onclick={toCustom}>カスタム</li>
               <li class="menuhan" onclick={toURL}>URL</li>
           </ul>    
@@ -10,7 +10,7 @@
         <header>
          <i class="fa fa-bars hanbaga" id="show" if={vis==2 ||vis==2.1 ||vis==3 ||vis==4 ||vis==5 ||vis==6||vis==7} onclick={hanbaga}></i>
           <ul class="menu_ul2" if={vis==2 ||vis==2.1 ||vis==3 ||vis==4 ||vis==5 ||vis==6||vis==7}>
-              <li class="menu2" onclick={toFunction}>機能</li>
+              <li class="menu2" onclick={toFunction}>基本機能</li>
               <li class="menu2" onclick={toCustom}>カスタム</li>
               <li class="menu2" onclick={toURL}>URL</li>
           </ul>   
@@ -26,7 +26,7 @@
 <div id="body">
 <div if={ vis == 1}  class="top padding-top">
     <div class="entry content_center">CreateRoom!<br><span class="button-dropdown" data-buttons="dropdown">
-    <a  onclick={toSelect}  class="button button-rounded button-flat-action">部屋作成 </a>
+    <a  onclick={toSelect}  class="button button-rounded button-flat-action pointer">部屋作成 </a>
     </span></div>
 
 </div>
@@ -39,7 +39,7 @@
      <li class="room_number"><span>部屋番号:</span>{roomname}</li>
      <li class="fa fa-user icon_user gestNumber_text" aria-hidden="true">{guestNumber}</li>
       <li class="function">   <span class="button-dropdown" data-buttons="dropdown">
-              <a class="button button-rounded button-flat-primary">選択肢     ⬇︎</a>
+              <a class="button button-rounded button-flat-primary pointer">選択肢     ⬇︎</a>
 
               <ul class="button-dropdown-menu-below" style="display: none;" id="choiceNumber_ul">
                 <li onclick={getNum}><a href="#">２つ</a></li>
@@ -47,23 +47,23 @@
                 <li onclick={getNum}><a href="#">４つ</a></li>
                 <li onclick={getNum}><a href="#">５つ</a></li>
                 <li onclick={getNum}><a href="#">６つ</a></li>
-                <li class="button-dropdown-divider"><a href="#">Option 3</a></li>
               </ul>
     </span></li>
       <li class="function"><span class="button-dropdown" data-buttons="dropdown">
-  <a onclick={toText} class="button button-rounded button-flat-action"> テキスト </a>
+  <a onclick={toText} class="button button-rounded button-flat-action pointer"> テキスト </a>
 </span></li>
+ <li><a onclick={toClose} class="button button-border margin_back pointer">退室</a></li>
   </ul>
 </div>
 <!--4ページ目　問題文作成画面-->
-<div if={ vis == 6} class="top padding-top">
- <div id="result">
- <table>
+<div if={ vis == 6} class="top padding-top table_width">
+ <div id="result_table">
+ <table id="Create_table">
      <tr>
-         <td colspan="3">問題文作成</td>
+         <td colspan="3" id="table_title">文章作成</td>
      </tr>
      <tr>
-         <td colspan="3"><input type="text" id="Qtext" name="question"></td>    
+         <td colspan="3"><textarea type="text" id="Qtext" name="question" rows="3"></textarea>    
      </tr>
      <tr>
          <th>番号</th>
@@ -89,8 +89,10 @@
          <th><input type="radio" name="trueORfalse" onclick={trueORfalse} id="R4"></th>
      </tr>
  </table>
- 制限時間を入力<input type="text" id="Time" name="Time" class="inputText">分
-    <p onclick={sendCreateQ} class="link">送信</p>
+ <p id="limit">制限時間を入力<input type="text" id="Time" name="Time" class="inputText">分</p>
+    <span class="button-dropdown" data-buttons="dropdown">
+  <a  onclick={sendCreateQ} class="button button-rounded button-flat-action pointer color">送信</a>
+</span>
     
     
 <!--選択肢選択できる問題作成
@@ -123,18 +125,18 @@
     <div id="result">
        <div id="chart"></div>
     </div>
-      <i onclick={toPieChart} class="fa fa-pie-chart barpie" aria-hidden="true"></i>
-      <i onclick={tobarChart} class="fa fa-bar-chart barpie" aria-hidden="true"></i><br>
+      <i onclick={toPieChart} class="fa fa-pie-chart barpie  pointer" aria-hidden="true"></i>
+      <i onclick={tobarChart} class="fa fa-bar-chart barpie  pointer" aria-hidden="true"></i><i class="fa fa-camera-retro pointer" aria-hidden="true" onclick={shot2} id="shot"></i><br>
                <span class="button-dropdown" data-buttons="dropdown">
-               <a  onclick={backSelect} class="button button-rounded button-flat-primary">回答を締め切る</a>
+               <a  onclick={backSelect} class="button button-rounded button-flat-primary hover pointer" data-hover="回答を締め切る"><span class="front">回答者数：{finishedAnswer}/{guestNumber}</span></a>
                </span>
-        <p class="link">{finishedAnswer}/{guestNumber}</p>
-        <a onclick={shot2} id="shot">テストダウンロード</a><br>
+<!--        <a onclick={shot2} id="shot">テストダウンロード</a><br>-->
     </div>
 <!--3ページ目　テキスト問題-->
 <div if={ vis == 4} class="main padding-top">
-         <h1>返答</h1>
+         
 <div id="result">
+    <h1>返答</h1>
 <section id="sec01">
     <table class="demo01" id="javascript_sample_table_1">
         <tbody id="javascript_sample_table_1_tbody">
@@ -146,22 +148,22 @@
     </table>
 </section>
        </div>
+       <i class="fa fa-camera-retro pointer" aria-hidden="true" onclick={shot}></i><br><br>
        <span class="button-dropdown" data-buttons="dropdown">
-       <a  onclick={backSelect} class="button button-rounded button-flat-action">回答を締め切る</a>
+       <a  onclick={backSelect} class="button button-rounded button-flat-action hover pointer" data-hover="回答を締め切る"><span class="front">{finishedAnswer}/{guestNumber}</span></a>
        </span>
-        <p class="link">{finishedAnswer}/{guestNumber}</p>
-        <a onclick={shot}>テストダウンロード</a><br>
+        
+<!--        <a onclick={shot}>テストダウンロード</a><br>-->
         
  </div>
 <!--3ページ目　作成問題-->
 <div if={ vis == 5}>
         <div id="chart"></div>
-        <button onclick={toPieChart}>円グラフを表示</button><br />
-        <button onclick={tobarChart}>棒グラフを表示</button><br />
-        <span class="button-dropdown" data-buttons="dropdown">
-              <a  onclick={backSelect} class="button button-rounded button-flat-primary">回答を締め切る</a>
-               </span>
-        <p class="link">{finishedAnswer}/{guestNumber}</p>
+        <i onclick={toPieChart} class="fa fa-pie-chart barpie  pointer" aria-hidden="true"></i>
+      <i onclick={tobarChart} class="fa fa-bar-chart barpie  pointer" aria-hidden="true"></i><i class="fa fa-camera-retro pointer" aria-hidden="true" onclick={shot2} id="shot"></i><br>
+             <span class="button-dropdown" data-buttons="dropdown">
+              <a  onclick={backSelect} class="button button-rounded button-flat-primary pointer color hover" data-hover="回答を締め切る"><span class="front">{finishedAnswer}/{guestNumber}</span></a>
+              </span>
                 <table>
         <tr>
             <th class="ichi">順位</th>
@@ -180,7 +182,7 @@
 </div>
 <!--URL表示ページ-->
 <div if={ vis == 7}  class="top padding-top">
-    <div class="URL content_center">http://<br>0.0.0.0:3000/<br>guest.html<br>部屋番号：{roomname}</div>
+    <div class="URL content_center">部屋番号：{roomname}<br>http://pingpong-<br>dash.herokuapp.<br>com/guest.html</div>
 
 </div>
 
@@ -219,7 +221,7 @@
         toSelect = function(){
           self.socket.emit('makeRoom');
             document.body.style.backgroundColor ="#f8f8f8";
-            document.getElementById("header_under").style.backgroundColor = "#00a7ea";
+            document.getElementById("header_under").style.backgroundColor = "#333300";
           self.vis = 2;
             functionhistory = 2;
         }
@@ -258,6 +260,8 @@
                 PieChart[i] = ["選択肢"+(i+1),0];
             }
             console.log(PieChart);
+            document.getElementById("header_under").style.backgroundColor = "#00a7ea";
+            document.getElementById("hanbaga_menu").style.backgroundColor = "#00a7ea";
             self.vis = 3;
             functionhistory = 3;
             self.update();
@@ -270,6 +274,7 @@
             };
             self.socket.emit('OtoG',data);
             document.getElementById("header_under").style.backgroundColor = "#99CC00";
+            document.getElementById("hanbaga_menu").style.backgroundColor = "#99CC00";
             self.vis = 4;
             functionhistory = 4;
             self.update();
@@ -321,6 +326,11 @@
 //            document.Q.num.value = "";
 //            document.Q.question.value ="";
 //            document.Q.Time.value = "";
+            document.getElementById( "Qtext" ).value="";
+            document.getElementById("Time").value="";
+            for( var i = 0;i < 4;i++){
+                document.getElementById("Answer"+i).value="";
+            }
             self.selectNumber.length = 0;
             //棒グラフのデータセット
             for( var i = 0; i < parseInt(Kaitou_Data.SN)+1; i++){
@@ -336,6 +346,8 @@
             for( var i = 0;i < parseInt(Kaitou_Data.SN);i++){
                 PieChart[i] = ["選択肢"+(i+1),0];
             }
+            document.getElementById("header_under").style.backgroundColor = "#E34933";
+            document.getElementById("hanbaga_menu").style.backgroundColor = "#E34933";
             self.vis = 5;
             self.update();
             chartSet();
@@ -362,7 +374,8 @@
                 self.socket.emit("OtoG",data);
                 alert("回答を締め切りました")
             }
-            document.getElementById("header_under").style.backgroundColor = "#00a7ea";
+            document.getElementById("header_under").style.backgroundColor = "#333300";
+            document.getElementById("hanbaga_menu").style.backgroundColor = "#333300";
             self.finishedAnswer = 0;//回答者数リセット
             functionhistory = 2;//機能履歴を２にする
         }
@@ -463,7 +476,7 @@
             if(DATA.type == 'text_answer'){
                 TextData.push([DATA.Name,DATA.Answer]);
                 console.log(DATA.Answer);
-                self.textAnswer.push({Name:DATA.Name,Answer:DATA.Answer});
+                self.textAnswer.unshift({Name:DATA.Name,Answer:DATA.Answer});
             }
             //作成問題の回答受信
             if(DATA.type == 'createQ_answer'){
@@ -705,7 +718,8 @@
  <!-- style -->
   <style scoped>
       .c3-text {
-          font-size:50px;
+          font-size:40px;
+          font-family: 'Noto Sans JP', sans-serif;
       }
 /*      icon*/
       .room_number{
@@ -744,8 +758,8 @@
       }
 /*     ーーーーーーーーーーーーーーーーーーーーーーー ハンバーガーメニュ*/
       #hanbaga_menu{
-/*          background: #333300;*/
-          background:#00a7ea;
+          background: #333300;
+/*          background:#00a7ea;*/
           padding-top:10px;
           padding-bottom:10px;
           height:25px;
@@ -769,13 +783,13 @@
           text-align: center;
           display:inline-block; 
           font-size:15px;
-          font-weight:bold;
           color:white;
           vertical-align: middle;
           
       }
       .menuhan:hover{
           cursor: pointer;
+          font-size:20px;
       }
       
 /*      ーーーーーーーーーーーーーーーーーーーーーー*/
@@ -799,14 +813,14 @@
           text-align: center;
           display:inline-block; 
           font-size:15px;
-          font-weight:bold;
           width:100px;
           color:white;
           vertical-align: middle;
       }
       .menu2:hover{
           cursor: pointer;
-          background: white;
+          font-size:20px;
+          color:#00a7ea;
           
       }
       .menu_ul3{
@@ -817,7 +831,6 @@
           text-align: center;
           display:inline-block; 
           font-size:15px;
-          font-weight:bold;
           width:130px;
           color:white;
           vertical-align: middle;
@@ -831,7 +844,7 @@
       }
       #header_under{
           height:5px;
-          background:#00a7ea;
+          background:#333300;
           z-index: 2;
       }
 /*      -----------------------------------#body部分*/
@@ -864,6 +877,7 @@
           
       }
       .URL{
+          text-align: left;
           font-size:150px;
           font-weight: bold;
           color:black;
@@ -904,10 +918,23 @@
           height:100%;
       }
       #result{
-          width: 100%;
+          width: 90%;
           height:70%;
-	margin: 40px auto;
-	line-height:180%;
+	margin: 60px auto 40px;
+	line-height:100%;
+          overflow:scroll;
+/*
+          border:1px solid #00a7ea;
+          width:500px;
+          height:100%;
+          margin:0 auto;
+*/
+      }
+      #result_table{
+          width: 500px;
+          height:70%;
+	margin: 60px auto 40px;
+	line-height:100%;
           overflow:scroll;
 /*
           border:1px solid #00a7ea;
@@ -917,6 +944,8 @@
 */
       }
       #chart{
+          width:80%;
+          margin:0 auto;
       }
       .inputText{
           width:20px;
@@ -928,6 +957,47 @@
           height:250px;
           width:500px;
       }
+/*      退室ボタンのマージン*/
+      .margin_back{
+          margin-top:15px;
+          width:165px;
+      }
+/*      締め切り　回答者ボタン*/
+      .hover{
+          display: block;
+          width:100px;
+          height:30px;
+      }
+      .hover:hover > .front{
+          opacity: 0;
+      }
+      
+      .hover:hover:after{
+          content:attr(data-hover);
+          display:block;
+          position: absolute;
+          top:0px;
+          left:30px;
+      }
+/*      ボタンホバー時のポインタ*/
+      .pointer:hover{
+          cursor:pointer;
+      }
+/*ランク機能付き問題送信ボタン*/
+      .color{
+          background:#E34933;
+      }
+      .color:hover{
+          background:#E34933;
+      }
+/*      制限時間*/
+      #limit{
+          margin:10px auto;
+          text-align: left;
+          padding-left:30px;
+          
+      }
+/*      部屋作成ボタンの色変更*/
 /*選択肢自由問題作成
       #Qtext{
           width:500px;
@@ -941,6 +1011,30 @@
           width:400px;
       }
 */
+      
+/*      テーブル*/
+      #Create_table{
+          width:500px;
+          margin:0 auto;
+      }
+      #table_title{
+          font-size:30px;
+          height:50px;
+      }
+      #Create_table textarea{
+          width:90%;
+      }
+      #Create_table td{
+          padding:5px;
+      }
+      #Create_table th{
+          padding-top:2px;
+          padding-bottom:2px;
+          padding-left:30px;
+      }
+      #Create_table input{
+          width:80%;
+      }
 
       @media screen and ( max-width:600px ){
           .menu_ul2{
@@ -964,17 +1058,52 @@
           font-size:14vw;
           
       }
+          #result_table{
+          width: 100%;
+
+      }
+          #Create_table{
+          width:100%;
+          margin:0 auto;
+          }
+          #table_title{
+              font-size:5vw;
+              height:50px;
+          }
+          #Create_table textarea{
+              width:90%;
+          }
+          #Create_table td{
+              padding:5px;
+          }
+          #Create_table th{
+              padding-top:2px;
+              padding-bottom:2px;
+              padding-left:10px;
+          }
+          #Create_table input{
+              width:80%;
+          }
+          #limit{
+          padding-left:10px;
+          }
+          .table_width{
+              width:90%;
+          }
       }
 section table   { width: 100%;
       word-break:break-all;}
-section th, section td  { padding: 10px; border: 1px solid #ddd; }
+section th, section td  { padding: 5px; border: 1px solid #ddd; }
 section th  { background: #f4f4f4; }
 section td  { text-align: left; }
  
 /*----------------------------------------------------
     .demo01
 ----------------------------------------------------*/
-.demo01 th  { width: 30%; text-align: left; }
+      .demo01{
+          margin:10px auto 0;
+      }
+.demo01 th  { width: 25%; text-align: center; }
  
 @media only screen and (max-width:480px){
 /*
@@ -982,11 +1111,11 @@ section td  { text-align: left; }
         width:100%;
     }
 */
-    .demo01 { margin: 0 -10px; 
+    .demo01 { margin:10px auto 0; 
     word-wrap: break-word;}
     .demo01 th,
     .demo01 td{
-        width: 100%;
+        width: 96%;
         display: block;
         border-top: none;
     }

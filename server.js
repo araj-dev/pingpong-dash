@@ -63,7 +63,7 @@ io.on('connection', function (socket) {
 
     if(roomnames.indexOf(roomname) == -1){
       console.log("not exsist");
-      socket.emit('joinResult', "0");
+      socket.emit('joinResult', {result:0});
       return;
     }
 
@@ -79,7 +79,11 @@ io.on('connection', function (socket) {
         socket.username = guestdata.username;
       }
       console.log(socket.username);
-      socket.emit('joinResult', { result : 1, name : socket.username });
+      var data = {
+          result:1,
+          name:socket.username
+      };
+      socket.emit('joinResult', data);
 
       //参加者カウント用
       rooms[roomname].emit('count', 1);

@@ -2,7 +2,7 @@
 <div id="header">
         <header>
           <ul class="menu_ul" if={vis==2||vis==3||vis==4||vis==5||vis==6}>
-              <li class="menu">ようこそ！　{Name}さん</li>
+              <li class="menu width">ようこそ！<span>{Name}</span>さん</li>
               <li class="room_number menu"><span>部屋番号:</span>{Room}</li>
           </ul>   
         </header>
@@ -24,7 +24,7 @@
   </div>
   </form>
     <span class="button-dropdown" data-buttons="dropdown">
-    <a onclick={toWait} class="button button-rounded button-flat-action">入室 </a>
+    <a onclick={toWait} class="button button-rounded button-flat-action pointer">入室 </a>
     </span>
 </div>
 </div>
@@ -33,16 +33,17 @@
 <div class="content_center">
     <div class="select"><p>待機中</p></div>
 <!--    <p onclick={toClose} class="link">退室</p>-->
-    <a onclick={toClose} class="button button-border">退室</a>
+    <a onclick={toClose} class="button button-border pointer margin_back">退室</a>
 </div>
 
 </div>
 <!--3ページ目　選択問題の回答ページ-->
-<div if={ vis == 3} class="top">
+<div if={ vis == 3} class="top Select_width">
 <div class="content_center">
-    <div class="select"><p class="Behavior">選ぶ</p><div class="buttons">
-	<a class="twitter"  each={choice} onclick={toResult_choice}>{number}</a>
-   </div></div>
+    <div class="select"><p class="Behavior">選ぶ</p>
+    <a class="buttonSelect pointer"  each={choice} onclick={toResult_choice}>{number}</a>
+<!--	<a class="twitter"  each={choice} onclick={toResult_choice}>{number}</a>-->
+   </div>
 <!--    <a onclick={toClose} class="button button-border">退室</a>-->
 </div>
 </div>
@@ -54,22 +55,32 @@
     <form name="text">
         <textarea name="answer" id="textAnswer" cols="30" rows="6" maxlength="140"></textarea><br>
         <span class="button-dropdown" data-buttons="dropdown">
-       <a onclick={toResult_text} class="button button-rounded button-flat-action">送信</a>
+       <a onclick={toResult_text} class="button button-rounded button-flat-action pointer">送信</a>
        </span>
     </form>
 </div>
 </div>
 </div>
 <!--3ページ目　作成問題の回答ページ-->
-<div if={ vis == 5}>
-    <p class="Behavior">選ぶ</p>
-    <p>問題；{Q}</p>
-    <p id="time">制限時間</p>
+<div if={ vis == 5} class="top Select_width">
 <!--    選択肢数非固定-->
 <!--    <p each={choice} onclick={toResult_createQ} class="link" >{number}-{content}</p>-->
+<!--
 <div class="buttons margin"  each={choice}>
     <a class="twitter" onclick={toResult_choice}>{number}<br><span>{content}</span></a>
    </div>
+-->
+   
+   
+   <div class="content_center">
+    <div class="select">
+    <p class="CreateQ">{Q}</p>
+    <p class="CreateTime">制限時間:<span id="time"></span>秒</p>
+    <a class="buttonCreate pointer"  each={choice}  onclick={toResult_createQ}><span class="CreateNum">{number}</span>{content}</a>
+
+   </div>
+
+</div>
 
 
 
@@ -78,7 +89,7 @@
 <div if={ vis == 6 } class="top">
 
     <div class="content_center">
-    <div class="select"><p class="Behavior">待機中</p></div>
+    <div class="wait"><p class="Behavior">待機中</p></div>
     <div id="resultText">
 <section id="sec01">
     <table class="demo01">
@@ -89,7 +100,7 @@
     </table>
 </section>
        </div>
-    <a onclick={toClose} class="button button-border">退室</a>
+    <a onclick={toClose} class="button button-border pointer margin_back">退室</a>
 </div>
 </div>
 </div>
@@ -110,14 +121,18 @@
 //----------------------------------------mount,socket.on受信
     this.on('mount',function(){
         self.socket.on('joinResult',function(data){
-            //ルームコード確認
+            //ルームコード確
             if( data.result == 0){
               alert("番号が違います");
             }
             if( data.result == 1){
+                if(self.Name == ""){
+                    self.Name = data.name;
+                }
               self.vis = 2;
               self.update();
             }
+            
             console.log(data.name);
         });
         self.socket.on('count',function(data){
@@ -134,6 +149,7 @@
                 self.title = "選ぶ";
                 console.log(self.choice);
                 self.answerFinish = false;//未回答へ変更
+                document.getElementById("header_under").style.backgroundColor = "#00a7ea";
                 self.vis=3;
                 self.update();
             }
@@ -173,6 +189,7 @@
                 self.title = "選ぶ";
                 console.log(self.choice);
                 self.answerFinish = false;//未回答へ変更
+                document.getElementById("header_under").style.backgroundColor = "#E34933";
                 self.vis=5;
                 self.update();
             }
@@ -200,7 +217,7 @@
         self.Room = guestdata.roomname;
         self.socket.emit('joinRoom', guestdata);
         document.body.style.backgroundColor ="#f8f8f8";
-            document.getElementById("header_under").style.backgroundColor = "#00a7ea";
+            document.getElementById("header_under").style.backgroundColor = "#333300";
     }
     //選択肢問題回答
     toResult_choice = function(event){
@@ -212,6 +229,7 @@
         };
         self.socket.emit('GtoO',data);
         self.answerFinish　=true;//回答済みに変更
+        document.getElementById("header_under").style.backgroundColor = "#333300";
         self.vis = 6;
         self.update();
     }
@@ -220,12 +238,13 @@
         Answer = document.text.answer.value;
         data = {
             type:'text_answer',
-            Name:guestdata.username,
+            Name:self.Name,
             Answer:Answer,
         }
         self.socket.emit("GtoO",data);
         document.text.answer.value ="";
         self.answerFinish　=true;//回答済みに変更
+        document.getElementById("header_under").style.backgroundColor = "#333300";
         self.vis = 6;
         self.update();
      }
@@ -278,11 +297,17 @@
       .menu{
           display:inline-block; 
           font-size:15px;
-          font-weight:bold;
+          
           width:170px;
           color:white;
           vertical-align: middle;
           
+      }
+      .width span{
+          font-weight:bold;
+      }
+      .width{
+          width:200px;
       }
       #header_under{
           height:5px;
@@ -392,6 +417,7 @@ footer, header, hgroup, menu, nav, section {
 
 
       /*      -----------------------------------#body部分*/
+/*
       .buttons {
           vertical-align: middle;
           display: inline;
@@ -495,6 +521,63 @@ footer, header, hgroup, menu, nav, section {
 .rss img {
 	vertical-align: -7px;
 }
+*/
+/*      選択問題ボタン*/
+      .buttonSelect {
+        position:relative;
+	display:block;
+	padding:1em 0;
+	color:#fff;
+	font-size:88%;
+	border-radius:3px;
+	text-align:center;
+	line-height: 22px;
+	text-decoration: none;
+	text-shadow:1px 1px 0 rgba(255,255,255,0.3);
+        background:#00acee;
+	box-shadow:0 5px 0 #0092ca;
+          margin-top:10px;
+          margin-bottom:10px;
+}
+
+        
+        
+      .buttonSelect:hover{
+          -webkit-transform: translate3d(0px, 5px, 1px);
+	-moz-transform: translate3d(0px, 5px, 1px);
+	transform: translate3d(0px, 5px, 1px);
+	box-shadow:none;
+            background:#0092ca;
+      }
+      .buttonCreate:hover {
+   -webkit-transform: translate3d(0px, 5px, 1px);
+	-moz-transform: translate3d(0px, 5px, 1px);
+	transform: translate3d(0px, 5px, 1px);
+	box-shadow:none;
+            background:#0092ca;
+}
+            .buttonCreate {
+        position:relative;
+	display:block;
+	padding:1em 0;
+	color:#fff;
+	font-size:2vw;
+	border-radius:3px;
+	text-align:left;
+	line-height: 22px;
+	text-decoration: none;
+	text-shadow:1px 1px 0 rgba(255,255,255,0.3);
+        background:#00acee;
+	box-shadow:0 5px 0 #0092ca;
+          margin-top:10px;
+          margin-bottom:10px;
+}
+
+        
+      /*      退室ボタンのマージン*/
+      .margin_back{
+          margin-top:20px;
+      }
       /*      -----------------------------------#body部分*/
       #body{
           height:100%;
@@ -548,6 +631,17 @@ footer, header, hgroup, menu, nav, section {
       }
       .select{
           overflow: scroll;
+          height:70%;
+/*
+          border-top:1px solid #00a7ea;
+          border-bottom:1px solid #00a7ea;
+*/
+          margin-top:20px;
+          padding:20px;
+          margin-bottom:15px;
+      }
+      .wait{
+          overflow: scroll;
           height:250px;
 /*
           border-top:1px solid #00a7ea;
@@ -561,6 +655,22 @@ footer, header, hgroup, menu, nav, section {
           font-size:20px;
           margin-bottom:20px;
       }
+      .Select_width{
+          width:80%;
+      }
+      .CreateQ{
+          text-align: left;
+          font-size: 4vw;
+          margin-top: 10px;
+          margin-bottom: 10px;
+      }
+      .CreateNum{
+          margin-left: 10px;
+          margin-right: 30px;
+      }
+      .CreateTime{
+          font-size: 3vw;
+      }
       #index{
           margin-top:10px;
           margin-bottom:10px;
@@ -573,6 +683,31 @@ footer, header, hgroup, menu, nav, section {
           font-size:20px;
           margin-bottom:20px;
       }
+      /*      ボタンホバー時のポインタ*/
+      .pointer{
+          cursor:pointer;
+      }
+      /*      退室ボタンのマージン*/
+      .margin_back{
+          margin-top:15px;
+          width:165px;
+      }
+      
+      
+      @media screen and ( min-width:600px ){
+          .Select_width{
+              width:600px;
+          }
+          .CreateQ{
+              font-size:20px; 
+          }
+          .CreateTime{
+              font-size:15px;
+          }
+          .buttonCreate{
+              font-size:15px;
+          }
+      }
 section table   { width: 100%;
       word-break:break-all;}
 section td  { text-align: center; }
@@ -580,7 +715,7 @@ section td  { text-align: center; }
 /*----------------------------------------------------
     .demo01
 ----------------------------------------------------*/
-.demo01 th  { width: 30%; text-align: left; }
+.demo01 th  { width: 30%; text-align: center; }
  
 @media only screen and (max-width:480px){
     #result{

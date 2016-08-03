@@ -185,14 +185,53 @@ function cap() {
   border-radius: 50%;
   box-shadow: inset 0px 8px 48px #ddd;
 }
+        
+        
+        
+        
+        .button2 {
+	position: relative;
+	display: inline-block;
+	padding: .5em 4em;
+	border: 2px solid #fff;
+	color: #fff;
+	text-align: center;
+	text-decoration: none;
+	outline: none;
+	overflow: hidden;
+}
+.button2::after {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	z-index: 2;
+	display: block;
+	content: attr(data-hover);
+	width: 100%;
+	height: 100%;
+	padding: .5em 4em;
+	background-color: #fff;
+	color: #333;
+	opacity: 0;
+	transition: all .3s;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+.button2:hover::after {
+	top: 0;
+	opacity: 1;
+}
     </style>
     <script type="text/javascript">
     function Download() {
-        var text = "ファイル";//document.getElementById("text").value; 
-        var blob = new Blob(["ファイル"]); 
-        var url = window.URL.createObjectURL(blob);
-        console.log(url);
-        document.getElementById("download").href = url; 
+        var text = document.getElementById("text").value;
+        var blob = new Blob([text]);
+        if (window.navigator.msSaveBlob) {
+            window.navigator.msSaveBlob(blob, 'BlobFile.txt');
+        } else {
+            var url = window.URL.createObjectURL(blob);
+            document.getElementById('download').href = url;
+        }
     }
     </script>
 </head>
@@ -287,6 +326,8 @@ function cap() {
     
     <a href="http://office606.org/sample/testdownload.jpg" download="testdownload.jpg">テストダウンロード</a>
     
-    <a href="#" id="download" download="testdownload.txt" onclick="download()">テストダウンロード</a><br>
+    
+    
+    <a class="button2" data-hover="Hover" href="#">Button</a>
 </body>
 </html>
