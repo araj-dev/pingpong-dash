@@ -1,22 +1,20 @@
 <owner>
-<!--ハンバーガーメニュー-->
-<div id="hanbaga_menu"  if={vis==2 ||vis==2.1 ||vis==3 ||vis==4 ||vis==5 ||vis==6||vis==7||vis==8||vis==9||vis==10}>
+<div id="hanbaga_menu">
             <ul class="munu_han">
               <li class="menuhan" onclick={toFunction}>基本機能</li>
-              <li class="menuhan" onclick={toPrebuilt}>作成済設問</li>
+              <li class="menuhan" onclick={toCustom}>カスタム</li>
               <li class="menuhan" onclick={toURL}>URL</li>
           </ul>    
         </div>
-<!--        ヘッダー部分-->
 <div id="header">
-        <header if={vis==2 ||vis==2.1 ||vis==3 ||vis==4 ||vis==5 ||vis==6||vis==7||vis==8||vis==9||vis==10} >
-         <i class="fa fa-bars hanbaga" id="show" if={vis==2 ||vis==2.1 ||vis==5 ||vis==6||vis==7||vis==8||vis==9} onclick={hanbaga}></i>
-          <ul class="menu_ul2" if={vis==2 ||vis==2.1 ||vis==5 ||vis==6||vis==7||vis==8||vis==9}>
+        <header>
+         <i class="fa fa-bars hanbaga" id="show" if={vis==2 ||vis==2.1 ||vis==3 ||vis==4 ||vis==5 ||vis==6||vis==7} onclick={hanbaga}></i>
+          <ul class="menu_ul2" if={vis==2 ||vis==2.1 ||vis==3 ||vis==4 ||vis==5 ||vis==6||vis==7}>
               <li class="menu2" onclick={toFunction}>基本機能</li>
-              <li class="menu2" onclick={toPrebuilt}>作成済設問</li>
+              <li class="menu2" onclick={toCustom}>カスタム</li>
               <li class="menu2" onclick={toURL}>URL</li>
           </ul>   
-          <ul class="menu_ul3" if={vis==2 ||vis==2.1 ||vis==3 ||vis==4 ||vis==5 ||vis==6||vis==7||vis==8||vis==9||vis==10}>
+          <ul class="menu_ul3" if={vis==2 ||vis==2.1 ||vis==3 ||vis==4 ||vis==5 ||vis==6||vis==7}>
               <li class="menu3"><span>部屋番号:</span>{roomname}</li>
      <li class="fa fa-user icon_user menu3" aria-hidden="true">{guestNumber}</li>
           </ul>
@@ -24,31 +22,24 @@
         <div id="header_under"> 
         </div>
 </div>
+<!--1ページ目-->
 <div id="body">
-<!--ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー部屋作成画面-->
-<div if={ vis == 1} class="top">
-    <div class="entry content_center">
-<!--
-    <span class="button-dropdown" data-buttons="dropdown">
-    <a  onclick={toSelect}  class="button button-rounded button-flat-action pointer">部屋を作成する </a>
-    </span>
--->
-        <p class="entry_toppage pointer test_margin" onclick={toSelect}>部屋を作成する</p>
-        <a href="create.html"><p class="entry_toppage pointer">設問を作成する</p></a>
-        <a  href="javascript:history.back();">
-          <p class="back_room pointer">戻る</p>
-        </a>
-    </div>
+<div if={ vis == 1} class="top padding-top">
+    <div class="entry content_center">CreateRoom!<br><span class="button-dropdown" data-buttons="dropdown">
+    <a  onclick={toSelect}  class="button button-rounded button-flat-action pointer">部屋作成 </a>
+    </span><a href="create.html">設問作成</a></div>
+    
+
 </div>
-<!--ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー選択肢、テキスト選択画面-->
+
+<!-----------------------------------------------選択画面-->
 <!--選択・テキスト-->
 <div if={ vis == 2} class="top padding-top">
  
   <ul class="menu_ul content_center">
      <li class="room_number"><span>部屋番号:</span>{roomname}</li>
      <li class="fa fa-user icon_user gestNumber_text" aria-hidden="true">{guestNumber}</li>
-      <li class="function">
-             <span class="button-dropdown" data-buttons="dropdown">
+      <li class="function">   <span class="button-dropdown" data-buttons="dropdown">
               <a class="button button-rounded button-flat-primary pointer">選択肢     ⬇︎</a>
 
               <ul class="button-dropdown-menu-below" style="display: none;" id="choiceNumber_ul">
@@ -58,99 +49,14 @@
                 <li onclick={getNum}><a href="#">５つ</a></li>
                 <li onclick={getNum}><a href="#">６つ</a></li>
               </ul>
-              </span>
-              </li>
+    </span></li>
       <li class="function"><span class="button-dropdown" data-buttons="dropdown">
   <a onclick={toText} class="button button-rounded button-flat-action pointer"> テキスト </a>
 </span></li>
  <li><a onclick={toClose} class="button button-border margin_back pointer">退室</a></li>
   </ul>
 </div>
-<!--ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー事前作成済み-->
-<!--作成済み設問一覧画面-->
-<div class="flex" if={ vis == 8}>
-           <div id="flexdiv">
-           <label for="file"   class="button button-rounded button-flat-caution pointer">
-             作成済みの設問を表示する
-              
-               <input id="file" type="file" onchange={loadfile} style="display:none;"/>
-           </label>
-<!--           <div id="view"></div>-->
-               <table class="prebuild_table">
-                   <thead>
-                       <tr>
-                           <th class="pb01" id="pb01">回答形式</th>
-                           <th class="pb02" id="pb02">設問文</th>
-                       </tr>
-                   </thead>
-                   <tbody>
-                       <tr each={result_list}>
-                           <td>{format}</td>
-                           <td onclick={toResult_detaile}>{question}</td>
-                           
-                       </tr>
-                   </tbody>
-               </table>
-           </div>
-</div>
-<!--作成済み設問詳細確認画面、送信-->
-<div class="flex" if={ vis == 9}>
-           <div id="flexdiv">
-           <div class="Q">
-                 <table class="Qtable" >
-                     <tr>
-                         <td colspan="2" class="table_title">設問文</td>
-                     </tr>
-                     <tr>
-                         <td colspan="2"><textarea type="text" class="question" name="question" rows="7" cols="30"></textarea>    
-                     </tr>
-<!--
-                     <tr>
-                     <td colspan="2" id="C_T">
-                     <span class="button-dropdown" data-buttons="dropdown">
-                     <a class="button button-rounded button-flat-primary pointer">選択肢     ⬇︎</a>
-                     <ul class="button-dropdown-menu-below" style="display: none;" id="choiceNumber_ul">
-                     <li onclick={Decision_num}><a href="#">２つ</a></li>
-                     <li onclick={Decision_num}><a href="#">３つ</a></li>
-                     <li onclick={Decision_num}><a href="#">４つ</a></li>
-                     <li onclick={Decision_num}><a href="#">５つ</a></li>
-                     <li onclick={Decision_num}><a href="#">６つ</a></li>
-                     </ul>
-                       </span>
-                       <span class="button-dropdown" data-buttons="dropdown">
-                        <a onclick={Decision_text} class="button button-rounded button-flat-action pointer"> テキスト </a>
-                        </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td id="format">回答形式</td>
-                        <td class="Decision"></td>
-                    </tr>
--->
-                    <tr each={name, i in result_detail}>
-                       <td class="pb01_detail">{(i+1)}</td>
-                       <td class="pb02_detail"><input type="text" class="Coices_text" value={name.Choice}></td>
-                    </tr>
-<!--
-                    <tr class="Choice">
-                         <td class="Choices_num">選択肢{num}</td>
-                         <td><input type="text" class="Choices_text"></td>
-                     </tr>
--->
-                     
-                 </table>
-                 <a　onclick={toPrebuilt} class="back pointer">←</a>
-<!--                 <p onclick={toPrebuilt} class="back">戻る</p>-->
-                 <span class="button-dropdown" data-buttons="dropdown" show={visible}>
-                 <a onclick={prebuild_select} class="button button-rounded button-flat-primary pointer">選択肢</a>
-                 </span>
-                 <span class="button-dropdown" data-buttons="dropdown" hide={visible}>
-                 <a onclick={prebuild_text} class="button button-rounded button-flat-action pointer">テキスト</a>
-                 </span>
-            </div>
-           </div>
-</div>
-<!--ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー設問分作成画面-->
+<!--4ページ目　問題文作成画面-->
 <div if={ vis == 6} class="top padding-top table_width">
  <div id="result_table">
  <table id="Create_table">
@@ -190,7 +96,7 @@
 </span>
     
     
-選択肢選択できる問題作成
+<!--選択肢選択できる問題作成
   <form name="Q" id="Q">
    <p>問題文作成</p>
     <input type="text" id="Qtext" name="question">
@@ -211,15 +117,13 @@
     制限時間を入力<input type="text" id="Time" name="Time" class="inputText">分
     <p onclick={sendCreateQ} class="link">送信</p>
   </form>
-
+-->
   </div>
 </div>
-
-<!--ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー結果画面-->
-<!--選択問題-->
-<!--
+<!------------------------------------------------結果画面-->
+<!--3ページ目　選択問題-->
 <div if={ vis == 3} class="padding-top">
-    <div class="result">
+    <div id="result">
        <div id="chart"></div>
     </div>
       <i onclick={toPieChart} class="fa fa-pie-chart barpie  pointer" aria-hidden="true"></i>
@@ -227,35 +131,12 @@
                <span class="button-dropdown" data-buttons="dropdown">
                <a  onclick={backSelect} class="button button-rounded button-flat-primary hover pointer" data-hover="回答を締め切る"><span class="front">回答者数：{finishedAnswer}/{guestNumber}</span></a>
                </span>
--->
 <!--        <a onclick={shot2} id="shot">テストダウンロード</a><br>-->
-<!--    </div>-->
-<div class="flex" if={ vis == 3}>
-    <div id="pb_flexdiv">
-        <div class="pb_result">
-           <p class="base_result_title choice_result_color">集計結果</p>
-            <div id="chart"></div>
-            <div class="bottom">
-<!--
-                <i onclick={toPieChart} class="fa fa-pie-chart barpie  pointer" aria-hidden="true"></i>
-                <i onclick={tobarChart} class="fa fa-bar-chart barpie  pointer" aria-hidden="true"></i>
--->
-                <img src="./img/pie.png" width="40px" height="auto" onclick={toPieChart} id="pie" class="chart pointer">
-                <img src="./img/bar.png" width="40px" height="auto" onclick={tobarChart} id="bar" class="chart pointer">
-                <img src="./img/data.png" width="15px" height="auto" onclick={shot2} id="shot" class="data pointer"><br>
-<!--                <i class="fa fa-camera-retro pointer" aria-hidden="true" onclick={shot2} id="shot"></i><br>-->
-                <span class="button-dropdown" data-buttons="dropdown">
-                    <a  onclick={backSelect} class="button button-rounded button-flat-primary hover pointer" data-hover="回答を締め切る"><span class="front">回答者数：{finishedAnswer}/{guestNumber}</span></a>
-                </span>
-            </div>
-        </div>
     </div>
-</div>
-<!--テキスト問題-->
-<!--
+<!--3ページ目　テキスト問題-->
 <div if={ vis == 4} class="main padding-top">
          
-<div class="result">
+<div id="result">
     <h1>返答</h1>
 <section id="sec01">
     <table class="demo01" id="javascript_sample_table_1">
@@ -268,93 +149,15 @@
     </table>
 </section>
        </div>
--->
-       
+       <i class="fa fa-camera-retro pointer" aria-hidden="true" onclick={Textshot}></i><br><br>
+       <span class="button-dropdown" data-buttons="dropdown">
+       <a  onclick={backSelect} class="button button-rounded button-flat-action hover pointer" data-hover="回答を締め切る"><span class="front">{finishedAnswer}/{guestNumber}</span></a>
+       </span>
         
 <!--        <a onclick={shot}>テストダウンロード</a><br>-->
         
-<!-- </div>-->
- <div class="flex" if={ vis == 4}>
-    <div id="pb_flexdiv">
-        <div class="pb_result">
-            
-    <p class="base_result_title text_result_color">返答</p>
-<section id="sec01">
-    <table class="demo01" id="javascript_sample_table_1">
-        <tbody id="javascript_sample_table_1_tbody">
-            <tr each={textAnswer}>
-                <th>{Name}</th>
-                <td>{Answer}</td>
-            </tr>
-        </tbody>
-    </table>
-</section>
-       
-            <div class="bottom">
-            <img src="./img/data.png" width="15px" height="auto" onclick={Textshot} id="shot" class="data pointer" style="
-    margin: 0 auto 10px;"><br>
-<!--            <i class="fa fa-camera-retro pointer" aria-hidden="true" onclick={Textshot}></i>-->
-       <span class="button-dropdown" data-buttons="dropdown">
-       <a  onclick={backSelect} class="button button-rounded button-flat-action hover pointer" data-hover="回答を締め切る"><span class="front">{finishedAnswer}/{guestNumber}</span></a>
-       </span>
-            </div>
-        </div>
-    </div>
-</div>
- 
-<!--作成済み設問,選択問題-->
-<div class="flex" if={ vis == 10}>
-           <div id="pb_flexdiv">
-                   <div class="pb_result">
-                      <p class="pb_question">{question}</p>
-                      <div id="chart"></div>
-                      <div class="bottom">
-                           <img src="./img/pie.png" width="40px" height="auto" onclick={toPieChart} id="pie" class="chart pointer">
-                           <img src="./img/bar.png" width="40px" height="auto" onclick={tobarChart} id="bar" class="chart pointer">
-                           <img src="./img/data.png" width="15px" height="auto" onclick={shot2} id="shot" class="data pointer"><br>
-<!--
-                            <i onclick={toPieChart} class="fa fa-pie-chart barpie  pointer" aria-hidden="true"></i>
-                            <i onclick={tobarChart} class="fa fa-bar-chart barpie  pointer" aria-hidden="true"></i>
-                            <img src="./img/data.png" width="30px" height="auto" onclick={shot2} id="shot"><br>
--->
-<!--                            <i class="fa fa-camera-retro pointer" aria-hidden="true" onclick={shot2} id="shot"></i>-->
-                           <span class="button-dropdown" data-buttons="dropdown">
-                           <a  onclick={backSelect} class="button button-rounded button-flat-primary hover pointer" data-hover="回答を締め切る"><span class="front">回答者数：{finishedAnswer}/{guestNumber}</span></a>
-                           </span>
-                　　　　</div>
-                    </div>
-     
-<!--        <a onclick={shot2} id="shot">テストダウンロード</a><br>-->
-           </div>
-</div>
-<!--作成済み設問,テキスト問題-->
-<div class="flex" if={ vis == 11}>
-           <div id="pb_flexdiv">
-           <div class="pb_result">
-      <h1>返答</h1>
-<section id="sec01">
-    <table class="demo01" id="javascript_sample_table_1">
-        <tbody id="javascript_sample_table_1_tbody">
-            <tr each={textAnswer}>
-                <th>{Name}</th>
-                <td>{Answer}</td>
-            </tr>
-        </tbody>
-    </table>
-</section>
-       
-            <div class="bottom">
-            <i class="fa fa-camera-retro pointer" aria-hidden="true" onclick={Textshot}></i><br><br>
-       <span class="button-dropdown" data-buttons="dropdown">
-       <a  onclick={backSelect} class="button button-rounded button-flat-action hover pointer" data-hover="回答を締め切る"><span class="front">{finishedAnswer}/{guestNumber}</span></a>
-       </span>
-            </div>
-    </div>
-     
-<!--        <a onclick={shot2} id="shot">テストダウンロード</a><br>-->
-           </div>
-</div>
-<!--作成問題-->
+ </div>
+<!--3ページ目　作成問題-->
 <div if={ vis == 5}>
         <div id="chart"></div>
         <i onclick={toPieChart} class="fa fa-pie-chart barpie  pointer" aria-hidden="true"></i>
@@ -378,15 +181,11 @@
         </tr>
     </table>
 </div>
-<!--ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーURL表示ページ-->
+<!--URL表示ページ-->
 <div if={ vis == 7}  class="top padding-top">
     <div class="URL content_center">http://pingpong-<br>dash.herokuapp.<br>com/guest.html<br><span id="roomnum">部屋番号：</span>{roomname} <img src="./img/QR_Code.jpg"></div>
 
 </div>
-
-
-
-
 
 </div>
 <script> 
@@ -394,7 +193,6 @@
     self.socket = io.connect();
     this.vis = 1;
     self.guestNumber = 0;//参加人数
-    var chart_State = 1;//チャートがバーチャート（１）か円グラフ（２）か
     var X= [];//チャートのラベル
     var Y = [];//チャートのラベルに対する回答者数
     self.textAnswer = [];//テキスト問題の回答の配列
@@ -402,7 +200,7 @@
         X:X,
         Y:Y,
         guest:0,
-        SN:0//選択肢の数
+        SN:0
     }//チャートオブジェクト
     self.selectNumber = [];//問題作成の選択肢数の配列
     self.answerNum = 0;//正解番号
@@ -418,12 +216,6 @@
     var TextData = [];
     var textAnswerData = "";
     var functionhistory ="";//機能の履歴
-    self.result_list = [{format:"",question:""}];//事前作成資料のリストオブジェクト
-    var For_result_detail = [];//result_detailにセットする前の仮配列
-    self.result_detail = [];//事前作成資料の詳細オブジェクト
-    var Qnum = "";//事前作成資料のリストのリスト番号
-    self.question = "";//事前作成の設問文表示のための変数
-    self.visible = true;//事前作成詳細画面の選択肢、テキストボタンの切り替えのため
 
     
 //-------------------------------------------onClick,emit送信
@@ -469,7 +261,8 @@
                 PieChart[i] = ["選択肢"+(i+1),0];
             }
             console.log(PieChart);
-            document.getElementById("header_under").style.backgroundColor = "#00A1CB";
+            document.getElementById("header_under").style.backgroundColor = "#00a7ea";
+            document.getElementById("hanbaga_menu").style.backgroundColor = "#00a7ea";
             self.vis = 3;
             functionhistory = 3;
             self.update();
@@ -481,7 +274,8 @@
                 type:'text',
             };
             self.socket.emit('OtoG',data);
-            document.getElementById("header_under").style.backgroundColor = "#8fcf00";
+            document.getElementById("header_under").style.backgroundColor = "#99CC00";
+            document.getElementById("hanbaga_menu").style.backgroundColor = "#99CC00";
             self.vis = 4;
             functionhistory = 4;
             self.update();
@@ -582,6 +376,7 @@
                 alert("回答を締め切りました")
             }
             document.getElementById("header_under").style.backgroundColor = "#333300";
+            document.getElementById("hanbaga_menu").style.backgroundColor = "#333300";
             self.finishedAnswer = 0;//回答者数リセット
             functionhistory = 2;//機能履歴を２にする
         }
@@ -591,9 +386,7 @@
                 type:'close'
             }
             self.socket.emit('OtoG',data);
-            location.reload();
-            //退室の時にindex.html
-//            location.href = location.origin;
+            location.href = location.origin;
         }
         //画面遷移
         //機能ページへ
@@ -611,126 +404,6 @@
         //カスタムページへ
         toCustom = function(){
             self.vis = 6;
-        }
-        //事前作成ページへ
-        toPrebuilt = function(){
-            
-            self.vis = 8;
-        }
-        loadfile = function(e){
-//            $("#pb01").css({
-//                "width": "20%",
-//                "display": "bold"
-//            });
-//            $("#pb02").css({
-//                "width": "20%",
-//                "display": "bold"
-//            });
-            document.getElementById("pb01").style.display = "table-cell";
-            document.getElementById("pb02").style.display = "table-cell";
-//            $("#pb01").style.display = "block";
-//            $("#pb02").style.display = "block";
-////            $(document).ready(function(){
-//    $("#file").change(function(e){
-        var file = e.target.files[0];
-        // FileReader.onloadイベントに
-        // ファイル選択時に行いたい処理を書く
-        var reader = new FileReader();
-        reader.onload = function(e){
-            // 選択したCSVファイルから２次元配列を生成
-            var arr = toArray(e.target.result);
-            self.result_list = arr;
-            self.update();
-            // ２次元配列からテーブルを生成
-            var table = createTableFromArray(arr);
-            // divにテーブルを挿入
-            $("#view").empty();
-            $("#view").append(table);
-            
-        };
-        // Textとしてファイルを読み込む
-        reader.readAsText(file);
-            console.log(self.result_list);
-            self.update();
-//    });
-//},false);
-        }
-        //事前作成済み設問の確認画面へ
-        toResult_detaile = function(e){
-            Qnum = e.item.Number;
-            //選択肢問題の場合
-            if(e.item.format == "選択肢"){
-                self.result_detail = For_result_detail[Qnum-1];
-                self.visible = true;
-                self.vis = 9;
-                self.update();
-                $(".question").val(self.result_list[Qnum-1].question);
-                self.question = self.result_list[Qnum-1].question;   
-            }
-            //テキスト問題の場合
-            if(e.item.format == "テキスト"){
-                self.result_detail = "";
-                self.visible = false;
-                self.vis = 9;
-                self.update();
-                $(".question").val(self.result_list[Qnum-1].question);
-            }
-            console.log(e.item.format);
-            
-            
-        }
-        //事前作成済みの選択肢問題を送信
-        prebuild_select = function(){
-            self.QselectContent = [];//選択肢の項目を配列でデータ化
-//            for( var i = 0 ;i < self.result_detail.length;i++){
-//                var content = document.Q.elements['Q'+(i+1)].value;
-//                document.Q.elements['Q'+(i+1)].value = "";
-//                self.QselectContent[i] = {num:i,content:content};
-//            }
-            
-            
-            Kaitou_Data.SN = self.result_detail.length;//選択肢の数
-            var data = {
-                type:'prebuild_select',
-                SN:Kaitou_Data.SN,//グラフ描画する場合//グラフ描画しない場合sentakusi,//選択肢の数
-                Q:self.result_list[Qnum-1].question,//問題文
-                QContent:self.result_detail//選択肢、選択肢の項目
-            }
-            self.socket.emit('OtoG',data);
-            //棒グラフのデータセット
-            for( var i = 0; i < parseInt(Kaitou_Data.SN)+1; i++){
-                if( i == 0){
-                    columns[i] = "選択肢";
-                    Xziku[i] = "x";
-                }else{
-                    columns[i] = 0;
-                    Xziku[i] = i;
-                }
-            }
-            //円グラフのデータセット
-            for( var i = 0;i < parseInt(Kaitou_Data.SN);i++){
-                PieChart[i] = ["選択肢"+(i+1),0];
-            }
-            
-            document.getElementById("header_under").style.backgroundColor = "#00A1CB";
-            self.vis = 10;
-            self.update();
-            $(".question").val("");
-            $(".Choices_text").val("");
-            chartSet();
-            
-        }
-        //事前作成済みのテキスト問題を送信
-        prebuild_text = function(){
-            var data = {
-                type:'prebuild_text',
-                Q:self.result_list[Qnum-1].question//問題文
-            };
-            self.socket.emit('OtoG',data);
-            document.getElementById("header_under").style.backgroundColor = "#99CC00";
-            self.vis = 4;
-            self.update();
-            
         }
         //URLページへ
         toURL = function(){
@@ -755,14 +428,14 @@
             onrendered: function(canvas) {
                 var link2 = document.createElement('a');
                 link2.href = canvas.toDataURL();
-                link2.download = "SelectData.png";
+                link2.download = "SelectAnswer.png";
                 link2.click();
                 //document.body.appendChild(canvas);
             }
         });
 
     }
-        //テキスト回答をファイルでダウンロード保存
+        //テキスト回答をファイルでダウンロード
         Textshot = function(){
             
             for( var i = 0;i < TextData.length;i++){
@@ -772,7 +445,7 @@
             var blob = new Blob([text], { "type" : "text/csv" });    
             var link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
-            link.download = 'TextData.csv';
+            link.download = 'TextAnswer.csv';
             link.click();
             textAnswerData = "";
         }
@@ -795,53 +468,17 @@
                 //棒グラフ、円グラフの回答集計
                 if ( DATA.kaitou){
                     columns[DATA.kaitou] = columns[DATA.kaitou] + 1;
-                    PieChart[DATA.kaitou-1][1] = PieChart[DATA.kaitou-1][1] + 1;    
+                    PieChart[DATA.kaitou-1][1] = PieChart[DATA.kaitou-1][1] + 1;
                 }
                 if(self.finishedAnswer == 0){
-                    if(chart_State == 1){
-                        chartResult_bar();
-                    }
-                    if(chart_State == 2){
-                        chartResult_pie();
-                    }      
+                     chartResult();
                 }
-                //チャートの形状を確認
-                if(chart_State == 1){
-                    plus();
-                }
-                if(chart_State == 2){
-                    plus_pie();
-                }
-                
             }
             //テキスト回答の受信
             if(DATA.type == 'text_answer'){
                 TextData.push([DATA.Name,DATA.Answer]);
                 console.log(DATA.Answer);
                 self.textAnswer.unshift({Name:DATA.Name,Answer:DATA.Answer});
-            }
-            //作成済み、選択問題回答の受信
-            if( DATA.type == 'pb_select_answer' ){
-                //棒グラフ、円グラフの回答集計
-                if ( DATA.kaitou){
-                    columns[DATA.kaitou] = columns[DATA.kaitou] + 1;
-                    PieChart[DATA.kaitou-1][1] = PieChart[DATA.kaitou-1][1] + 1;
-                }
-                if(self.finishedAnswer == 0){
-                    if(chart_State == 1){
-                        chartResult_bar();
-                    }
-                    if(chart_State == 2){
-                        chartResult_pie();
-                    }      
-                }
-                //チャートの形状を確認
-                if(chart_State == 1){
-                    plus();
-                }
-                if(chart_State == 2){
-                    plus_pie();
-                }
             }
             //作成問題の回答受信
             if(DATA.type == 'createQ_answer'){
@@ -938,16 +575,12 @@
                         }
                      });
     }
-    var A;
-    var B;
-    var C;
-    var D;
-    //チャート結果,1人目のデータを受け取った場合
-    function chartResult_bar(){
-        D = parseInt(Kaitou_Data.SN);
-        C = columns.shift();
-        B = Math.max.apply(null,columns);
-        A = columns.indexOf(B);
+    //チャート結果
+    function chartResult(){
+        var D = parseInt(Kaitou_Data.SN);
+        var C = columns.shift();
+        var B = Math.max.apply(null,columns);
+        var A = columns.indexOf(B);
         for( var i = 0; i < D;i++){
                 if( columns[i] == B){
                     Color[i] = '#ff7f0e';
@@ -955,6 +588,13 @@
                     Color[i] = '#1f77b4';
                 }
         }
+            
+//            if( columns[D] > columns[i]){
+//                Color[D+1] = '#ff7f0e';
+//            }else{
+//                Color[i] = '#1f77b4';
+//            }
+
         columns.unshift(C);
         console.log(Color);
         chart = c3.generate({
@@ -979,40 +619,12 @@
                          },
                         axis: {
                               y: {
-                                  max:Kaitou_Data.guest,
                                 show:false
                               }
                         }
                           
                      });
-        
-    }
-    
-    function chartResult_pie(){
-        D = parseInt(Kaitou_Data.SN);
-        C = columns.shift();
-        B = Math.max.apply(null,columns);
-        A = columns.indexOf(B);
-        for( var i = 0; i < D;i++){
-                if( columns[i] == B){
-                    Color[i] = '#ff7f0e';
-                }else{
-                    Color[i] = '#1f77b4';
-                }
-        }
-        columns.unshift(C);
-        chart = c3.generate({
-    data: {
-        // iris data from R
-        columns: PieChart,
-        type : 'pie',
-        order: null
-    }
-        });
-                            }
-        //チャート結果、2人目以降
-    function plus(){
-                        
+                    timer1 = setInterval(function () {
                         C = columns.shift();
                         B = Math.max.apply(null,columns);
                         A = columns.indexOf(B);
@@ -1034,63 +646,27 @@
                              ],
                             type: 'bar'
                         });
-//        chart = c3.generate({
-//                         //bindto: "#test",
-//                         data: {
-//                             x:'x',
-//                             columns:[
-//                                 Xziku,
-//                                 columns
-//                             ],
-//                             labels:true,
-//                             color:function(color,d){
-//                                    return Color[d.index];    
-//                            },
-//                             type: 'bar' 
-//                         },
-//                         legend: {
-//                             show: false 
-//                         },
-//                         width: {
-//                             ratio: 0.1 
-//                         },
-//                        axis: {
-//                              y: {
-//                                show:false
-//                              }
-//                        }
-//                          
-//                     });
-                    
+                    }, 3000);
+        
     }
     toPieChart = function (){
-        chart_State = 2;//チャートをpie(2)に変更
-//        clearInterval(timer1);
+        clearInterval(timer1);
         chart = c3.generate({
     data: {
         // iris data from R
         columns: PieChart,
         type : 'pie',
-        order: null
     }
 });
-////        timer1 = setInterval(function () {
-//                        chart.load({
-//                            columns:PieChart,
-//                            type: 'pie'
-//                        });
-////                    }, 3000);
-    }
-    //pieチャートの2人目以降の結果表示
-    function plus_pie(){
-        chart.load({
+        timer1 = setInterval(function () {
+                        chart.load({
                             columns:PieChart,
-                            type: 'pie',
-                            order: null
+                            type: 'pie'
                         });
+                    }, 3000);
     }
     tobarChart = function (){
-        chart_State = 1;//チャートをbarチャートに変更
+        clearInterval(timer1);
         chart = c3.generate({
                          //bindto: "#test",
                          data: {
@@ -1118,15 +694,15 @@
                         }
                           
                      });
-//                    timer1 = setInterval(function () {
-//                        chart.load({
-//                            columns:[
-//                                 Xziku,
-//                                 columns
-//                             ],
-//                            type: 'bar'
-//                        });
-//                    }, 3000);
+                    timer1 = setInterval(function () {
+                        chart.load({
+                            columns:[
+                                 Xziku,
+                                 columns
+                             ],
+                            type: 'bar'
+                        });
+                    }, 3000);
     }
     
     
@@ -1140,168 +716,9 @@
        
     }
     
-    // CSVテキストを２次元配列にする 
-    //参考資料では2次元配列にしていたのをオブジェクトにして
-    //eachで展開できるようにする
-    function toArray(csv){
-//        var result = new Array();
-//    var rows = csv.split("\n");
-//    $(rows).each(function(){
-//        result.push(this.split(","));
-//    });
-//    result.pop();//最後の余分な要素削除
-//    return result;
-        var preresult = new Array();
-        var rows = csv.split("\n");
-        var list = [];
-        var detail = [];
-//        var length = [];
-//        var Maxlength="";
-        $(rows).each(function(i){
-            preresult.push(this.split(","));
-            var format = preresult[i].slice(1,2);//選択肢かテキストかの判断要素を取り出す
-            list.push({format:format[0],question:preresult[i][0],Number:i+1});
-            preresult[i].splice(0,3);//選択肢の項目をオブジェクトにするため、それ以外を削除
-            var predetail = [];
-            //選択肢をオブジェクトにセット、eachで展開するため
-            $(preresult[i]).each(function(j){
-                predetail.push({Choice:preresult[i][j]});
-            });
-            detail.push(predetail);
-            
-            
-//            for(var i = 0;i < preresult.length;i++){
-//                length.push(preresult[i].length);
-//            }
-//            Maxlength = Math.max.apply(null,length);
-//            for(var i = 0;i < Maxlength-3;i++){
-//                trtitle.append($("<th>").append("選択肢"+(i+1)));
-//            }
-        });
-        
-        detail.pop();
-        For_result_detail = detail;
-        list.pop();//事前作成資料のリスト
-        
-        
-        
-//        preresult.pop();//最後の余分な要素削除
-        return list;
-        // preresult; 
-        
-    }
-    // ２次元配列からテーブルを生成する
-    function createTableFromArray(arr){
-//        var table = $("<table class='prebuild_table'>");
-//        var tbody = $("<tbody>");
-//        var trtitle = $("<tr>");
-//        trtitle.append($("<th class='pb01'>").append("回答方式"));
-//        trtitle.append($("<th class='pb02'>").append("設問文"));
-//    //    var length = [];
-//    //    var Maxlength="";
-//    //    for(var i = 0;i < arr.length;i++){
-//    //        length.push(arr[i].length);
-//    //    }
-//    //    Maxlength = Math.max.apply(null,length);
-//    //    for(var i = 0;i < Maxlength-3;i++){
-//    //        trtitle.append($("<th>").append("選択肢"+(i+1)));
-//    //    }
-//
-//        $(arr).each(function(i){
-//            var tr = $("<tr>");
-//            var format = [];
-//            format = arr[i].slice(1,2);
-//            var quesition = this.slice(0,1);//設問文のみ表示するため削除
-//            //console.log(arr[i]);     
-//    //        arr[i].splice(1,2);
-//            $(quesition).each(function(){
-//                tr.append($("<td onclick={toCheck_question}>").append(escapse(quesition)));
-//            });
-//            if(format[0]=="選択肢"){
-//               tr.prepend('<td><a href="#">選択肢</a></td>');
-//               }
-//            if(format[0]=="テキスト"){
-//                tr.prepend('<td><a href="#">テキスト</a></td>');
-//            }
-//
-//            tbody.prepend(trtitle).append(tr);
-//        });
-//        return table.append(tbody);
-    }
-    // タグをエスケープ
-    function escapse(t){
-        return $('<div>').text(t).html();
-    }
-    // ]]>
-    
 </script>
  <!-- style -->
   <style scoped>
-      a {
-            text-decoration: none;
-            color:white;
-        }
-
-        a:link {
-            color:black;
-        }
-
-        a:visited {
-            
-        }
-
-/*
-        a:hover {
-            color: #00a7ea;
-            cursor: pointer;
-        }
-*/
-
-        a:active {
-            
-        }
-      .entry_toppage{
-              background: #285294;
-    height: 1.25em;
-    width: 330px;
-    padding: 10px 0;
-    color: white;
-    font-size: 20px;
-          margin-bottom:7px;
-      }
-      .back_room:hover,.entry_toppage:hover{
-          cursor:pointer;
-          opacity:0.5;
-      }
-      .back_room{
-          background: #FFA103;
-            height: 1.25em;
-            width: 330px;
-            padding: 10px 0;
-            color: white;
-            font-size: 20px;
-      }
-      .base_result_title{
-          height: 30px;
-        font-size: 30px;
-        
-        
-        padding-left: 20px;
-        text-align: left;
-        line-height: 1;
-      }
-      .text_result_color{
-          color: #333300;
-          border-left: 10px solid #8fcf00;
-      }
-      .choice_result_color{
-          color: #333300;
-          border-left: 10px solid #00A1CB;
-      }
-      
-      
-      
-      
       .c3-text {
           font-size:40px;
           font-family: 'Noto Sans JP', sans-serif;
@@ -1374,7 +791,7 @@
       }
       .menuhan:hover{
           cursor: pointer;
-          color:#00a7ea;
+          font-size:20px;
       }
       
 /*      ーーーーーーーーーーーーーーーーーーーーーー*/
@@ -1404,6 +821,7 @@
       }
       .menu2:hover{
           cursor: pointer;
+          font-size:20px;
           color:#00a7ea;
           
       }
@@ -1428,7 +846,7 @@
       }
       #header_under{
           height:5px;
-          background:#f8f8f8;
+          background:#333300;
           z-index: 2;
       }
 /*      -----------------------------------#body部分*/
@@ -1457,8 +875,7 @@
       .entry{
           font-size:100px;
           color:white;
-/*          font-family: 'Raleway', sans-serif;*/
-          font-family: 'Poiret One', cursive;
+          font-family: 'Raleway', sans-serif;
           
       }
       .URL{
@@ -1507,7 +924,7 @@
           width:100%;
           height:100%;
       }
-      .result{
+      #result{
           width: 90%;
           height:70%;
 	margin: 60px auto 40px;
@@ -1534,8 +951,8 @@
 */
       }
       #chart{
-          width:100%;
-          margin:30px auto 50px;
+          width:80%;
+          margin:0 auto;
       }
       .inputText{
           width:20px;
@@ -1629,21 +1046,6 @@
       #Create_table input{
           width:80%;
       }
-/*      グラフ変更用icon*/
-      .chart{
-          margin-bottom:10px;
-      }
-      .chart:hover{
-          opacity:0.5;
-      }
-      .data{
-          margin-left: 35px;
-          margin-bottom: 12px;
-      }
-      .data:hover{
-          opacity:0.5;
-      }
-      
 
       @media screen and ( max-width:600px ){
           .menu_ul2{
@@ -1699,47 +1101,18 @@
           .table_width{
               width:90%;
           }
-/*          */
-          .prebuild_table {
-              width:90%;
-              margin:0 auto;
-          }
-/*          事前作成済み、選択式回答用*/
-          .pb_question{
-              font-size:3vw;
-              line-height: 120%;
-              color:#333300;
-          }
       }
-      
 section table   { width: 100%;
       word-break:break-all;}
-section th, section td  { 
-    padding: 10px;
-/*    border: 1px solid #f1dd38;*/
-      }
-section th  { 
-    background: #d9ec92; 
-    color: #525252;
-    font-weight: bold;
-    border-top: 1px dotted gray;
-    border-bottom: 1px dotted gray;
-      }
-section td  { 
-    text-align: left;
-    font-weight: 100;
-    border-top: 1px solid #d9ec92;
-    border-bottom: 1px solid #d9ec92;
-      }
+section th, section td  { padding: 5px; border: 1px solid #ddd; }
+section th  { background: #f4f4f4; }
+section td  { text-align: left; }
  
 /*----------------------------------------------------
     .demo01
 ----------------------------------------------------*/
       .demo01{
           margin:10px auto 0;
-      }
-      #sec01{
-          height:500px;
       }
 .demo01 th  { width: 25%; text-align: center; }
  
@@ -1749,9 +1122,6 @@ section td  {
         width:100%;
     }
 */
-    #sec01{
-          height:400px;
-      }
     .demo01 { margin:10px auto 0; 
     word-wrap: break-word;}
     .demo01 th,
@@ -1759,154 +1129,9 @@ section td  {
         width: 96%;
         display: block;
         border-top: none;
-        margin:0 auto;
     }
     .demo01 tr:first-child th   { border-top: 1px solid #ddd; }
 } 
-      
-      
-/*      flex　事前作成資料ページリスト、詳細*/
-          .flex {
-      display: -webkit-flex;
-      display: flex;
-      -webkit-justify-content: center;
-      justify-content: center;
-      -webkit-align-items: center;
-      align-items: center;
-      height:100%;
-        width:100%;
-              padding-top:50px;
-    }
-
-    #flexdiv {
-        width:600px;
-        height:500px;
-      margin: 0px;
-      padding-top: 50px;
-        margin:0 auto;
-        overflow: scroll;
-
-    }
-        .flex-nav a {
-            margin: 10px;
-          border-radius: 15px;
-          background: #285294;
-          color: #fff;
-          display: block;
-          padding: 8px;
-          text-decoration: none;
-            width:15px;
-            height:15px;
-        }
-        .flex-nav .logo {
-          background: #4584b1;
-        }
-        .flex-nav {
-          display: flex;
-        }
-/*      事前資料リストのテーブル*/
-      .prebuild_table{
-          text-align: left;
-      }
-      .prebuild_table th,
-      .prebuild_table td{
-          padding:10px;
-      }
-      .prebuild_table tr td:nth-of-type(2){
-          font-size:12px;
-      }
-      .prebuild_table tr td:nth-of-type(2):hover{
-          cursor:pointer;
-          opacity: 0.5;
-      } 
-      #pb01{
-          display: none;
-          width: 20%;
-          font-weight: bold;
-      }
-      #pb02{
-          display: none;
-          width: 80%;
-          font-weight: bold;
-      }
-      #pb02:hover{
-          cursor:pointer;
-          opacity: 0.5;
-      }
-/*      事前資料詳細のテーブル*/
-      .Q{
-          width:100%;
-          height:100%;
-      }
-      .Qtable{
-          width:600px;
-          margin-bottom:30px;
-      }
-      .Qtable td{
-          padding:5px;
-      }
-      .table_title{
-          font-size: 30px;
-          border-left: 10px solid #E54028;
-          color: ##333300;
-      }
-      .question{
-          width:95%;
-          padding:2px;
-      }
-      .Coices_text{
-          width:95%;
-          padding:2px;
-      }
-      pb01_detail{
-          width:10%;
-      }
-      .pb02_detail{
-          width:90%;
-      }
-/*      事前作成済み、選択式回答の結果表示ページ用*/
-      #pb_flexdiv {
-          width:600px;
-          height:90%;
-          margin:0 auto;
-          
-      }
-      .pb_result{
-          width: 100%;
-          line-height:100%;
-      }
-      .pb_question{
-          text-align: left;
-          border-left:10px solid #00A1CB;
-          padding-left:20px;
-          color:#333300;
-      }
-/*      事前作成ずみ設問読み込みページ　読み込みボタン*/
-      .fileload_buttom{
-          
-      }
-/*      戻るボタン*/
-      .back{
-          display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 1px solid #584d4d;
-            padding: 5px;
-            vertical-align: middle;
-            border-radius: 3px;
-            color: #584d4d;
-      }
-      .back{
-          opacity:0.5;
-      }
-      .c3 text{
-          font-size:20px;
-          fill:#4c4c4c;
-      }
-      .c3-chart-arc text {
-          fill: white;
-      }
-      
 
 
   </style>

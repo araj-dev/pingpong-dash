@@ -1,9 +1,9 @@
 <guest>
 <div id="header">
-        <header if={vis==2||vis==3||vis==3.1||vis==4||vis==4.1||vis==5||vis==6}>
-          <ul class="menu_ul" if={vis==2||vis==3||vis==3.1||vis==4||vis==4.1||vis==5||vis==6}>
+        <header>
+          <ul class="menu_ul" if={vis==2||vis==3||vis==4||vis==5||vis==6}>
               <li class="menu width">ようこそ！<span>{Name}</span>さん</li>
-              <li class="room_number menu min_width_none"><span>部屋番号:</span>{Room}</li>
+              <li class="room_number menu"><span>部屋番号:</span>{Room}</li>
           </ul>   
         </header>
         <div id="header_under"> 
@@ -16,41 +16,31 @@
 <!-- form starts here -->
 <form class="sign-up">
 <div class="username">
-
+   <h1 class="login_title">Entrance</h1>
     <input type="text" id="roomcode" placeholder="部屋番号"/>
   </div>
   <div class="password">
     <input type="text"  id="username"placeholder="名前"/>
   </div>
-  <p onclick={toWait} class="entry_room pointer">入室</p>
-  <a  href="javascript:history.back();" class="Q_plus_minus">
-      <p class="back_room pointer">戻る</p>
-  </a>
   </form>
-  
-  
-  
-<!--アイフォンで使えないボタン
     <span class="button-dropdown" data-buttons="dropdown">
     <a onclick={toWait} class="button button-rounded button-flat-action pointer">入室 </a>
     </span>
--->
 </div>
 </div>
 <!--2ページ目-->
 <div if={ vis == 2} class="top">
 <div class="content_center">
-    <div class="guest_select"><p>お待ち下さい</p></div>
+    <div class="select"><p>待機中</p></div>
 <!--    <p onclick={toClose} class="link">退室</p>-->
-<!--    <a onclick={toClose} class="button button-border pointer margin_back">退室</a>-->
-    <p  onclick={toClose}　class="getout pointer base_buttom">退室</p>
+    <a onclick={toClose} class="button button-border pointer margin_back">退室</a>
 </div>
 
 </div>
 <!--3ページ目　選択問題の回答ページ-->
 <div if={ vis == 3} class="top Select_width">
 <div class="content_center">
-    <div class="guest_select"><p class="Behavior">選ぶ</p>
+    <div class="select"><p class="Behavior">選ぶ</p>
     <a class="buttonSelect pointer"  each={choice} onclick={toResult_choice}>{number}</a>
 <!--	<a class="twitter"  each={choice} onclick={toResult_choice}>{number}</a>-->
    </div>
@@ -60,59 +50,16 @@
 <!--3ページ目　テキスト問題の回答ページ-->
 <div if={ vis == 4} class="top">
    <div class="content_center">
-   <div class="guest_select">
-   <p class="base_result_title text_result_color Behavior">回答記入</p>
+   <div class="select">
+   <p class="Behavior">テキスト記入</p>
     <form name="text">
-        <textarea name="answer" id="textAnswer" cols="30" rows="12" maxlength="140"></textarea><br>
+        <textarea name="answer" id="textAnswer" cols="30" rows="6" maxlength="140"></textarea><br>
         <span class="button-dropdown" data-buttons="dropdown">
-<!--       <a onclick={toResult_text} class="button button-rounded button-flat-action pointer">送信</a>-->
-       <p  onclick={toResult_text}　class="text_send pointer base_buttom">送信</p>
+       <a onclick={toResult_text} class="button button-rounded button-flat-action pointer">送信</a>
        </span>
     </form>
 </div>
 </div>
-</div>
-<!--3ページ目　事前作成済み、選択式問題の回答ページ-->
-<div if={ vis == 3.1} class="top Select_width"> 
-   <div class="content_center　Qpadding-top">
-    <div class="guest_select pb_height">
-    <p class="CreateQ base_Q_content choice_Q_content_color">{Q}</p>
-    <a class="buttonCreate pointer"  each={choice}  onclick={toResult_prebuild_num}><span class="CreateNum CreateNum_width">
-       <table class="prebuild_table_number">
-           <tr>
-               <td class="pb_table_td">{number}</td>
-               <td>{content}</td>
-           </tr>
-       </table>
-       </span>
-       </a>
-
-   </div>
-
-</div>
-
-
-
-</div>
-<!--3ページ目　事前作成済み、テキスト式問題の回答ページ-->
-<div if={ vis == 4.1} class="top Select_width"> 
-   <div class="content_center　Qpadding-top">
-    <div class="guest_select pb_height">
-    <p class="CreateQ base_Q_content text_Q_content_color">{Q}</p>
-    <form name="text">
-        <textarea name="answer" id="textAnswer" cols="30" rows="12" maxlength="140"></textarea><br>
-        <span class="button-dropdown" data-buttons="dropdown">
-<!--       <a onclick={toResult_text} class="button button-rounded button-flat-action pointer">送信</a>-->
-       <p  onclick={toResult_text}　class="text_send pointer base_buttom">送信</p>
-       </span>
-    </form>
-
-   </div>
-
-</div>
-
-
-
 </div>
 <!--3ページ目　作成問題の回答ページ-->
 <div if={ vis == 5} class="top Select_width">
@@ -126,7 +73,7 @@
    
    
    <div class="content_center">
-    <div class="guest_select">
+    <div class="select">
     <p class="CreateQ">{Q}</p>
     <p class="CreateTime">制限時間:<span id="time"></span>秒</p>
     <a class="buttonCreate pointer"  each={choice}  onclick={toResult_createQ}><span class="CreateNum">{number}</span>{content}</a>
@@ -142,20 +89,18 @@
 <div if={ vis == 6 } class="top">
 
     <div class="content_center">
-    <div class="wait"><p class="Behavior">お待ち下さい</p>
+    <div class="wait"><p class="Behavior">待機中</p></div>
     <div id="resultText">
 <section id="sec01">
     <table class="demo01">
-            <tr>
+            <tr each={textAnswer}>
                 <th>回答</th>
-                <td class="wait_answer">{Answer}</td>
+                <td>{Answer}</td>
             </tr>
     </table>
 </section>
-       </div></div>
-    
-<!--    <a onclick={toClose} class="button button-border pointer margin_back">退室</a>-->
-    <p  onclick={toClose}　class="getout pointer base_buttom">退室</p>
+       </div>
+    <a onclick={toClose} class="button button-border pointer margin_back">退室</a>
 </div>
 </div>
 </div>
@@ -218,30 +163,6 @@
                 document.getElementById("header_under").style.backgroundColor = "#99CC00";
                 self.update();
             }
-            //事前作成済み、選択問題の受信
-            if(data.type == 'prebuild_select'){
-                console.log(data);
-                self.choice.length = 0;
-                self.Q = data.Q;//問題文
-                for( var i = 0; i < data.SN; i++){
-                    self.choice[i] = {
-                        number:i+1,//選択肢数
-                        content:data.QContent[i].Choice//項目
-                    }
-                }
-                self.answerFinish = false;//未回答へ変更
-                document.getElementById("header_under").style.backgroundColor = "#00a7ea";
-                self.vis=3.1;
-                self.update();
-            }
-            //事前作成済み、テキスト問題の受信
-            if(data.type == 'prebuild_text'){
-                self.Q = data.Q;
-                self.answerFinish = false;//未回答へ変更
-                self.vis=4.1;
-                document.getElementById("header_under").style.backgroundColor = "#99CC00";
-                self.update();
-            }
             //問題文作成問題受信
             if(data.type == 'createQ'){
                 self.choice.length = 0;
@@ -268,6 +189,7 @@
                     }
                 }
                 self.title = "選ぶ";
+                console.log(self.choice);
                 self.answerFinish = false;//未回答へ変更
                 document.getElementById("header_under").style.backgroundColor = "#E34933";
                 self.vis=5;
@@ -286,7 +208,6 @@
                 alert('主催者が退室しました。本日はありがとうございました。')
                 location.href = location.origin;
             }
-            
 
         });
     });
@@ -301,26 +222,10 @@
     //選択肢問題回答
     toResult_choice = function(event){
         var item = event.item;
-        self.Answer = [];
-        self.Answer = self.choice.indexOf(item) + 1;
+        Answer = self.choice.indexOf(item) + 1;
         data = {
             type:'select_answer',
-            kaitou:self.Answer,
-        };
-        self.socket.emit('GtoO',data);
-        self.answerFinish　=true;//回答済みに変更
-        document.getElementById("header_under").style.backgroundColor = "#333300";
-        self.vis = 6;
-        self.update();
-    }
-    //事前作成済み、選択問題回答
-    toResult_prebuild_num = function(){
-        var item = event.item;
-        self.Answer = [];
-        self.Answer = self.choice.indexOf(item) + 1;
-        data = {
-            type:'pb_select_answer',
-            kaitou:self.Answer,
+            kaitou:Answer,
         };
         self.socket.emit('GtoO',data);
         self.answerFinish　=true;//回答済みに変更
@@ -330,12 +235,11 @@
     }
     //テキスト問題回答
     toResult_text = function(){
-        self.Answer = [];
-        self.Answer = document.text.answer.value;
+        Answer = document.text.answer.value;
         data = {
             type:'text_answer',
             Name:self.Name,
-            Answer:self.Answer,
+            Answer:Answer,
         }
         self.socket.emit("GtoO",data);
         document.text.answer.value ="";
@@ -347,13 +251,12 @@
     //作成問題の回答
     toResult_createQ = function(){
         var item = event.item;
-        self.Answer = [];
-        self.Answer = self.choice.indexOf(item) + 1;
+        Answer = self.choice.indexOf(item) + 1;
         answerTime = setAnswerTime - count;
         data = {
             type:'createQ_answer',
             Name:guestdata.username,
-            kaitou:self.Answer,
+            kaitou:Answer,
             zikan:answerTime
         }
         console.log(data);
@@ -364,9 +267,7 @@
         self.update();
     }
     toClose = function(){
-        location.reload();
-        //index.html
-//        location.href = location.origin;
+        location.href = location.origin;
     }
     //------------------------------------------function
 
@@ -375,57 +276,6 @@
 
  <!-- style -->
   <style scoped>
-      .base_result_title{
-          height: 30px;
-        font-size: 30px;
-        
-        
-        padding-left: 20px;
-        text-align: left;
-        line-height: 1;
-      }
-      .text_result_color{
-          color: #99cc00;
-          border-left: 10px solid #99cc00;
-      }
-      .entry_room{
-              background: #285294;
-    height: 1.25em;
-    width: 330px;
-    padding: 10px 0;
-    color: white;
-    font-size: 20px;
-          margin-bottom:10px;
-      }
-      .back_room{
-          background: #FFA103;
-    height: 1.25em;
-    width: 330px;
-    padding: 10px 0;
-    color: white;
-    font-size: 20px;
-      }
-      .back_room:hover, .entry_room:hover{
-          opacity:0.5;
-      }
-      .base_buttom{
-          width: 216px;
-    height: 32px;
-    margin:0 auto;
-    font-size: 14px;
-    padding: 0px 25.6px;
-    
-    line-height: 30px;
-          margin-top:10px;
-      }
-      .getout{
-          border: 2px solid #666;
-          color: #666;
-      }
-      .text_send{
-          color:white;
-          background:#99cc00;
-      }
 /*     -------------------------------header部分*/
       header{
           background: #333300;
@@ -461,7 +311,7 @@
       }
       #header_under{
           height:5px;
-          background:#f8f8f8;
+          background:#00a7ea;
       }
       /*      -----------------------------------ログイン*/
 
@@ -510,40 +360,57 @@ footer, header, hgroup, menu, nav, section {
 
 
 .sign-up {
+  position: relative;
   margin: 50px auto;
-    width: 330px;
-    padding: 33px 0px 33px;
-    background: #f8f8f8;
+  width: 280px;
+  padding: 33px 25px 29px;
+  background: white;
+  border-bottom: 1px solid #c4c4c4;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
 }
       input {
   height: 1.25em;
-    width: 328px;
-    font-size: 20px;
-    padding: 10px 0px;
-    text-align: center;
-    border: 0.033em #285294 solid;
-    background: transparent;
-    margin-bottom: 10px;
+  width: 8.125em;
+  font-size: 20px;
+          padding:10px 30px;
+  text-align:center;
+  border: 0;
+  outline: 0;
+  color: black;
+  background: transparent;
+  border:0.033em #00a7ea solid;
+          margin-bottom:10px;
           
 }
-      input:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0px 1000px #f8f8f8 inset;
-}
-
+      .login_title{
+          margin: -40px -25px 25px;
+          border-top-right-radius:5px;
+          border-top-left-radius:5px;
+  padding: 15px 25px;
+  line-height: 35px;
+  font-size: 50px;
+  font-weight: 300;
+  color: white;
+  text-align: center;
+/*  text-shadow: 0 1px rgba(255, 255, 255, 0.75);*/
+  background: #285294;
+      }
 ::placeholder {
-  color: #285294;
+  color: #00a7ea;
 }
 
 ::-moz-placeholder {
-  color: #285294;
+  color: #00a7ea;
 }
 
 :-ms-input-placeholder {
-  color: #285294;
+  color: #00a7ea;
 }
 
 ::-webkit-input-placeholder {
-  color: #285294;
+  color: #00a7ea;
 }
 
 
@@ -691,13 +558,13 @@ footer, header, hgroup, menu, nav, section {
 }
             .buttonCreate {
         position:relative;
-	display:flex;
+	display:block;
 	padding:1em 0;
 	color:#fff;
 	font-size:2vw;
 	border-radius:3px;
 	text-align:left;
-	line-height: 120%;
+	line-height: 22px;
 	text-decoration: none;
 	text-shadow:1px 1px 0 rgba(255,255,255,0.3);
         background:#00acee;
@@ -773,23 +640,9 @@ footer, header, hgroup, menu, nav, section {
           padding:20px;
           margin-bottom:15px;
       }
-      .guest_select{
-          height:70%;
-/*
-          border-top:1px solid #00a7ea;
-          border-bottom:1px solid #00a7ea;
-*/
-          margin-top:20px;
-          padding:20px;
-          margin-bottom:15px;
-      }
-      .pb_height{
-/*          height:90%;*/
-      }
       .wait{
           overflow: scroll;
-          height:80%;
-/*          height:250px;*/
+          height:250px;
 /*
           border-top:1px solid #00a7ea;
           border-bottom:1px solid #00a7ea;
@@ -807,20 +660,13 @@ footer, header, hgroup, menu, nav, section {
       }
       .CreateQ{
           text-align: left;
-          font-size: 13px;
-          margin-top:2em;
-          margin-bottom:1em;
-/*
-          padding-top:2em;
-          padding-bottom: 1em;
-*/
+          font-size: 4vw;
+          margin-top: 10px;
+          margin-bottom: 10px;
       }
       .CreateNum{
           margin-left: 10px;
           margin-right: 30px;
-      }
-      .CreateNum_width{
-          width:100%;
       }
       .CreateTime{
           font-size: 3vw;
@@ -846,29 +692,14 @@ footer, header, hgroup, menu, nav, section {
           margin-top:15px;
           width:165px;
       }
-/*      回答済み待機中のtable*/
-      .wait_answer{
-          
-      }
-/*      設問あり問題のデザインバランス用*/
-/*      設問あり問題、設問文デザイン*/
-      .base_Q_content{
-          padding-left: 10px;
-          color: #3c3c3c;
-      }
-      .text_Q_content_color{
-          border-left: 10px solid #99cc00;
-      }
-      .choice_Q_content_color{
-          border-left: 10px solid #00a7ea;
-      }
+      
       
       @media screen and ( min-width:600px ){
           .Select_width{
               width:600px;
           }
           .CreateQ{
-              font-size:15px; 
+              font-size:20px; 
           }
           .CreateTime{
               font-size:15px;
@@ -887,25 +718,6 @@ section td  { text-align: center; }
 .demo01 th  { width: 30%; text-align: center; }
  
 @media only screen and (max-width:480px){
-    .min_width_none{
-        display:none;
-    }
-    .select{
-        padding:0px;
-    }
-    .guest_select{
-        padding:0px;
-    }
-    .test{
-        width:99%;
-        margin:0 auto;
-    }
-    .sign-up{
-        width:320px;
-    }
-    input{
-        width:98%;
-    }
     #result{
         width:100%;
     }
@@ -918,35 +730,5 @@ section td  { text-align: center; }
         border-top: none;
     }
 } 
-/*      事前資料作成選択画面table*/
-      .prebuild_table_number{
-          width:100%;
-      }
-      .pb_table_td{
-          width:10%;
-      }
-      
-/*      a リンク　装飾解除*/
-      a {
-            text-decoration: none;
-            color:black;
-        }
-
-        a:link {
-            color:black;
-        }
-
-        a:visited {
-            
-        }
-
-        a:hover {
-            color: #00a7ea;
-            cursor: pointer;
-        }
-
-        a:active {
-            
-        }
   </style>
 </guest>

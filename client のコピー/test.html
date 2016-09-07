@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js" type="text/javascript"></script>
+</head>
+<body>
+   <canvas id="canvas" height="450" width="600"></canvas>
+   
+<script>
+var lineChartData = {
+    labels : ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+    datasets : [
+        {
+            fillColor : "rgba(220, 220, 220, 0.5)",
+            strokeColor : "rgba(220, 220, 220, 1)",
+            pointColor : "rgba(220, 220, 220, 1)",
+            pointStrokeColor : "#fff",
+            data : [1, 59, 90, 81, 56, 55, 40, 30, 10, 40, 48, 58]
+        },
+        {
+            fillColor : "rgba(151, 187, 205, 0.5)",
+            strokeColor : "rgba(151, 187, 205, 1)",
+            pointColor : "rgba(151, 187, 205, 1)",
+            pointStrokeColor : "#fff",
+            data : [28, 48, 40, 19, 96, 27, 100, 33, 63, 31, 64, 51]
+        }
+    ]
+}
+// オプション
+var options = {
+    // X, Y 軸ラインが棒グラフの値の上にかぶさるようにするか    
+    scaleOverlay : true,
+    // 値の開始値などを自分で設定するか
+    scaleOverride : true,
+    
+    // 以下の 3 オプションは scaleOverride: true の時に使用
+    // Y 軸の値のステップ数
+    // e.g. 10 なら Y 軸の値は 10 個表示される
+    scaleSteps : 10,
+    // Y 軸の値のステップする大きさ
+    // e.g. 10 なら 0, 10, 20, 30 のように増えていく
+    scaleStepWidth : 10,
+    // Y 軸の値の始まりの値
+    scaleStartValue : 0,
+    // X, Y 軸ラインの色
+    scaleLineColor : "rgba(0, 0, 0, .1)",
+    // X, Y 軸ラインの幅
+    scaleLineWidth : 1,
+    // ラベルの表示 ( Y 軸の値 )
+    scaleShowLabels : true,
+    // ラベルの表示フォーマット ( Y 軸の値 )
+    scaleLabel : "<%=value%>%",
+    // X, Y 軸値のフォント
+    scaleFontFamily : "'Arial'",
+    // X, Y 軸値のフォントサイズ
+    scaleFontSize : 12,
+    // X, Y 軸値のフォントスタイル, normal, italic など
+    scaleFontStyle : "italic",
+    // X, Y 軸値の文字色
+    scaleFontColor : "#666",    
+    // グリッドライン ( Y 軸の横ライン ) の表示 
+    scaleShowGridLines : true,
+    // グリッドラインの色
+    scaleGridLineColor : "rgba(0, 0, 0, .05)",
+    // グリッドラインの幅
+    scaleGridLineWidth : 1,
+    // ラインが曲線 ( true ) か直線 ( false )か
+    bezierCurve : false,
+    // ポイントの点を表示するか
+    pointDot : true,
+    // ポイントの点の大きさ
+    pointDotRadius : 5,
+    // ポイントの点の枠線の幅
+    pointDotStrokeWidth : 1,
+    // データセットのストロークを表示するか
+    // みたいですが、ちょっと変化が分からなかったです
+    datasetStroke : false,
+    // ラインの幅
+    datasetStrokeWidth : 1,
+    // ラインの内側を塗りつぶすか
+    datasetFill : true,
+    // 表示の時のアニメーション
+    animation : true,
+    // アニメーションの速度 ( ステップ数 )
+    animationSteps : 60,
+    // アニメーションの種類, 以下が用意されている
+    // linear, easeInQuad, easeOutQuad, easeInOutQuad, easeInCubic, easeOutCubic,
+    // easeInOutCubic, easeInQuart, easeOutQuart, easeInOutQuart, easeInQuint,
+    // easeOutQuint, easeInOutQuint, easeInSine, easeOutSine, easeInOutSine,
+    // easeInExpo, easeOutExpo, easeInOutExpo, easeInCirc, easeOutCirc, easeInOutCirc,
+    // easeInElastic, easeOutElastic, easeInOutElastic, easeInBack, easeOutBack,
+    // easeInOutBack, easeInBounce, easeOutBounce, easeInOutBounce
+    animationEasing : "easeOutQuad",
+    // アニメーション終了後に実行する処理
+    // animation: false の時にも実行されるようです
+    // e.g. onAnimationComplete : function() {alert('complete');}
+    onAnimationComplete : null
+}
+var chart = new Chart(document.getElementById("canvas").getContext("2d")).Line(lineChartData, options);
+ 
+</script>
+    </body>
+</html>

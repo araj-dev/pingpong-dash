@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.css" rel="stylesheet">
+<link rel="stylesheet" href="css/buttons.css">
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script type="text/javascript" src="./html2canvas.js"></script>
+<script>
+    
+
+function cap() {
+	html2canvas(document.body, {
+		onrendered: function(canvas) {
+			var png = canvas.toDataURL();
+			var a = document.createElement('a');
+			a.setAttribute('download','hoge.png');
+			a.href = png;
+			a.innerText = 'aa';
+			a.click();
+		}
+	});
+}
+	
+    
+</script>
+<script type="text/javascript" src="js/buttons.js"></script>
+    <title>test</title>
+    <style>
+        
+    body {
+	text-align: center;
+	font-family: Arial;
+	background: #f8f8f8 url(images/bg.jpg);
+}
+ 
+.buttons {
+    margin-bottom:100px;
+	margin-top: 160px;
+}
+        .buttons a {
+                               background: #222;
+  color: white;
+  text-shadow: 2px 2px 3px rgba(255,255,255,0.1);
+            font-size:30px;
+            
+    
+            text-decoration: none;
+	margin-right: 30px;
+	width: 64px;
+	height: 64px;
+	display: inline-block;
+	position: relative;
+	line-height: 64px;
+	background-color: #eaeaea;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#72bedd), to(#00a7ea));
+	background-image: -webkit-linear-gradient(top, #72bedd, #00a7ea);
+	background-image: -moz-linear-gradient(top, #f6f6f6, #eaeaea); 
+	background-image: -ms-linear-gradient(top, #f6f6f6, #eaeaea); 
+	background-image: -o-linear-gradient(top, #f6f6f6, #eaeaea);
+	background-image: linear-gradient(top, #f6f6f6, #eaeaea);
+	-moz-border-radius: 32px;
+	-webkit-border-radius: 32px;
+	border-radius: 32px;
+	-moz-box-shadow: 0 1px 1px rgba(0, 0, 0, .25), 0 2px 3px rgba(0, 0, 0, .1);
+	-webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .25), 0 2px 3px rgba(0, 0, 0, .1);
+	box-shadow: 0 1px 1px rgba(0, 0, 0, .25), 0 2px 3px rgba(0, 0, 0, .1);
+}
+        .buttons a:active {
+	top: 1px;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#00a7ea), to(#72bedd));
+	background-image: -webkit-linear-gradient(top, #00a7ea, #72bedd);
+	background-image: -moz-linear-gradient(top, #eaeaea, #f6f6f6); 
+	background-image: -ms-linear-gradient(top, #eaeaea, #f6f6f6); 
+	background-image: -o-linear-gradient(top, #eaeaea, #f6f6f6);
+	background-image: linear-gradient(top, #eaeaea, #f6f6f6);
+}
+        .buttons a::before{
+	content: '';
+	position: absolute;
+	z-index: -1;
+	top: -8px;
+	right: -8px;
+	bottom: -8px;
+	left: -8px;
+	background-color: #eaeaea;
+	-moz-border-radius: 140px;
+	-webkit-border-radius: 140px;
+	border-radius: 140px;
+	opacity: 0.5;		
+}
+        .buttons a:active::before {
+	top: -9px;
+}
+ 
+.buttons a:hover::before {
+	opacity: 1;
+}
+        .buttons a.twitter:hover::before {
+	background-color: #c6f0f8;
+}
+ 
+.buttons a.facebook:hover::before {
+	background-color: #dae1f0;
+}
+ 
+.buttons a.dribble:hover::before {
+	background-color: #fadae6;
+}
+ 
+.buttons a.rss:hover::before {
+	background-color: #f8ebb6;
+}
+        .twitter img {
+	vertical-align: -7px;
+}
+ 
+.dribble img {
+	vertical-align: -12px;
+}
+ 
+.facebook img {
+	vertical-align: -12px;
+}
+ 
+.rss img {
+	vertical-align: -7px;
+}
+/*        */
+        .nav {
+  list-style: none;
+  text-align: center;
+}
+
+.nav li {
+  position: relative;
+  display: inline-block;
+  margin-right: -4px;
+}
+        .nav a {
+  display: block;
+  background-color: #f7f7f7;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#f7f7f7), to(#e7e7e7));
+  background-image: -webkit-linear-gradient(top, #f7f7f7, #e7e7e7); 
+  background-image: -moz-linear-gradient(top, #f7f7f7, #e7e7e7); 
+  background-image: -ms-linear-gradient(top, #f7f7f7, #e7e7e7); 
+  background-image: -o-linear-gradient(top, #f7f7f7, #e7e7e7); 
+  color: #a7a7a7;
+  margin: 36px;
+  width: 144px;
+  height: 144px;
+  position: relative;
+  text-align: center;
+  line-height: 144px;
+  border-radius: 50%;
+  box-shadow: 0px 3px 8px #aaa, inset 0px 2px 3px #fff;
+}
+        .nav a:hover{
+  text-decoration: none;
+  color: #555;
+  background: #f5f5f5;
+}
+        .nav li:before {
+  content: "";
+  display: block;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #fff;
+  width: 100%;
+  height: 1px;
+  position: absolute;
+  top: 50%;
+  z-index: -1;
+}
+        .nav a:before {
+  content: "";
+  display: block;
+  background: #fff;
+  border-top: 2px solid #ddd;
+  position: absolute;
+  top: -18px;
+  left: -18px;
+  bottom: -18px;
+  right: -18px;
+  z-index: -1;
+  border-radius: 50%;
+  box-shadow: inset 0px 8px 48px #ddd;
+}
+        
+        
+        
+        
+        .button2 {
+	position: relative;
+	display: inline-block;
+	padding: .5em 4em;
+	border: 2px solid #fff;
+	color: #fff;
+	text-align: center;
+	text-decoration: none;
+	outline: none;
+	overflow: hidden;
+}
+.button2::after {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	z-index: 2;
+	display: block;
+	content: attr(data-hover);
+	width: 100%;
+	height: 100%;
+	padding: .5em 4em;
+	background-color: #fff;
+	color: #333;
+	opacity: 0;
+	transition: all .3s;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+.button2:hover::after {
+	top: 0;
+	opacity: 1;
+}
+    </style>
+    <script type="text/javascript">
+    function Download() {
+        var text = document.getElementById("text").value;
+        var blob = new Blob([text]);
+        if (window.navigator.msSaveBlob) {
+            window.navigator.msSaveBlob(blob, 'BlobFile.txt');
+        } else {
+            var url = window.URL.createObjectURL(blob);
+            document.getElementById('download').href = url;
+        }
+    }
+    </script>
+</head>
+<body>
+   
+   <div class="buttons">
+	<a class="twitter" href="">1</a>
+	<a class="facebook" href="">2</a>
+	<a class="dribble" href="">3</a>
+	<a class="rss" href="">4</a>
+</div>
+   
+   <span class="button-dropdown" data-buttons="dropdown">
+  <a href="#" class="button button-rounded"> press me <i class="fa fa-caret-down"></i></a>
+  
+  <ul>
+    <li><a href="#">Option 1</a></li>
+    <li><a href="#">Option 2</a></li>
+    <li class="button-dropdown-divider"><a href="#">Option 3</a></li>
+  </ul>
+</span>
+ 
+<span class="button-dropdown" data-buttons="dropdown">
+  <a href="#" class="button button-rounded button-flat-primary"> 選択肢 <i class="fa fa-caret-down"></i></a>
+  
+  <ul class="button-dropdown-menu-below" style="display: none;">
+    <li><a href="#">２つ</a></li>
+    <li><a href="#">３つ</a></li>
+    <li><a href="#">４つ</a></li>
+    <li><a href="#">５つ</a></li>
+    <li><a href="#">Option 2</a></li>
+    <li class="button-dropdown-divider"><a href="#">Option 3</a></li>
+  </ul>
+<div style="position: fixed; top: 0px; left: 0px; right: 0px; bottom: 0px; z-index: 999; display: none;"></div></span>
+ 
+<span class="button-dropdown" data-buttons="dropdown">
+  <a href="#" class="button button-rounded button-flat-action"> テキスト <i class="fa fa-caret-down"></i></a>
+  
+  <ul class="button-dropdown-menu-above">
+    <li><a href="#">Option 1</a></li>
+    <li><a href="#">Option 2</a></li>
+    <li class="button-dropdown-divider"><a href="#">Option 3</a></li>
+  </ul>
+</span>
+ 
+<span class="button-dropdown" data-buttons="dropdown">
+  <a href="#" class="button button-highlight button-rounded">
+    press me <i class="fa fa-caret-down"></i>
+  </a>
+  
+  <ul>
+    <li><a href="#">Option 1</a></li>
+    <li><a href="#">Option 2</a></li>
+    <li class="button-dropdown-divider"><a href="#">Option 3</a></li>
+  </ul>
+</span>
+ 
+<span class="button-dropdown" data-buttons="dropdown">
+  <a href="#" class="button button-caution button-pill"> press me <i class="fa fa-caret-down"></i></a>
+  
+  <ul>
+    <li><a href="#">Option 1</a></li>
+    <li><a href="#">Option 2</a></li>
+    <li class="button-dropdown-divider"><a href="#">Option 3</a></li>
+  </ul>
+</span>
+ 
+<span class="button-dropdown" data-buttons="dropdown">
+  <a href="#" class="button button-royal button-rounded">
+    <i class="fa fa-envelope"></i> press me <i class="fa fa-caret-down"></i>
+  </a>
+  
+  <ul>
+    <li><a href="#">Option 1</a></li>
+    <li><a href="#">Option 2</a></li>
+    <li class="button-dropdown-divider"><a href="#">Option 3</a></li>
+  </ul>
+</span>
+<!--    -->
+    <nav>      
+  <ul class="nav">       
+    <li><a href="#" class="icon-home"></a></li>
+    <li><a href="#" class="icon-cog"></a></li>
+    <li><a href="#" class="icon-cw"></a></li>
+    <li><a href="#" class="icon-location"></a></li>
+  </ul>
+</nav>
+
+
+  <textarea id="text" placeholder="文字を入力してください。"></textarea>
+    <a download='BlobFile.txt' href='#' id='download' onclick="Download()">ダウンロード</a>
+    
+    <a href="http://office606.org/sample/testdownload.jpg" download="testdownload.jpg">テストダウンロード</a>
+    
+    
+    
+    <a class="button2" data-hover="Hover" href="#">Button</a>
+</body>
+</html>
