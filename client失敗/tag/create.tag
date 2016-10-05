@@ -41,6 +41,12 @@
                         <td id="format">回答形式</td>
                         <td class="Decision"></td>
                     </tr>
+                    <!--
+                    <tr class="Choice">
+                         <td class="Choices_num">選択肢{num}</td>
+                         <td><input type="text" class="Choices_text"></td>
+                     </tr>
+-->
 
                 </table>
             </div>
@@ -66,6 +72,7 @@
                 num: self.question_num.length + 1
             });
             self.update();
+            
             $('.Qtable').each(function(i) {
                 $(this).attr('id', 'table' + (i + 1));
 

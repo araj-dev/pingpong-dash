@@ -35,8 +35,6 @@
                 <div class="guest_select">
                     <p>お待ち下さい</p>
                 </div>
-                <!--    <p onclick={toClose} class="link">退室</p>-->
-                <!--    <a onclick={toClose} class="button button-border pointer margin_back">退室</a>-->
                 <p onclick={toClose}　class="getout pointer base_buttom">退室</p>
             </div>
 
@@ -47,7 +45,9 @@
                 <div class="guest_select">
                     <p class="Behavior">選ぶ</p>
                     <a class="buttonSelect pointer" each={choice} onclick={toResult_choice}>{number}</a>
+
                 </div>
+
             </div>
         </div>
         <!--3ページ目　テキスト問題の回答ページ-->
@@ -132,6 +132,7 @@
                     <div id="resultText">
                     </div>
                 </div>
+
                 <p onclick={toClose}　class="getout pointer base_buttom">退室</p>
             </div>
         </div>
@@ -343,7 +344,7 @@
             self.update();
         }
         toClose = function() {
-                location.reload();
+                location.reload();　　
             }
             //------------------------------------------function
     </script>
@@ -583,6 +584,7 @@
         }
         
         .main {
+            /*          width:500px;*/
             word-wrap: break-word;
             text-align: center;
             height: 70%;
@@ -620,8 +622,7 @@
             margin-bottom: 15px;
         }
         
-        .pb_height {
-        }
+        .pb_height {}
         
         .wait {
             overflow: auto;
@@ -729,7 +730,7 @@
         }
         /*----------------------------------------------------
     .demo01
-----------------------------------------------------*/
+        ----------------------------------------------------*/
         
         .demo01 th {
             width: 30%;
