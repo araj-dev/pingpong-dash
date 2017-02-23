@@ -1,6 +1,6 @@
 <owner>
 <!--ハンバーガーメニュー-->
-<div id="hanbaga_menu" if={vis==2 ||vis==2.1 ||vis==3 ||vis==4 ||vis==5 ||vis==6||vis==7||vis==8||vis==9||vis==10}>
+<div id="hanbaga_menu" if={vis==2 ||vis==2.1 ||vis==3 ||vis==4 ||vis==5 ||vis==6||vis==7||vis==8||vis==9||vis==10||vis==11}>
     <ul class="munu_han">
         <li class="menuhan" onclick={toFunction}>基本機能</li>
         <li class="menuhan" onclick={toPrebuilt}>作成済設問</li>
@@ -9,14 +9,14 @@
 </div>
 <!--        ヘッダー部分-->
 <div id="header">
-    <header if={vis==2 ||vis==2.1 ||vis==3 ||vis==4 ||vis==5 ||vis==6||vis==7||vis==8||vis==9||vis==10}>
+    <header if={vis==2 ||vis==2.1 ||vis==3 ||vis==4 ||vis==5 ||vis==6||vis==7||vis==8||vis==9||vis==10||vis==11}>
         <i class="fa fa-bars hanbaga" id="show" if={vis==2 ||vis==2.1 ||vis==5 ||vis==6||vis==7||vis==8||vis==9} onclick={hanbaga}></i>
         <ul class="menu_ul2" if={vis==2 ||vis==2.1 ||vis==5 ||vis==6||vis==7||vis==8||vis==9}>
             <li class="menu2" onclick={toFunction}>基本機能</li>
             <li class="menu2" onclick={toPrebuilt}>作成済設問</li>
             <li class="menu2" onclick={toURL}>URL</li>
         </ul>
-        <ul class="menu_ul3" if={vis==2 ||vis==2.1 ||vis==3 ||vis==4 ||vis==5 ||vis==6||vis==7||vis==8||vis==9||vis==10}>
+        <ul class="menu_ul3" if={vis==2 ||vis==2.1 ||vis==3 ||vis==4 ||vis==5 ||vis==6||vis==7||vis==8||vis==9||vis==10||vis==11}>
             <li class="menu3"><span>部屋番号:</span>{roomname}</li>
             <li class="fa fa-user icon_user menu3" aria-hidden="true">{guestNumber}</li>
         </ul>
@@ -251,7 +251,7 @@
                 <img src="./img/bar.png" width="40px" height="auto" onclick={tobarChart} id="bar" class="chart pointer">
                 <img src="./img/data.png" width="15px" height="auto" onclick={shot2} id="shot" class="data pointer"><br>
                 <span class="button-dropdown" data-buttons="dropdown">
-                               <a  onclick={backSelect} class="button button-rounded button-flat-primary hover pointer" data-hover="回答を締め切る"><span class="front">回答者数：{finishedAnswer}/{guestNumber}</span></a>
+                               <a  onclick={pb_backSelect} class="button button-rounded button-flat-primary hover pointer" data-hover="回答を締め切る"><span class="front">回答者数：{finishedAnswer}/{guestNumber}</span></a>
                 </span>
             </div>
         </div>
@@ -276,7 +276,7 @@
         <div class="bottom">
             <i class="fa fa-camera-retro pointer" aria-hidden="true" onclick={Textshot}></i><br><br>
             <span class="button-dropdown" data-buttons="dropdown">
-       <a  onclick={backSelect} class="button button-rounded button-flat-action hover pointer" data-hover="回答を締め切る"><span class="front">{finishedAnswer}/{guestNumber}</span></a>
+       <a  onclick={pb_backSelect} class="button button-rounded button-flat-action hover pointer" data-hover="回答を締め切る"><span class="front">回答者数：{finishedAnswer}/{guestNumber}</span></a>
             </span>
         </div>
     </div>
@@ -492,13 +492,39 @@
             if (Kaitou_Data.SN == 0) {
                 self.textAnswer.length = 0;
                 self.rankData.length = 0; //ランキングデータリセット
-                self.vis = 8;
+                self.vis = 2;
             }
             if (Kaitou_Data.SN > 0) {
                 PieChart = [];
                 Date_Zero();
                 Kaitou_Data.SN = 0;
                 self.vis = 2;
+            }
+            //回答出来なかった参加者がいた場合の処理
+            if (self.finishedAnswer != self.guestNumber) {
+                var data = {
+                    type: 'deadline'
+                }
+                self.socket.emit("OtoG", data);
+                alert("回答を締め切りました")
+            }
+            document.getElementById("header_under").style.backgroundColor = "#333300";
+            self.finishedAnswer = 0; //回答者数リセット
+            functionhistory = 2; //機能履歴を２にする
+        }
+    pb_backSelect = function() {
+            console.log("チェック");
+            //テキスト回答,作成問題の場合の処理
+            if (Kaitou_Data.SN == 0) {
+                self.textAnswer.length = 0;
+                self.rankData.length = 0; //ランキングデータリセット
+                self.vis = 8;
+            }
+            if (Kaitou_Data.SN > 0) {
+                PieChart = [];
+                Date_Zero();
+                Kaitou_Data.SN = 0;
+                self.vis = 8;
             }
             //回答出来なかった参加者がいた場合の処理
             if (self.finishedAnswer != self.guestNumber) {
@@ -640,7 +666,7 @@
             };
             self.socket.emit('OtoG', data);
             document.getElementById("header_under").style.backgroundColor = "#99CC00";
-            self.vis = 4;
+            self.vis = 11;
             self.update();
 
         }
