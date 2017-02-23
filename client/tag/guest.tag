@@ -33,7 +33,7 @@
         <div if={ vis==2 } class="top">
             <div class="content_center">
                 <div class="guest_select">
-                    <p>お待ち下さい</p>
+                    <p class="firstpage_sentence">お待ち下さい</p>
                 </div>
                 <!--    <p onclick={toClose} class="link">退室</p>-->
                 <!--    <a onclick={toClose} class="button button-border pointer margin_back">退室</a>-->
@@ -543,7 +543,7 @@
             font-size: 88%;
             border-radius: 3px;
             text-align: center;
-            line-height: 3vh;
+            line-height: 22px;
             text-decoration: none;
             text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.3);
             background: #00acee;
@@ -576,7 +576,7 @@
             font-size: 2vw;
             border-radius: 3px;
             text-align: left;
-            line-height: 3vh;
+            line-height: 120%;
             text-decoration: none;
             text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.3);
             background: #00acee;
@@ -606,7 +606,7 @@
         
         .content_center {
             display: table-cell;
-            vertical-align: middle;
+            vertical-align: top;
         }
         
         .link {
@@ -679,6 +679,7 @@
         .Behavior {
             font-size: 20px;
             margin-bottom: 20px;
+            margin-top: 20px;
         }
         
         .Select_width {
@@ -872,6 +873,10 @@
             text-align: left;
             color:#525252;
             padding-left:10px;
+        }
+        
+        .firstpage_sentence{
+            margin-top:20px;
         }
     </style>
 </guest>
