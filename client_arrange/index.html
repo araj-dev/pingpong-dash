@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <title>TOP</title>
+    <!--CSS -->
+    <link rel="stylesheet" href="css/reset.css">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
+    <!--JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <!--自作CSS -->
+    <style type="text/css">
+        @import url(http://fonts.googleapis.com/earlyaccess/notosansjp.css);
+        /*ここに調整CSS記述*/
+        
+        body {
+            background: #f8f8f8;
+        }
+        
+        a {
+            text-decoration: none;
+            color: black;
+        }
+        
+        a:link {
+            color: black;
+        }
+        
+        a:visited {}
+        
+        a:hover {
+            cursor: pointer;
+        }
+        
+        a:active {}
+        
+        #teacher_img {
+            width: 80px;
+            height: auto;
+        }
+        
+        #guest_img {
+            width: 80px;
+            height: auto;
+        }
+        
+        .parent {
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100vw;
+            height: 100vh;
+        }
+        
+        .second_parent {
+            height: 150vw;
+        }
+        
+        #intro1 {
+            width: 100vw;
+            ;
+            height: 70%;
+        }
+        
+        .child {
+            width: 100%;
+        }
+        
+        #HG {
+            width: 100%;
+            text-align: center;
+            font-family: 'Poiret One', cursive;
+            font-size: 15vw;
+        }
+        
+        #intro1 img {
+            width: 8vw;
+            height: auto;
+        }
+        
+        ul {
+            display: none;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            flex-wrap: wrap;
+            margin-bottom: 50px;
+        }
+        
+        li {
+            width: 26%;
+            -webkit-justify-content: center;
+            justify-content: center;
+            margin: 0 10px 10px;
+            padding: 5px 10px;
+            display: block;
+            text-align: center;
+            border-radius: 4px;
+        }
+        
+        li img {
+            width: 30px;
+            height: auto;
+        }
+        
+        .copy {
+            font-size: 7vw;
+            font-weight: bold;
+            font-family: 'Noto Sans JP', sans-serif;
+        }
+        
+        .copy_content {
+            font-size: 3vw;
+            line-height: 150%;
+            margin-top: 5vw;
+        }
+        
+        .main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 30%;
+        }
+        
+        .col-1 {}
+        
+        .main div {
+            width: 100vw;
+            padding: 3vw;
+        }
+        
+        #toIntro {
+            position: absolute;
+            top: 500px;
+        }
+        
+        #toIntro img {
+            width: 20px;
+            height: auto;
+        }
+        
+        .function {
+            padding: 3vw;
+        }
+        
+        .functionleft {
+            float: left;
+            width: 15%;
+            padding-top: 5vw;
+            padding-left: 2vw;
+        }
+        
+        .functionright {
+            float: right;
+            width: 80%;
+        }
+        
+        .function_width_height {
+            width: 100%;
+            height: 10vw;
+            padding-top: 2vw;
+            padding-bottom: 2vw;
+        }
+        
+        .title {
+            color: #00a7ea;
+            font-weight: bold;
+            font-size: 15px;
+            display: inline-block;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+        
+        .cont {
+            font-size: 10px;
+        }
+        
+        .icon {
+            margin-top: 30px;
+        }
+        
+        .detail {
+            text-align: left;
+        }
+        
+        #footer {
+            background: #333300;
+            height: 20px;
+            padding-left: 3vw;
+            padding-right: 3vw;
+            padding-top: 30px;
+        }
+        
+        #footer p {
+            float: right;
+            font-size: 5px;
+        }
+        
+        #footer,
+        #footer a {
+            color: #b2b6b7;
+        }
+        
+        #host span {
+            width:
+        }
+        
+        #host span:nth-child(1) {
+            display: inline-block;
+            width: 35vw;
+        }
+        
+        #host span:nth-child(2) {
+            display: none;
+            font-size: 11vw;
+            width: 35vw;
+        }
+        
+        #host:hover span:nth-child(1) {
+            display: none;
+        }
+        
+        #host:hover span:nth-child(2) {
+            display: inline-block;
+        }
+        
+        #guest span:nth-child(1) {
+            display: inline-block;
+            width: 35vw;
+        }
+        
+        #guest span:nth-child(2) {
+            display: none;
+            font-size: 11vw;
+            width: 35vw;
+        }
+        
+        #guest:hover span:nth-child(1) {
+            display: none;
+        }
+        
+        #guest:hover span:nth-child(2) {
+            display: inline-block;
+        }
+        
+        #slash {
+            color: #285294;
+            font-weight: bold;
+        }
+        
+        @media screen and ( min-width:600px) {
+            .parent {
+                width: 600px;
+                position: relative;
+            }
+            #HG {
+                font-size: 95px;
+            }
+            #host span:nth-child(2) {
+                display: none;
+                font-size: 78px;
+            }
+            #host span:nth-child(1) {
+                display: inline-block;
+                width: 234px;
+            }
+            #host span:nth-child(2) {
+                display: none;
+                font-size: 78px;
+                width: 234px;
+            }
+            #host:hover span:nth-child(1) {
+                display: none;
+            }
+            #host:hover span:nth-child(2) {
+                display: inline-block;
+            }
+            #guest span:nth-child(1) {
+                display: inline-block;
+                width: 234px;
+            }
+            #guest span:nth-child(2) {
+                display: none;
+                font-size: 78px;
+                width: 234px;
+            }
+            #guest:hover span:nth-child(1) {
+                display: none;
+            }
+            #guest:hover span:nth-child(2) {
+                display: inline-block;
+            }
+            .main div {
+                padding: 18px;
+            }
+            .second_parent {
+                width: 600px;
+                margin: 0 auto;
+                height: 100%;
+            }
+            #intro1 {
+                display: none;
+            }
+            #footer {
+                height: 20px;
+            }
+            ul {
+                display: -webkit-flex;
+                display: flex;
+            }
+            .copy {
+                font-size: 30px;
+            }
+            .copy_content {
+                font-size: 15px;
+            }
+            .functionleft {
+                clear: both;
+            }
+            .functionright {
+                clear: both;
+            }
+        }
+    </style>
+    <script>
+        $(function() {
+            // #で始まるアンカーをクリックした場合に処理
+            $('a[href^=#]').click(function() {
+                // スクロールの速度
+                var speed = 400; // ミリ秒
+                // アンカーの値取得
+                var href = $(this).attr("href");
+                // 移動先を取得
+                var target = $(href == "#" || href == "" ? 'html' : href);
+                // 移動先を数値で取得
+                var position = target.offset().top;
+                // スムーススクロール
+                $('body,html').animate({
+                    scrollTop: position
+                }, speed, 'swing');
+                return false;
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div class="parent">
+        <div class="child">
+            <p id="HG">
+                <a href="./owner.html" id="host">
+                    <span>HOST</span>
+                    <span>主催者</span>
+                </a>
+                <span id="slash"> / </span>
+                <a href="./guest.html" id="guest">
+                    <span>GUEST</span>
+                    <span>参加者</span>
+                </a>
+            </p>
+
+        </div>
+        <p id="toIntro" class="pointer">
+            <a href="#intro">
+                <img src="./img/down-arrow.png" alt="下">
+            </a>
+        </p>
+    </div>
+    <div class="second_parent" id="intro">
+
+        <div class="main">
+            <div class="col-1">
+                <h1 class="copy">その時、その場所にいる人の生の声を。</h1>
+                <p class="copy_content">
+                    今まで汲み取ることのできなかった参加者の声を手軽に可視化し、皆で共有出来ます。 今までなら一方通行になりがちな場面も、声を汲み取ることで 新しい体験を作り出せます。 皆で作り出す、新しい空間を体験してみませんか？
+                </p>
+            </div>
+        </div>
+        <div id="intro1">
+            <div class="function">
+                <div id="function01" class="function_width_height">
+                    <p class="functionleft"><img src="./img/share02.png" alt="01"></p>
+                    <p class="functionright">
+                        <span class="title">生の声</span><br>
+                        <span class="cont">大勢に問いかけ、即時に反応を取得し可視化できます。</span>
+                    </p>
+                </div><br>
+                <div id="function02" class="function_width_height">
+                    <p class="functionleft">
+                        <img src="./img/chat.png" alt="02"></p>
+                    <p class="functionright">
+                        <span class="title">共有</span><br>
+                        <span class="cont">集められた参加者の声を可視化し、皆で共有出来ます。その声を反映した講演、授業を行うことができます。</span>
+                    </p>
+                </div><br>
+                <div id="function03" class="function_width_height">
+                    <p class="functionleft"><img src="./img/graph.png" alt="03"></p>
+                    <p class="functionright">
+                        <span class="title">選択肢やテキスト</span><br>
+                        <span class="cont">選択形式、テキスト形式で問いかけ、グラフや表として表示することが出来ます。</span>
+                    </p>
+                </div><br>
+                <div id="function04" class="function_width_height">
+                    <p class="functionleft"><img src="./img/pencil.png" alt="05"></p>
+                    <p class="functionright">
+                        <span class="title">設問事前作成</span><br>
+                        <span class="cont">事前に設問文、選択項目を作成することができるため、別途資料を用意する手間を省けます。</span>
+                    </p>
+                </div><br>
+                <div id="function05" class="function_width_height" class="function_width_height">
+                    <p class="functionleft"><img src="./img/backup.png" alt="04"></p>
+                    <p class="functionright">
+                        <span class="title">保存</span><br>
+                        <span class="cont">取得された情報は保存し、後で資料として使用出来ます。</span>
+                    </p>
+                </div><br>
+
+            </div>
+        </div>
+        <ul>
+            <li>
+                <div>
+                    <p class="icon"><img src="./img/share02.png" alt="01"></p>
+                    <p class="detail">
+                        <span class="title">生の声</span><br>
+                        <span class="cont">大勢に問いかけ、即時に反応を取得し可視化できます。</span>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <p class="icon"><img src="./img/chat.png" alt="02"></p>
+                    <p class="detail">
+                        <span class="title">共有</span><br>
+                        <span class="cont">集められた参加者の声を可視化し、皆で共有出来ます。その声を反映した講演、授業を行うことができます。</span>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <p class="icon"><img src="./img/graph.png" alt="03"></p>
+                    <p class="detail">
+                        <span class="title">選択肢やテキスト</span><br>
+                        <span class="cont">選択形式、テキスト形式で問いかけ、グラフや表として表示することが出来ます。</span>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <p class="icon"><img src="./img/pencil.png" alt="04"></p>
+                    <p class="detail">
+                        <span class="title">設問事前作成</span><br>
+                        <span class="cont">事前に設問文、選択項目を作成することができるため、別途資料を用意する手間を省けます。</span>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <p class="icon"><img src="./img/backup.png" alt="05"></p>
+                    <p class="detail">
+                        <span class="title">保存</span><br>
+                        <span class="cont">取得された情報は保存し、後で資料として使用出来ます。</span>
+                    </p>
+                </div>
+            </li>
+        </ul>
+
+
+
+    </div>
+    <div id="footer">
+        <p>icons Designed by Freepik and distributed by
+            <a href="http://www.flaticon.com/">Flaticon</a>
+        </p>
+    </div>
+
+
+
+
+    <!-- scripts we need -->
+    <script src="https://rawgit.com/riot/riot/master/riot%2Bcompiler.min.js"></script>
+    <!-- riot tags -->
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/jquery.min.js"></script>
+</body>
+
+</html>

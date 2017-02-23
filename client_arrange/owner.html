@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <title>HOST</title>
+    <!--CSS -->
+
+    <link href='https://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
+
+
+    <!--リセット-->
+    <link rel="stylesheet" href="css/reset.css">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <!--ボタン-->
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/buttons.css">
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script type="text/javascript" src="js/buttons.js"></script>
+
+
+    <script src="html2canvas.js"></script>
+    <!--選択肢問題回答保存用-->
+    <script type="text/javascript" src="http://gabelerner.github.io/canvg/rgbcolor.js"></script>
+    <script type="text/javascript" src="http://gabelerner.github.io/canvg/StackBlur.js"></script>
+    <script type="text/javascript" src="http://gabelerner.github.io/canvg/canvg.js"></script>
+
+
+    <!--ハンバーガーメニュ-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css">
+
+
+
+
+
+
+    <!--JS c3.js-->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>-->
+    <script src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+    <script src="./js/d3.v3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.css" />
+    <!--  googlefnt RoomCreate-->
+    <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+    <!--  icon-->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+
+
+    <!--自作CSS -->
+    <style type="text/css">
+        /*ここに調整CSS記述*/
+        /*    フォント*/
+        
+        @import url(http://fonts.googleapis.com/earlyaccess/notosansjp.css);
+        html {
+            height: 100%;
+            width: 100%;
+            min-height: 100%;
+        }
+        
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 100%;
+            background: #f8f8f8;
+            text-align: center;
+            height: 100%;
+            width: 100%;
+            min-height: 100%;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+
+    <owner></owner>
+    <!-- scripts we need -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://rawgit.com/riot/riot/master/riot%2Bcompiler.min.js"></script>
+    <!-- riot tags -->
+    <script type="riot/tag" src="./tag/owner.tag"></script>
+
+    <!-- mount this app -->
+    <script>
+        riot.mount('owner');
+        localStorage.debug = '*';
+    </script>
+
+
+
+
+</body>
+
+</html>

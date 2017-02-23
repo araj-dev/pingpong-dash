@@ -61,10 +61,10 @@
   <a onclick={toText} class="button button-rounded button-flat-action pointer"> テキスト </a>
 </span></li>
         <li>
-            <label for="file" class="button button-rounded button-flat-caution pointer usepb" onclick={toPrebuilt} >
+            <label for="file" class="button button-rounded button-flat-caution pointer usepb">
              作成済みの設問を使用する
               
-<!--               <input id="file" type="file" onclick={toPrebuilt} style="display:none;"/>-->
+               <input id="file" type="file" onclick={toPrebuilt} style="display:none;"/>
            </label>
 
             <li><a onclick={toClose} class="button button-border margin_back pointer">退室</a></li>
@@ -492,7 +492,7 @@
             if (Kaitou_Data.SN == 0) {
                 self.textAnswer.length = 0;
                 self.rankData.length = 0; //ランキングデータリセット
-                self.vis = 8;
+                self.vis = 2;
             }
             if (Kaitou_Data.SN > 0) {
                 PieChart = [];
@@ -544,8 +544,6 @@
 
         self.vis = 8;
         document.getElementById("header_under").style.backgroundColor = "#E34933";
-        $("#file").trigger("click");
-        
     }
     loadfile = function(e) {
             document.getElementById("pb01").style.display = "table-cell";
@@ -720,13 +718,11 @@
             //テキスト回答の受信
             if (DATA.type == 'text_answer') {
                 TextData.push([DATA.Name, DATA.Answer]);
+                console.log(DATA.Answer);
                 self.textAnswer.unshift({
                     Name: DATA.Name,
                     Answer: DATA.Answer
                 });
-                //集まった回答を回答済みの参加者に送信
-                var data = [DATA.Name, DATA.Answer];
-                self.socket.emit('OtoG', data);  
             }
             //作成済み、選択問題回答の受信
             if (DATA.type == 'pb_select_answer') {
