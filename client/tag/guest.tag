@@ -659,7 +659,7 @@
         
         .guest_select {
             height: 70%;
-            margin-top: 100px;
+            margin-top: 70px;
             padding: 20px;
             margin-bottom: 15px;
         }
