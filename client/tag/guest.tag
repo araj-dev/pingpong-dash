@@ -496,7 +496,7 @@
         /*      -----------------------------------ログイン*/
         
         .sign-up {
-            margin: 50px auto;
+/*            margin: 50px auto;*/
             width: 330px;
             padding: 33px 0px 33px;
             background: #f8f8f8;
