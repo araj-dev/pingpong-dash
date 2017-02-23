@@ -543,13 +543,13 @@
             font-size: 88%;
             border-radius: 3px;
             text-align: center;
-            line-height: 22px;
+            line-height: 3vh;
             text-decoration: none;
             text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.3);
             background: #00acee;
             box-shadow: 0 5px 0 #0092ca;
-            margin-top: 10px;
-            margin-bottom: 10px;
+            margin-top: 23px;
+            margin-bottom: 23px;
         }
         
         .buttonSelect:hover {
@@ -576,13 +576,13 @@
             font-size: 2vw;
             border-radius: 3px;
             text-align: left;
-            line-height: 120%;
+            line-height: 3vh;
             text-decoration: none;
             text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.3);
             background: #00acee;
             box-shadow: 0 5px 0 #0092ca;
-            margin-top: 10px;
-            margin-bottom: 10px;
+            margin-top: 23px;
+            margin-bottom: 23px;
         }
         /*      退室ボタンのマージン*/
         
