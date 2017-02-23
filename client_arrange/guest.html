@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- ビューポートの設定 -->
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <!--リセット-->
+    <link rel="stylesheet" href="css/reset.css">
+    <title>GUEST</title>
+    <!--CSS -->
+    <!--ボタン-->
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/buttons.css">
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script type="text/javascript" src="js/buttons.js"></script>
+    <!--JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <!--自作CSS -->
+    <style type="text/css">
+            /*ここに調整CSS記述*/
+        
+        @import url(http://fonts.googleapis.com/earlyaccess/notosansjp.css);
+        html {
+            height: 100%;
+            width: 100%;
+        }
+        
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 100%;
+            background: #f8f8f8;
+            text-align: center;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+    </style>
+</head>
+
+<body>
+
+
+    <guest></guest>
+
+
+    <!-- scripts we need -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://rawgit.com/riot/riot/master/riot%2Bcompiler.min.js"></script>
+    <!-- riot tags -->
+    <script type="riot/tag" src="./tag/guest.tag"></script>
+
+    <!-- mount this app -->
+    <script>
+        riot.mount('guest');
+    </script>
+</body>
+
+</html>
