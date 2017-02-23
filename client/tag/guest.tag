@@ -37,7 +37,7 @@
                 </div>
                 <!--    <p onclick={toClose} class="link">退室</p>-->
                 <!--    <a onclick={toClose} class="button button-border pointer margin_back">退室</a>-->
-                <p onclick={toClose}　class="getout pointer base_buttom">退室</p>
+<!--                <p onclick={toClose}　class="getout pointer base_buttom">退室</p>-->
             </div>
 
         </div>
@@ -140,7 +140,7 @@
                         </table>
                     </div>
                 </div>
-                <p onclick={toClose}　class="getout pointer base_buttom">退室</p>
+<!--                <p onclick={toClose}　class="getout pointer base_buttom">退室</p>-->
             </div>
         </div>
     </div>
@@ -571,9 +571,10 @@
         .buttonCreate {
             position: relative;
             display: flex;
-            padding: 1em 0;
+            padding: 0.2em 0;
             color: #fff;
-            font-size: 2vw;
+            font-size: 30px;
+/*            font-size: 2vw;*/
             border-radius: 3px;
             text-align: left;
             line-height: 120%;
@@ -761,7 +762,7 @@
                 font-size: 15px;
             }
             .buttonCreate {
-                font-size: 15px;
+                font-size: 30px;
             }
         }
         
