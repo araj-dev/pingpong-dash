@@ -45,6 +45,7 @@ io.on('connection', function (socket) {
       socket.emit('success',roomname);
       roomnames.push(roomname);
       rooms[roomname] = socket;
+      //console.log(rooms);
   });
 
   socket.on('OtoG',function(data){
@@ -105,8 +106,9 @@ io.on('connection', function (socket) {
 
         //オーナーdisconnectの時ルーム情報を削除
         if(socket.flg == 1){
-          //console.log(socket.adapter.rooms);
+          console.log(socket);
           //console.log(socket.roomname);
+
           var roomIndex = roomnames.indexOf(socket.roomname);
           roomnames.splice(roomIndex, 1);
           delete rooms[socket.roomname];
